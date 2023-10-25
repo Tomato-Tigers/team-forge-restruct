@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import "./Login.css";
+import "../App.css";
+import "./Login-Register.css";
 
 /*
 let userDatabase: [string, string][] = [
@@ -26,14 +27,18 @@ function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const navigate = useNavigate();
+
   // Handlers.
+  const redirectToRegister = () => {
+    navigate("/Register");
+  };
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-
   const handleLogin = () => {
     axios
       .get<User[]>("http://localhost:4000/users")
@@ -117,7 +122,7 @@ function Login() {
             <button
               className="login_redirect_button"
               type="button"
-              //onClick={redirectToRegisterPage}
+              onClick={redirectToRegister}
             >
               Register
             </button>
