@@ -55,28 +55,19 @@ function RegistrationPage() {
         password: password,
       };
       axios
-        .get<User[]>("http://localhost:4000/users")
-        .then((res) => {
-          const users = res.data;
-          const existingUser = users.find(
-            (user: User) => user.email === newUser.email
-          );
-          if (existingUser) {
-            console.error("User already exists");
-          } else {
-            axios
-              .post<User>("http://localhost:4000/users", newUser)
-              .then((response) => {
-                console.log("User registered successfully:", response.data);
-              })
-              .catch((error: Error) => {
-                console.error(`Error registering user: ${error}`);
-              });
-          }
-        })
-        .catch((error: Error) => {
-          console.error(`Error fetching data: ${error}`);
-        });
+      .post("http://localhost:5000/register", {
+        name: name, // Added the name field here
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log("User registered successfully:", response.data);
+        // Optionally redirect to login or somewhere else after successful registration
+        redirectToLogin();
+      })
+      .catch((error) => {
+        console.error(`Error registering user: ${error}`);
+      });
     }
   };
 

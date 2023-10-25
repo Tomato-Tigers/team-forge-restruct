@@ -41,24 +41,22 @@ function Login() {
   };
   const handleLogin = () => {
     axios
-      .get<User[]>("http://localhost:4000/users")
+      .post("http://localhost:5000/login", { email, password })
       .then((res) => {
-        const users = res.data;
-        const user = users.find((user: User) => user.email === email);
-        if (user) {
-          if (user.password === password) {
-            console.log("User found and password matches");
-          } else {
-            console.log("User found but password does not match");
-          }
-        } else {
-          console.log("User not found");
-        }
+        // Handle successful login here, e.g., navigate to home page
+        console.log(res.data);
       })
-      .catch((error: Error) => {
-        console.error(`Error fetching data: ${error}`);
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          // Here, error.response.data will contain the error message 
+          // sent by the server ('Username not found' or 'Incorrect password').
+          console.error(`Error during login: ${error.response.data}`);
+        } else {
+          console.error(`Error during login: ${error.message}`);
+        }
       });
   };
+  
 
   /*
   const handleLogin = () => {
