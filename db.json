@@ -23,6 +23,23 @@
       "name": "Xavier Pierce",
       "email": "xavier@emory.edu",
       "password": "789"
+    },
+    {
+      "id": 1698261074671,
+      "name": "katya k",
+      "email": "test@gmail.com",
+      "password": "$2b$10$TtsqVpSaEQqR7x68aya/SO/YHtqwJ7QR0rrCVoFTzostey.xGu7am"
+    },
+    {
+      "id": 1698262540715,
+      "email": "kat@gmail.com",
+      "password": "$2a$10$dEz4BwaDb14YS.hdVabTdOX3TX70ii2qDyN0LxwwqLSU0bLR8ZkrG"
+    },
+    {
+      "id": 1698262914172,
+      "name": "John Doe",
+      "email": "johnd@emory.edu",
+      "password": "$2a$10$V.vuIixVYASt3sdce0BjhO3KCGUXy7TGelmsrhpIro4eYc7kRBuSa"
     }
   ]
 }
