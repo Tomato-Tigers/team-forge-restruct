@@ -11,7 +11,7 @@ datasource db {
 model Entry{
   id String  @id @default(uuid())
   password String 
-  title String
+  username String
   content String
   createdAt DateTime @default(now())
   skills Skills
@@ -22,5 +22,6 @@ enum Skills{
   Python
   C
   
+
 
 }

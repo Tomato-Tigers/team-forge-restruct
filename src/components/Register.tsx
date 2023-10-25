@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import prisma from "../lib/prisma";  
+import { createNewUser } from "../api/prismaAPI"; 
+
+
 
 import axios from "axios";
 
