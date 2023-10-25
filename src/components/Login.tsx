@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { ChangeEvent } from "react";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
+
 import "./Login.css";
 
+/*
 let userDatabase: [string, string][] = [
   ["alexandra.iotzova@emory.edu", "Password123"],
   ["ekurchin@emory.edu", "Password456"],
   ["hrmitch@emory.edu", "Password789"],
 ];
+*/
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
 
 function Login() {
   // Hooks
@@ -21,6 +33,29 @@ function Login() {
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
+
+  const handleLogin = () => {
+    axios
+      .get<User[]>("http://localhost:4000/users")
+      .then((res) => {
+        const users = res.data;
+        const user = users.find((user: User) => user.email === email);
+        if (user) {
+          if (user.password === password) {
+            console.log("User found and password matches");
+          } else {
+            console.log("User found but password does not match");
+          }
+        } else {
+          console.log("User not found");
+        }
+      })
+      .catch((error: Error) => {
+        console.error(`Error fetching data: ${error}`);
+      });
+  };
+
+  /*
   const handleLogin = () => {
     const confirmUser = userDatabase.find(([username, userPassword]) => {
       return username === email && userPassword === password;
@@ -32,15 +67,6 @@ function Login() {
       alert("Invalid username or password");
     }
   };
-  /*
-  const handleLogin = () => {
-    fetch("/users/")
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-      .then((jsonRes) => setEmail(jsonRes.usersList));
   */
 
   return (
