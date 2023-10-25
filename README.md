@@ -52,3 +52,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 connect to postgress db:
 
 'vercel env pull .env'
+
+run:
+npx prisma init
+npx prisma db push
+npx prisma generate
+npx prisma studio
