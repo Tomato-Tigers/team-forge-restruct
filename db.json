@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+        "id": 1,
+        "name": "Katya Kurchin",
+        "email": "ekurchi@emory.edu",
+        "password": "123"
+    },
+    {
+        "id": 2,
+        "name": "Henry Mitchell",
+        "email": "hrmitch@emory.edu",
+        "password": "456"
+    }
+  ]
+}
