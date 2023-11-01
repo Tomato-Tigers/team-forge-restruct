@@ -4,14 +4,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
-
-const app = express();
-
-app.use(cors());
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
+const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/register', async (req, res) => {
@@ -27,7 +25,9 @@ app.post('/register', async (req, res) => {
 
     try {
         // Create a new user using the function from prismaAPI.ts
-        await createNewUser(prisma, { username: name, password: hashedPassword, email });
+        await createNewUser(prisma, { name: name, password: hashedPassword, email: email });
+
+ 
         res.status(200).send('User registered successfully');
     } catch (error) {
         res.status(500).send('Error registering user');
