@@ -1,41 +1,63 @@
-// sample student object
-const student = {
+import { search } from "./search.js";
+var adj = 0;
+
+// sample user object
+const user = {
     id: 0,
     name: '',
     skills: {},
     interests: [],
     availability: [], // "hh:mm-hh:mm;hh:mm-hh:mm;hh:mm-hh:mm"
-    relation: [] // the id of the students who the user wants to work with
+    relation: [] // the id of the users who the user wants to work with
 }
 
 // builds the network
-function build(students) {
+function build(users) {
     var adj = new Map(); // adjacent matrix
 
-    // for each student
-    for (var student of students.values()) {
-        var temp = student.relation;
+    // for each user
+    for (var user of users.values()) {
+        var temp = user.relation;
 
-        // add students who want to work with the current student
-        var original = adj.get(student.id) || [];
+        // add users who want to work with the current user
+        var original = adj.get(user.id) || [];
         for (var id of original)
             if (!temp.includes(id))
                 temp.push(id);
-        adj.set(student.id, temp);
+        adj.set(user.id, temp);
 
-        // go through all students the current student wants to work with
-        for (var id of student.relation) {
+        // go through all users the current user wants to work with
+        for (var id of user.relation) {
             var list = adj.get(id) || [];
-            // adds the student to the list if not already
-            if (!list.includes(student.id)) list.push(student.id);
+            // adds the user to the list if not already
+            if (!list.includes(user.id)) list.push(user.id);
             adj.set(id, list);
         }
     }
     return adj;
 }
 
-// forms a group of {size} for student {id} (using a bfs approach)
-function formGroup(adj, id, size) {
+// forms a group of {size} for user {id}
+// param users: Map: contains all information with the id as the key
+// param id: int: id of the user
+// param size: int: size of group
+// return list: array: the id of the students in the group
+export function group(users, id, size) {
+    if (adj == 0)
+        preprocess(users);
+    var list = groupByRelation(id, size);
+    if (list.length == size) return list;
+    var search = search(users, id, );
+    for (var i = 0; i < search.length && list.length < size; i++) {
+        if (list.includes(search[i].id)) continue;
+        list.push(search[i].id);
+    }
+    return list;
+}
+
+// forms a group of {size} for user {id} (based on relations)
+// if there are not enough people, return an array of smaller size
+function groupByRelation(id, size) {
     var res = [];
     var queue = [];
     res.push(id);
@@ -54,47 +76,8 @@ function formGroup(adj, id, size) {
     return res;
 }
 
-// builds a sample set of students
-function testBuild() {
-    console.log("Test: builds a network");
-    var students = new Map(); // the key is the id of the student
-    students.set(1, { id: 1, interest: [""], relation: [2, 3, 4] });
-    students.set(2, { id: 2, interest: [""], relation: [4] });
-    students.set(3, { id: 3, interest: [""], relation: [] });
-    students.set(4, { id: 4, interest: [""], relation: [2] });
-    students.set(6, { id: 6, interest: [""], relation: [3] });
-    students.set(7, { id: 7, interest: [""], relation: [] });
-
-    for (var student of students.values()) {
-        console.log("student " + student.id + " want to work with [" + student.relation + "]");
-    }
-    console.log();
-    var adj = build(students);
-    for (var entry of adj.entries()) {
-        var id = entry[0];
-        var relation = entry[1];
-        console.log("student " + id + " may work with [" + relation + "]");
-    }
-    console.log();
+// preprocess: 
+//  builds the adj map
+function preprocess(users) {
+    adj = build(users);
 }
-
-// tests forming a group
-function testForm() {
-    console.log("Test: form groups");
-    var students = new Map(); // the key is the id of the student
-    students.set(1, { id: 1, interest: [""], relation: [2, 3, 4] });
-    students.set(2, { id: 2, interest: [""], relation: [4] });
-    students.set(3, { id: 3, interest: [""], relation: [] });
-    students.set(4, { id: 4, interest: [""], relation: [2] });
-    students.set(6, { id: 6, interest: [""], relation: [3] });
-    students.set(7, { id: 7, interest: [""], relation: [] });
-
-    var adj = build(students);
-    console.log("form a group of 3 for student 2: " + formGroup(adj, 2, 3));
-    console.log("form a group of 5 for student 2: " + formGroup(adj, 2, 5));
-    console.log("form a group of 6 for student 2: " + formGroup(adj, 2, 6));
-    console.log("form a group of 4 for student 3: " + formGroup(adj, 3, 4));
-}
-
-testBuild();
-testForm();

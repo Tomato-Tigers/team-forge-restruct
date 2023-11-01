@@ -67,14 +67,17 @@ function build() {
     return top;
 }
 
-// return the dictionary (in text format)
-function getDict() {
+// gets the dictionary (in text format)
+// return dict: array: the dictionary with each entry being a word
+export function getDict() {
     var dict = file.split("\n");
     return dict;
 }
 
-// returns all possible words start with s in the dictionary dict
-function autocomplete(dict, s) {
+// gets all possible words start with s in the dictionary dict
+// param dict: array: the dictionary
+// param s: string: the word that is entered
+export function autocomplete(dict, s) {
     return findPrefix(dict, 0, s);
 }
 
@@ -110,21 +113,3 @@ function findAll(dict, s) {
     }
     return res;
 }
-
-// prints the dictionary
-function testDict() {
-    console.log("Dictionary(txt): \n" + getDict() + "\n");
-}
-
-// tests autocomplete on several words
-function testAutocomplete() {
-    var dict = build();
-    console.log("test autocomplete on C: " + autocomplete(dict, "C") + "\n");
-    console.log("test autocomplete on c: " + autocomplete(dict, "c") + "\n");
-    console.log("test autocomplete on Java: " + autocomplete(dict, "Java") + "\n");
-    console.log("test autocomplete on jAvA: " + autocomplete(dict, "jAvA") + "\n");
-}
-
-// test the functions
-testDict();
-testAutocomplete();

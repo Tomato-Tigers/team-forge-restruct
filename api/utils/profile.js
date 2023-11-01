@@ -1,75 +1,62 @@
+// imports
+import { sharedElements } from "./utils.js";
 
-const student = {
-    id: 0,
-    name: '',
-    skills: {},
-    interests: [],
-    availability: [], // "hh:mm-hh:mm;hh:mm-hh:mm;hh:mm-hh:mm"
-    relation: [], // the id of the students who the user wants to work with
-}
-
-// example: 
-/*
-{
-    "id": 123,
-    "name": "Henry",
-    "skills": {
-        "Java": 3,
-        "Python": 2, 
-        "C": 2, 
-        "Communication": 2, 
-    },
-    "interests": [
-        "shopping",
-        "reading", 
-        "video games"
-    ],
-    "availability": [
-        ";08:00-9:00;10:00-13:00", 
-        ";08:00-9:00;10:00-13:00", 
-        ";08:00-9:00;10:00-13:00", 
-        ";08:00-9:00;10:00-13:00", 
-        ";08:00-9:00;10:00-13:00", 
-        ";08:00-9:00;10:00-13:00", 
-        ";08:00-9:00;10:00-13:00"
-    ], 
-    relationship: [
-
-    ]
-}
-*/
-
-const interestWeight = 5;       // the weight for interests
-
-// calculate the similarity score
-// returns an int
-function similarityScore(studentA, studentB) {
-    if (studentA.id == studentB.id) {
+// calculate the score of user B for user A
+// param userA: User: the current user
+// param userB: User: the target user
+// param pref: Pref: user A's preference
+// param filter: Filter: the search filter
+// return score: int: the score
+// the score depends on availability and interests
+// a higher score indicates a more likely chance of working together
+// a score of 0 means that user B should not work with user A
+export function score(userA, userB, pref, filter) {
+    if (userA.id == userB.id)
         return 0;
-    }
 
     var res = 0;    // the final score
 
-    var slots = sharedAvailability(studentA.availability, studentB.availability);
+    var slots = sharedAvailability(userA.availability, userB.availability);
     var slotCnt = timeCnt(slots);
     if (slotCnt == 0) return 0;
 
-    var sharedInterests = sharedElements(studentA["interests"], studentB["interests"]);
-    res += sharedInterests.length * interestWeight;
+    var sharedInterests = sharedElements(userA.interests, userB.interests);
+    res += sharedInterests.length * pref.interest;
+
+    // make sure the user satisfy the filter and add corresponding score
+    for (var ski of filter.hasSki)
+        if (!userB.skills.includes(ski))
+            return 0;
+    for (var int of filter.hasInt)
+        if (!userB.interests.includes(int))
+            return 0;
+    for (var ski of filter.notSki)
+        if (userB.skills.includes(ski))
+            return 0;
+    for (var int of filter.notInt)
+        if (userB.interests.includes(int))
+            return 0;
+    for (var ski of filter.maySki)
+        if (userB.skills.includes(ski))
+            res += pref.skills;
+    for (var int of filter.mayInt)
+        if (userB.interests.includes(int) && !userA.interests.includes(int))
+            res += pref.skills;
 
     return res;
 }
 
 // find the shared available time slots
-// timeA and timeB are the students' availablity
-// returns an arr of length 7
-function sharedAvailability(timeA, timeB) {
-    var res = ["", "", "", "", "", "", ""];
+// param timeA: array:string: avaiable time for user A
+// param timeB: array:string: avaiable time for user B
+// return availability: array:string(7): the share available time
+export function sharedAvailability(timeA, timeB) {
+    var availability = ["", "", "", "", "", "", ""];
     for (var i = 0; i < 7; i++) {
         var inter = intersection(timeA[i], timeB[i]);
-        if (inter != "") res[i] = inter.substring(1);
+        if (inter != "") availability[i] = inter.substring(1);
     }
-    return res;
+    return availability;
 }
 
 // finds the intersection of two availability (on a day)
@@ -170,23 +157,27 @@ function later(timeA, timeB) {
 function timeCnt(time) {
     var res = 0;
     for (var i = 0; i < 7; i++) {
-        console.log("time" + time[i]);
-        var day = dayCnt(time);
+        var day = dayCnt(time[i]);
         res += day;
     }
     return res;
 }
 
-// counts the length of time slots in a day
-function dayCnt(time) {
-    var res = 0;
+// count the length of time slots in a day
+// param time: string: the time slots
+// return length: int: the length of time
+// if a time segment is less than 30 minutes, 
+// it will not be counted towards the total length of time
+// this is because a small segment of time cannot be enough for a meeting
+export function dayCnt(time) {
+    var length = 0;
     var segment = time.split(";");
     for (var j = 1; j < segment.length; j++) {
         var chunk = atot(segment[j]);
         var diff = timeDiff(chunk);
-        if (diff >= 30) res += diff;
+        if (diff >= 30) length += diff;
     }
-    return res;
+    return length;
 }
 
 function timeDiff(time) {
@@ -195,55 +186,3 @@ function timeDiff(time) {
     var diff = h * 60 + m;
     return diff;
 }
-
-// return the shared elements in two lists
-// return a list
-function sharedElements(arrA, arrB) {
-    var filteredArray = arrA.filter(function (n) {
-        return arrB.indexOf(n) !== -1;
-    });
-    return filteredArray;
-}
-
-// test function for time slot
-function testTimeSlot() {
-    console.log("Test: find shared availability")
-    timeA = [
-        ";08:00-09:00;11:00-13:00;14:59-15:01;16:00-18:00",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-    ];
-    timeB = [
-        ";08:00-09:00;11:00-13:00;14:59-15:01;16:00-18:00",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-    ];
-    console.log("time slot 1: " + timeA);
-    console.log("time slot 2: " + timeB);
-    var res = sharedAvailability(timeA, timeB);
-    console.log("The available time slots are: " + res);
-    for (var i = 0; i < 7; i++) {
-        console.log(dayCnt(res[i]) + " minutes are available on day " + (i + 1) + ". \n");
-    }
-}
-
-// test function for shared elements
-function testSharedElements() {
-    console.log("Test: find shared elements");
-    var list1 = ["piano", "reading", "basketball", "hiking"];
-    var list2 = ["hiking", "violin", "piano", "video games", "shopping"];
-    console.log("list 1: " + list1);
-    console.log("list 2: " + list2);
-    console.log(sharedElements(list1, list2) + "\n");
-}
-
-testTimeSlot();
-testSharedElements();
