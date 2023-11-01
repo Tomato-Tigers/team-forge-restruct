@@ -9,10 +9,10 @@ datasource db {
 }
 
 model Entry{
-  id String  @id @default(uuid())
+  id String  @id @default(autoincrement())
   password String 
-  title String
-  content String
+  name String
+  email String @unique
   createdAt DateTime @default(now())
   skills Skills
 }
