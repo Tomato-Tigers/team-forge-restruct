@@ -11,14 +11,14 @@ datasource db {
 model Entry {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  skills    String[]
-  interests String[]
-  availability String[]
-  relation String[] //id of students the user wants to work with.
+  skills    String[]?
+  interests String[]?
+  availability String[]?
+  relation String[]? //id of students the user wants to work with.
   password  String
   email     String   @unique
   name      String
-  title     String
+  title     String?
 }
 
 enum Skills {
