@@ -1,0 +1,52 @@
+/* NavigationBar.css */
+.navbar {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+}
+
+.navbar .logo img {
+    width: 24px; 
+    height: 24px;
+    margin-right: 8px; 
+}
+
+.navbar .links {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+}
+
+.navbar a {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px 16px;
+}
+
+.close-button {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.navbar a:hover,
+.close-button:hover {
+    background-color: #ddd;
+    color: black;
+}
+.dropdown {
+    position: absolute; 
+    top: 200px;
+    right: 20px;
+}
+
