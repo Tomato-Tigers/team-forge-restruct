@@ -15,8 +15,6 @@ model Entry{
   email String @unique
   createdAt DateTime @default(now())
   skills Skills?
-  title String?
-  content String?
 }
 
 enum Skills{
