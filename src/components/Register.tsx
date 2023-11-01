@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import prisma from "../lib/prisma";  
-import { createNewUser } from "../api/prismaAPI"; 
+import prisma from "../../server/lib/prisma";  
+import { createNewUser } from "../../server/api/prismaAPI"; 
 
 
 
