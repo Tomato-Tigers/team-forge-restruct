@@ -1,0 +1,63 @@
+@import "../App.css";
+
+.projects-container {
+    margin-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+  }
+
+.class-card, .add-button {
+    text-decoration: none;
+    width: 200px;
+    border: 1px solid var(--dark-gray);
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
+    background-color: black;
+    color: white;
+}
+
+  .class-card {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  .title-subtitle {
+    border-bottom: 1px solid var(--dark-gray);
+    width: 100%;
+  }
+
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .members {
+    font-size: 12px;
+    font-weight: none;
+    margin-bottom: 10px;
+  }
+
+  .membersCount {
+    color: var(--steel-blue);
+  }
+
+  .add-button {
+    height: 220px;
+    border: 1px solid #000;
+    padding: 10px;
+    font-size: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

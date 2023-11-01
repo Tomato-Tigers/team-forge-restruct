@@ -14,7 +14,7 @@ interface User {
   password: string;
 }
 
-function RegistrationPage() {
+const Register: React.FC = () => {
   // Hooks
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -55,19 +55,19 @@ function RegistrationPage() {
         password: password,
       };
       axios
-      .post("http://localhost:5000/register", {
-        name: name, // Added the name field here
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log("User registered successfully:", response.data);
-        // Optionally redirect to login or somewhere else after successful registration
-        redirectToLogin();
-      })
-      .catch((error) => {
-        console.error(`Error registering user: ${error}`);
-      });
+        .post("http://localhost:5000/register", {
+          name: name, // Added the name field here
+          email: email,
+          password: password,
+        })
+        .then((response) => {
+          console.log("User registered successfully:", response.data);
+          // Optionally redirect to login or somewhere else after successful registration
+          redirectToLogin();
+        })
+        .catch((error) => {
+          console.error(`Error registering user: ${error}`);
+        });
     }
   };
 
@@ -162,6 +162,6 @@ function RegistrationPage() {
       </div>
     </div>
   );
-}
+};
 
-export default RegistrationPage;
+export default Register;
