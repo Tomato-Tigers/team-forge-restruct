@@ -1,60 +1,54 @@
-const jsonServer = require('json-server');
+const { createNewUser, getPasswordByEmail, getSkillsByID, deleteEntryByID, modifyEntryByID, getTableIdByID } = require('./src/prismaAPI.js');
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
+const cors = require('cors');
+const { PrismaClient } = require('@prisma/client');
 
+const prisma = new PrismaClient();
 const app = express();
-const router = jsonServer.router('db.json'); // Your mock database file
-const middlewares = jsonServer.defaults();
 
+app.use(cors());
 app.use(bodyParser.json());
-app.use(middlewares);
 
-// Custom route to handle user registration
-app.post('/register', (req, res) => {
-    const { name, email, password } = req.body;
+app.post('/register', async (req, res) => {
+    const { name, email, password} = req.body;
 
-    // Check if user already exists
-    const existingUser = router.db.get('users').find({ email }).value();
+    const existingUser = await prisma.entry.findUnique({ where: { email } });
     if (existingUser) {
         return res.status(400).send('User already exists');
     }
 
-    // Hash the password
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    // Save the new user
-    const newUser = {
-        id: Date.now(),
-        name,
-        email,
-        password: hashedPassword
-    };
-    router.db.get('users').push(newUser).write();
-
-    res.status(200).send('User registered successfully');
+    try {
+        await createNewUser(prisma, { name, password: hashedPassword, email });
+        res.status(201).send('User registered successfully');
+    } catch (error) {
+        console.error("Error registering user:", error);
+        res.status(500).send('Error registering user');
+    }
 });
 
-
-// Custom route to handle user login
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    const user = router.db.get('users').find({ email }).value();
-
-    if (!user) {
+     const storedHashedPassword = await getPasswordByEmail(prisma, email);
+    
+    
+    if (!storedHashedPassword) {
         return res.status(400).send('Username not found');
     }
 
-    if (bcrypt.compareSync(password, user.password)) {
-        res.status(200).send('Login successful');
+    if (bcrypt.compareSync(password, storedHashedPassword)) {
+        res.status(200).send('Login successful'); 
     } else {
         res.status(400).send('Incorrect password');
     }
 });
 
-app.use(router);
+
 app.listen(5000, () => {
-    console.log('JSON Server with custom routes is running on http://localhost:5000');
+    console.log('Server is running on http://localhost:5000');
 });

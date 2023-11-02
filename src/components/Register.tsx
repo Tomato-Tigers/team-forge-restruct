@@ -44,51 +44,32 @@ function RegistrationPage() {
     setConfirmPassword(e.target.value);
   };
   const handleRegistration = () => {
-    if (password != confirmPassword) {
-      console.error("Passwords do not match.");
-    } else {
-      const name = `${firstName} ${lastName}`;
-      const newUser: User = {
-        id: 0,
-        name: name,
-        email: email,
-        password: password,
-      };
-      axios
-      .post("http://localhost:5000/register", {
-        name: name, // Added the name field here
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log("User registered successfully:", response.data);
-        // Optionally redirect to login or somewhere else after successful registration
-        redirectToLogin();
-      })
-      .catch((error) => {
-        console.error(`Error registering user: ${error}`);
-      });
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
     }
+    
+    const name = `${firstName} ${lastName}`;
+    
+    axios.post("http://localhost:5000/register", {
+      name: name,
+      email: email,
+      password: password,
+    })
+    .then((response) => {
+      console.log("User registered successfully:", response.data);
+      redirectToLogin();
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 400) {
+        alert("Error registering: " + error.response.data);
+      } else {
+        console.error(`Error registering user: ${error}`);
+      }
+    });
   };
 
-  /*
-  const handleRegistration = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-    if (password != confirmPassword) {
-      alert("Passwords do not match");
-    }
-    const confirmUser = userDatabase.find(([username, userPassword]) => {
-      return username === email && userPassword === password;
-    });
-    if (confirmUser) {
-      alert("Login already exists");
-    } else {
-      alert("Creating");
-    }
-  };
-*/
+
 
   return (
     <div className="register_page" id="register">
