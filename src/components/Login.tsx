@@ -35,7 +35,7 @@ function Login() {
   };
   const handleLogin = () => {
     axios
-      .post("http://localhost:5000/login", { email, password })
+      .post("https://team-forge-restruct.vercel.app/login", { email, password })
       .then((res) => {
         // Handle successful login here, e.g., navigate to home page
         console.log(res.data);
