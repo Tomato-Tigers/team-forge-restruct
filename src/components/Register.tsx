@@ -51,7 +51,7 @@ function RegistrationPage() {
     
     const name = `${firstName} ${lastName}`;
     
-    axios.post("http://team-forge-restruct.vercel.app/register", {
+    axios.post("https://team-forge-restruct.vercel.app/register", {
       name: name,
       email: email,
       password: password,
