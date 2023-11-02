@@ -19,6 +19,7 @@ model Entry {
   email     String   @unique
   name      String
   title     String?
+  classes   String[]
 }
 
 enum Skills {
@@ -35,6 +36,15 @@ model Message {
   recipientID String  
   message String
 }
+model Classes{
+  classID String @id @default(uuid())
+  members String[]
+  projects String[]
+  title String
+  subtitle String
+
+}
+
 model Groups{
   groupID String @id @default(uuid())
   memberIDs String[]
