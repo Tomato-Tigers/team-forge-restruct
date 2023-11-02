@@ -32,7 +32,10 @@ const App: React.FC = () => {
           <Route path="/RQTest" element={<RQTest />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Home" element={<Home />} />
-          <Route path="/Projects" element={<Projects classes={classes} />} />
+          <Route path="/Projects" element={<Projects classes={classes} />}>
+            <Route index element={<ClassPage />} />
+            <Route path=":id" element={<ClassPage />} />
+          </Route>
           <Route path="/Messages" element={<Messages />} />
         </Routes>
       </Router>

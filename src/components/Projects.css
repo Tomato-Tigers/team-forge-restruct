@@ -1,7 +1,7 @@
 @import "../App.css";
 
 .projects-container {
-    margin-top: 100px;
+    margin-top: 200px;
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
@@ -10,7 +10,6 @@
   }
 
 .class-card, .add-button {
-    text-decoration: none;
     width: 200px;
     border: 1px solid var(--dark-gray);
     box-shadow: 0px 0px 12px rgba(0,0,0,0.3);

@@ -106,7 +106,7 @@ const Login: React.FC = () => {
         </div>
         <footer>
           <div className="login_bottom_left" id="signInDiv">
-            Login with Google.
+            Forgot password.
           </div>
           <div className="login_bottom_right">
             <button

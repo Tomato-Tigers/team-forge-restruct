@@ -9,6 +9,9 @@
     width: 100%;
     border-bottom: 1px solid var(--dark-gray);
     box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
+    position: fixed;
+    height: 90px;
+    top: 0;
 }
 
 .navbar .logo {
@@ -49,6 +52,7 @@
     border-radius: 10px;
     color: black;
 }
+
 .dropdown {
     position: absolute; 
     top: 200px;
