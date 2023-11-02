@@ -71,24 +71,39 @@ const Register: React.FC = () => {
     }
   };
 
-  /*
+  
   const handleRegistration = () => {
     console.log("Email:", email);
     console.log("Password:", password);
     console.log("Confirm Password:", confirmPassword);
     if (password != confirmPassword) {
       alert("Passwords do not match");
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
     }
-    const confirmUser = userDatabase.find(([username, userPassword]) => {
-      return username === email && userPassword === password;
+    
+    const name = `${firstName} ${lastName}`;
+    
+    axios.post("https://team-forge-restruct-git-main-tomato-tigers-projects.vercel.app/register", {
+      name: name,
+      email: email,
+      password: password,
+    })
+    .then((response) => {
+      console.log("User registered successfully:", response.data);
+      redirectToLogin();
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 400) {
+        alert("Error registering: " + error.response.data);
+      } else {
+        console.error(`Error registering user: ${error}`);
+      }
     });
-    if (confirmUser) {
-      alert("Login already exists");
-    } else {
-      alert("Creating");
-    }
   };
-*/
+
+
 
   return (
     <div className="register_page" id="register">

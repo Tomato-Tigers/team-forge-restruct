@@ -1,26 +1,52 @@
 generator client {
   provider = "prisma-client-js"
 }
- 
+
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Entry{
-  id String  @id @default(uuid())
-  password String 
-  title String
-  content String
+model Entry {
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  skills Skills
+  skills    String?
+  interests String[]
+  availability String[]
+  relation String[] //id of students the user wants to work with.
+  password  String
+  email     String   @unique
+  name      String
+  title     String?
 }
 
-enum Skills{
+enum Skills {
   Java
   Python
   C
-  
+}
 
+model Message {
+
+  Messageid       String   @id @default(uuid())
+  userID String
+  datetime DateTime @default(now())
+  recipientID String  
+  message String
+}
+model Groups{
+  groupID String @id @default(uuid())
+  memberIDs String[]
+  meetingTimes String[]
+  name String
+
+}
+model Preferences {
+
+  id        String   @id @default(uuid())
+  groupID String @unique
+  interest Int
+  skill Int
+ 
 }

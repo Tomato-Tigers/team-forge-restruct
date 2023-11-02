@@ -7,13 +7,7 @@ import axios from "axios";
 import "../App.css";
 import "./Login-Register.css";
 
-/*
-let userDatabase: [string, string][] = [
-  ["alexandra.iotzova@emory.edu", "Password123"],
-  ["ekurchin@emory.edu", "Password456"],
-  ["hrmitch@emory.edu", "Password789"],
-];
-*/
+
 
 interface User {
   id: number;
@@ -41,7 +35,7 @@ const Login: React.FC = () => {
   };
   const handleLogin = () => {
     axios
-      .post("http://localhost:5000/login", { email, password })
+      .post("https://team-forge-restruct-git-main-tomato-tigers-projects.vercel.app/login", { email, password })
       .then((res) => {
         // Handle successful login here, e.g., navigate to home page
         console.log(res.data);
@@ -57,19 +51,7 @@ const Login: React.FC = () => {
       });
   };
 
-  /*
-  const handleLogin = () => {
-    const confirmUser = userDatabase.find(([username, userPassword]) => {
-      return username === email && userPassword === password;
-    });
-    if (confirmUser) {
-      alert("Login successful");
-      //navigate("/HomePage"), { state: { email: email } };
-    } else {
-      alert("Invalid username or password");
-    }
-  };
-  */
+  
 
   return (
     <div className="login_box" id="login">
