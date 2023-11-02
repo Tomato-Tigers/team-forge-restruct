@@ -7,13 +7,7 @@ import axios from "axios";
 import "../App.css";
 import "./Login-Register.css";
 
-/*
-let userDatabase: [string, string][] = [
-  ["alexandra.iotzova@emory.edu", "Password123"],
-  ["ekurchin@emory.edu", "Password456"],
-  ["hrmitch@emory.edu", "Password789"],
-];
-*/
+
 
 interface User {
   id: number;
@@ -58,19 +52,7 @@ function Login() {
   };
   
 
-  /*
-  const handleLogin = () => {
-    const confirmUser = userDatabase.find(([username, userPassword]) => {
-      return username === email && userPassword === password;
-    });
-    if (confirmUser) {
-      alert("Login successful");
-      //navigate("/HomePage"), { state: { email: email } };
-    } else {
-      alert("Invalid username or password");
-    }
-  };
-  */
+  
 
   return (
     <div className="login_box" id="login">
