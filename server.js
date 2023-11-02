@@ -8,7 +8,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const app = express();
 
-app.use(cors());
+app.use( cors({ origin: 'https://team-forge-restruct.vercel.app'}));
 app.use(bodyParser.json());
 
 app.post('/register', async (req, res) => {
