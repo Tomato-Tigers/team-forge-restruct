@@ -11,10 +11,10 @@ datasource db {
 model Entry{
   id String  @id @default(uuid())
   password String 
-  title String
-  content String
+  name String
+  email String @unique
   createdAt DateTime @default(now())
-  skills Skills
+  skills Skills?
 }
 
 enum Skills{
