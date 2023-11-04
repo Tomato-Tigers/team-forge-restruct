@@ -16,7 +16,7 @@ interface User {
   password: string;
 }
 
-function Login() {
+const Login: React.FC = () => {
   // Hooks
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -42,7 +42,7 @@ function Login() {
       })
       .catch((error) => {
         if (error.response && error.response.data) {
-          // Here, error.response.data will contain the error message 
+          // Here, error.response.data will contain the error message
           // sent by the server ('Username not found' or 'Incorrect password').
           console.error(`Error during login: ${error.response.data}`);
         } else {
@@ -50,7 +50,6 @@ function Login() {
         }
       });
   };
-  
 
   
 
@@ -89,7 +88,7 @@ function Login() {
         </div>
         <footer>
           <div className="login_bottom_left" id="signInDiv">
-            Login with Google.
+            Forgot password.
           </div>
           <div className="login_bottom_right">
             <button
@@ -111,6 +110,6 @@ function Login() {
       </form>
     </div>
   );
-}
+};
 
 export default Login;

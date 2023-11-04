@@ -14,7 +14,7 @@ interface User {
   password: string;
 }
 
-function RegistrationPage() {
+const Register: React.FC = () => {
   // Hooks
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -44,6 +44,40 @@ function RegistrationPage() {
     setConfirmPassword(e.target.value);
   };
   const handleRegistration = () => {
+    if (password != confirmPassword) {
+      console.error("Passwords do not match.");
+    } else {
+      const name = `${firstName} ${lastName}`;
+      const newUser: User = {
+        id: 0,
+        name: name,
+        email: email,
+        password: password,
+      };
+      axios
+        .post("http://localhost:5000/register", {
+          name: name, // Added the name field here
+          email: email,
+          password: password,
+        })
+        .then((response) => {
+          console.log("User registered successfully:", response.data);
+          // Optionally redirect to login or somewhere else after successful registration
+          redirectToLogin();
+        })
+        .catch((error) => {
+          console.error(`Error registering user: ${error}`);
+        });
+    }
+  };
+
+  
+  const handleRegistration = () => {
+    console.log("Email:", email);
+    console.log("Password:", password);
+    console.log("Confirm Password:", confirmPassword);
+    if (password != confirmPassword) {
+      alert("Passwords do not match");
     if (password !== confirmPassword) {
       alert("Passwords do not match.");
       return;
@@ -143,6 +177,6 @@ function RegistrationPage() {
       </div>
     </div>
   );
-}
+};
 
-export default RegistrationPage;
+export default Register;
