@@ -19,7 +19,7 @@ model Entry {
   email     String   @unique
   name      String
   title     String?
-  classes   String[]
+  classes   Class[] @relation("EntryClasses")//id of classes the user is in.
 }
 
 enum Skills {
@@ -36,9 +36,9 @@ model Message {
   recipientID String  
   message String
 }
-model Classes{
+model Class{
   classID String @id @default(uuid())
-  members String[]
+  members Entry[] @relation("EntryClasses") //connects to records in Entry
   projects String[]
   title String
   subtitle String
