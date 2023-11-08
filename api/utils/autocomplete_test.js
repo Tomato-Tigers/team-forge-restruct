@@ -1,19 +1,16 @@
-import { getDict, autocomplete } from "./autocomplete";
+import * as process from 'process';
+import { autocomplete } from "./autocomplete.js";
+import { getDict } from './dict.js';
 
-// prints the dictionary
-function testDict() {
-    console.log("Dictionary(txt): \n" + getDict() + "\n");
-}
 
 // tests autocomplete on several words
 function testAutocomplete() {
-    var dict = build();
-    console.log("test autocomplete on C: " + autocomplete(dict, "C") + "\n");
-    console.log("test autocomplete on c: " + autocomplete(dict, "c") + "\n");
-    console.log("test autocomplete on Java: " + autocomplete(dict, "Java") + "\n");
-    console.log("test autocomplete on jAvA: " + autocomplete(dict, "jAvA") + "\n");
+    var dict = getDict("skills");
+    var argi = 2;
+    while (process.argv[argi] != null) {
+        console.log("test autocomplete on " + process.argv[argi] + ": " + autocomplete(dict, process.argv[argi++]) + "\n");
+    }
 }
 
 // test the functions
-testDict();
 testAutocomplete();

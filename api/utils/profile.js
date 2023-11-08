@@ -41,7 +41,7 @@ export function score(userA, userB, pref, filter) {
             res += pref.skills;
     for (var int of filter.mayInt)
         if (userB.interests.includes(int) && !userA.interests.includes(int))
-            res += pref.skills;
+            res += pref.interests;
 
     return res;
 }
