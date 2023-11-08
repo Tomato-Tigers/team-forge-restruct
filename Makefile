@@ -1,3 +1,3 @@
 .PHONY: test
 test: 
-  npm run start
+	npm run start
