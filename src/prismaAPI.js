@@ -1,7 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
 
-async function createNewUser(data) {
+async function createNewUser(prisma, data) {
     return await prisma.entry.create({
         data: {
             email: data.email,
@@ -81,7 +80,6 @@ async function getTableIdByID(prisma, id) {
 }
 
 module.exports = {
-    prisma,
     createNewUser,
     getPasswordByEmail,
     getSkillsByID,
