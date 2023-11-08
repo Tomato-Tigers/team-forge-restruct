@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 
 import "../App.css";
@@ -15,7 +13,6 @@ interface User {
 }
 
 const Register: React.FC = () => {
-  // Hooks
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -24,60 +21,33 @@ const Register: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // Handlers
   const redirectToLogin = () => {
     navigate("/");
   };
-  const handleFirstNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
-  };
-  const handleLastNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
-  };
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-  };
-  const handleRegistration = () => {
-    if (password != confirmPassword) {
-      console.error("Passwords do not match.");
-    } else {
-      const name = `${firstName} ${lastName}`;
-      const newUser: User = {
-        id: 0,
-        name: name,
-        email: email,
-        password: password,
-      };
-      axios
-        .post("http://localhost:5000/register", {
-          name: name, // Added the name field here
-          email: email,
-          password: password,
-        })
-        .then((response) => {
-          console.log("User registered successfully:", response.data);
-          // Optionally redirect to login or somewhere else after successful registration
-          redirectToLogin();
-        })
-        .catch((error) => {
-          console.error(`Error registering user: ${error}`);
-        });
-    }
+
+  const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(event.target.value);
   };
 
-  
-  const handleRegistration = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-    if (password != confirmPassword) {
-      alert("Passwords do not match");
+  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(event.target.value);
+  };
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(event.target.value);
+  };
+
+  const handleRegistration = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (password !== confirmPassword) {
       alert("Passwords do not match.");
       return;
@@ -85,7 +55,7 @@ const Register: React.FC = () => {
     
     const name = `${firstName} ${lastName}`;
     
-    axios.post("https://team-forge-restruct-git-main-tomato-tigers-projects.vercel.app/register", {
+    axios.post("/api/register", {
       name: name,
       email: email,
       password: password,
@@ -103,26 +73,24 @@ const Register: React.FC = () => {
     });
   };
 
-
-
   return (
     <div className="register_page" id="register">
       <div className="login_box">
         <div className="login_header">
           <span className="blue_text">Team</span>Forge
         </div>
-        <form className="login_form">
+        <form className="login_form" onSubmit={handleRegistration}>
           <div className="subtitle">Register</div>
           <div className="form-group">
             <div className="name-group">
               <input
-                type="firstName"
+                type="text"
                 placeholder="First name"
                 value={firstName}
                 onChange={handleFirstNameChange}
               />
               <input
-                type="lastName"
+                type="text"
                 placeholder="Last name"
                 value={lastName}
                 onChange={handleLastNameChange}
@@ -146,29 +114,20 @@ const Register: React.FC = () => {
           <div className="form-group">
             <input
               type="password"
-              placeholder="Confirm password"
+              placeholder="Confirm Password"
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleRegistration();
-                }
-              }}
             />
           </div>
           <footer>
             <div className="login_bottom_left">
-              Using Google? Return to Login.
+              Already have an account? <span className="link" onClick={redirectToLogin}>Login here.</span>
             </div>
             <div className="login_bottom_right">
               <button
                 className="login_redirect_button"
-                type="button"
-                onClick={redirectToLogin}
+                type="submit"
               >
-                Login
-              </button>
-              <button type="button" onClick={handleRegistration}>
                 Register
               </button>
             </div>
