@@ -2,7 +2,7 @@ import { sampleUsers } from "./user.js";
 import { group } from "./network.js";
 
 // tests forming a group
-function testForm() {
+function testGroup() {
     console.log("Test: form groups");
     var students = sampleUsers();
 
@@ -17,6 +17,4 @@ function testForm() {
     console.log("from a group of 4 for student 4: " + group(students, 4, 4));
 }
 
-// 
-
-testForm();
+testGroup();
