@@ -19,7 +19,7 @@ model Entry {
   email     String   @unique
   name      String
   title     String?
-  classes   Class[] @relation("EntryClasses")//id of classes the user is in.
+  classes   Class[] @relation("EntryClasses") //id of classes the user is in.
 }
 
 enum Skills {
