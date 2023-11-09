@@ -1,12 +1,14 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Login from "./components/Login";
-import Register from "./components/Register";
-import RQTest from "./components/RQTest";
-import Home from "./components/Home";
-import Projects from "./components/Projects";
-import Messages from "./components/Messages";
-import ClassPage from "./components/ClassPage";
+import Login from "./Login";
+import Register from "./Register";
+import RQTest from "./RQTest";
+import Home from "./Home";
+import Projects from "./Projects";
+import Messages from "./Messages";
+import ClassPage from "./ClassPage";
+import HomePage from "./HomePage";
+import ProfilePage from "./ProfilePage"
 
 const classes = [
   {
@@ -31,7 +33,9 @@ const App: React.FC = () => {
           <Route path="/" element={<Login />} />
           <Route path="/RQTest" element={<RQTest />} />
           <Route path="/Register" element={<Register />} />
-          <Route path="/Home" element={<Home />} />
+          <Route path="/HomePage" element={<HomePage />} />
+          <Route path="/Home" element={<Home/>} />
+          <Route path="/ProfilePage" element={<ProfilePage />} />
           <Route path="/Projects" element={<Projects classes={classes} />}>
             <Route index element={<ClassPage />} />
             <Route path=":id" element={<ClassPage />} />
