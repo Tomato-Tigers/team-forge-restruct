@@ -5,6 +5,10 @@ import { useParams, Link, Routes, Route } from "react-router-dom";
 import MainLayout from "./MainLayout";
 import ClassPage from "./ClassPage";
 
+import UsrProps from "./UsrProps";
+
+
+
 interface Class {
   id: string;
   title: string;
@@ -13,12 +17,13 @@ interface Class {
 }
 
 interface ProjectProps {
-  classes: Class[];
+  classes: Class[]
 }
 
 const Projects: React.FC<ProjectProps> = ({ classes }) => {
+  let myUsr = { myEmail: 'alexandra.iotzova@emory.edu', firstName: 'Alexandra' , lastName: 'Iotzova'}
   return (
-    <MainLayout>
+    <MainLayout usr={myUsr}>
       <div className="projects-container">
         <Routes>
           <Route

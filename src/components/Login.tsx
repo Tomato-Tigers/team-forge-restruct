@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "../App.css";
+//import axios from "axios";
+import "./App.css";
 import "./Login-Register.css";
+import "./UsrProps"
 
 const Login: React.FC = () => {
   // State hooks
@@ -26,23 +27,12 @@ const Login: React.FC = () => {
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    axios
-      .post('/api/login', { email, password })
-      .then((response) => {
-        // Handle successful login here
-        console.log(response.data);
-        navigate('/home'); 
-      })
-      .catch((error) => {
-        // Handle login error here
-        if (error.response) {
-          // Display server-provided error message to the user
-          console.error(`Error during login: ${error.response.data}`);
-        } else {
-          // Handle other errors (e.g., network error)
-          console.error(`Error during login: ${error.message}`);
-        }
-      });
+    let myUsr = { myEmail: 'alexandra.iotzova@emory.edu', firstName: 'Alexandra' , lastName: 'Iotzova'}
+
+        navigate('/home',{
+          state: { myEmail: 'alexandra.iotzova@emory.edu', firstName: 'Alexandra' , lastName: 'Iotzova'} 
+      }); 
+  
   };
 
   return (

@@ -1,0 +1,12 @@
+:root {
+  --dark-gray: #3C3838;
+  --steel-blue: #7AC1D1;
+}
+
+.left {float: left;}
+.right {float: right;}
+
+html {
+  background-color: var(--dark-gray);
+  font-family: "proximanova", sans-sherif;
+}

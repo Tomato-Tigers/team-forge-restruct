@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import MainLayout from "./MainLayout";
+import UsrProps from "./UsrProps";
 
-function Home() {
+function Home( ) {
+  const location = useLocation();
+  const usr=location.state;
+  
   return (
-    <MainLayout>
-      <div>Home Page</div>;
+    <MainLayout usr={usr} >
+      <div>Home Page </div>;
     </MainLayout>
   );
 }
 export default Home;
+
