@@ -1,14 +1,14 @@
 @import "../App.css";
 
 .navbar {
-    background-color: black;
+    background-color: rgb(11, 11, 11);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0;
     width: 100%;
     border-bottom: 1px solid var(--dark-gray);
-    box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
+    box-shadow: 0px 0px 12px rgba(19, 19, 19, 0.922);
     position: fixed;
     height: 90px;
     top: 0;
@@ -17,7 +17,7 @@
 .navbar .logo {
     display: flex;
     align-items: center;
-    margin-top: 8px;
+    margin-top: 0px;
     margin-left: 8px;
 }
 
@@ -26,11 +26,22 @@
     height: 75px;
 }
 
+.menuIcon img{
+    height: 50px;
+    width: 50px;
+    margin-right: 50px;
+    cursor: pointer;
+    position: relative;
+    ;
+
+}
+
 .navbar .links {
     display: flex;
     align-items: center;
-    margin-right: 16px;
+    margin-left: 750px;
     background-color: none;
+    position: absolute;
 }
 
 .navbar a {
@@ -44,6 +55,7 @@
     color: var(--steel-blue);
     text-decoration: none;
     font-size: 24px;
+    font-weight: bold;
 }
 
 .navbar a:hover,
@@ -51,10 +63,121 @@
     background-color: var(--steel-blue);
     border-radius: 10px;
     color: black;
+    transition: background-color 0.7s ease;
+    cursor: pointer;
 }
 
 .dropdown {
     position: absolute; 
     top: 200px;
     right: 20px;
+}
+
+.branding {
+    font-weight: bold;
+    margin-left: 120px;
+    margin-top: 0px;
+    color: white;
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    background-color: rgb(11, 11, 11);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    position: absolute;
+}
+
+.blue_text {
+    color: var(--steel-blue);
+}
+
+.x-button {
+    color: black;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 1350px;
+    margin-top: 0px;
+    position: absolute;
+    border-radius: 100px;
+}
+
+.x-button:hover {
+    cursor: pointer;
+    background-color: var(--steel-blue);
+    transform: scale(1.1);
+    transition: background-color 0.3s ease;
+}
+
+.dropdown {
+    background-color: #040404b4;
+    padding: 20px; 
+    margin-top: -100px;
+    height: 75px;
+    width: 200px;
+    border-radius: 10px;
+    transform: scale(1.1);
+    transition: background-color 0.3s ease;
+    font-weight: bolder;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.dropdown p{
+    
+    color: white;
+    font-size: 16px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+
+}
+.dropdown.animate {
+    animation: fadeInDrop 0.7s ease forwards;
+}
+
+.dropdown.animateOut {
+        animation: fadeOutDrop 0.7s ease forwards;
+}
+
+
+
+@keyframes fadeInDrop {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    
+    }
+    to {
+      opacity: 1;
+        transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOutDrop {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+.sign-out-button {
+    margin-left: 65px;
+    margin-top: 10px;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bolder;
+    border-radius: 100px;
+    position: relative;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+.sign-out-button:hover {
+    cursor: pointer;
+    background-color: var(--steel-blue);
+    transform: scale(1.1);
+    transition: background-color 0.3s ease;
 }

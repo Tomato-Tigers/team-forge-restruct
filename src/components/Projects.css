@@ -9,7 +9,7 @@
     align-items: center;
   }
 
-.class-card, .add-button {
+.class-card,.add-button {
     width: 200px;
     border: 1px solid var(--dark-gray);
     box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
@@ -17,7 +17,7 @@
     color: white;
 }
 
-  .class-card {
+.class-card {
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -25,38 +25,189 @@
     align-items: center;
     text-align: center;
     padding-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
   }
 
-  .title-subtitle {
+  .class-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+.title-subtitle {
     border-bottom: 1px solid var(--dark-gray);
-    width: 100%;
-  }
+    width: 50%;
+}
 
-  .title {
-    font-size: 36px;
+.title {
+    font-size: 20px;
     font-weight: bold;
-  }
+    position: relative;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
 
-  .subtitle {
-    font-size: 16px;
-  }
+.subtitle {
+    font-size: 20px;
+    position: relative;
+    margin-top: 30px;
+}
 
-  .members {
+.members {
     font-size: 12px;
-    font-weight: none;
+    font-weight: bold;
     margin-bottom: 10px;
-  }
+}
 
-  .membersCount {
+.membersCount {
     color: var(--steel-blue);
-  }
+    font-weight: bold;
+}
 
-  .add-button {
-    height: 220px;
+.add-button {
+    height: 100px;
+    width: 100px;
     border: 1px solid #000;
-    padding: 10px;
+    padding: 0px 0px;
     font-size: 5em;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.add-button:hover{
+    cursor: pointer;
+    background-color: var(--steel-blue);
+    transform: scale(1.1);
+    transition: background-color 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Start from below its final position */
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.new-class-form.animate {
+  animation: fadeInUp 0.7s ease-in-out;
+}
+.new-class-form {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid var(--dark-gray);
+  box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
+  padding: 20px;
+  width: 540px;
+  border-radius: 8px;
+  max-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+.form-group {
+    margin-bottom: 25px;
+    justify-content: space-between;
+}
+
+.cancel-button{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+.cancel-button:hover{
+  cursor: pointer;
+  background-color: darken(red, 10%);
+  transform: rotate(-90deg);
+}
+  
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+  
+input[type="text"], textarea {
+    width: 100%;
+    padding: 5px 0px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    font-size: 1em;
+    color: whitesmoke;
+    transition: background-color 0.3s ease;
+    border: 1px solid #444;
+}
+
+input[type="text"]:focus, textarea:focus {
+    background-color: #b5b3b3;
+    outline: none;
+    border-color: var(--steel-blue);
+  }
+  
+button[type="submit"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--steel-blue);
+    color: #fff; 
+    margin-left: auto;
+    margin-right: -400px;
+    font-weight: bold;
+}
+
+button[type="submit"]:hover {
+    cursor: pointer;
+    background-color: var(--steel-blue);
+    transform: scale(1.1);
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 15%;
+  padding: 10px 10px;
+  border: none;
+  gap: 300px;
+  border-radius: 30px;
+  color: white;
+  transition: background-color 0.3s
+}
+
+button[type="button"] {
+  font-weight: bolder;
+}
+
+button[type="button"]:hover {
+  cursor: pointer;
+  background-color: var(--steel-blue);
+  transform: scale(1.1);
+  transition: background-color 0.3s ease;
+}
+
+.error_message {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+  margin-bottom: 4px;
+}
+
+.form-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  font-weight: bolder;
+
+}
