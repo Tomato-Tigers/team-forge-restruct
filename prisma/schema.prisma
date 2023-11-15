@@ -19,7 +19,8 @@ model Entry {
   email     String   @unique
   name      String
   title     String?
-  classes   Class[] @relation("EntryClasses") //id of classes the user is in.
+  classes   Class[] @relation("EntryClasses")//id of classes the user is in.
+  projects  Project[] //id of projects the user owns
 }
 
 enum Skills {
@@ -36,6 +37,7 @@ model Message {
   recipientID String  
   message String
 }
+
 model Class{
   classID String @id @default(uuid())
   members Entry[] @relation("EntryClasses") //connects to records in Entry
@@ -45,7 +47,17 @@ model Class{
 
 }
 
-model Groups{
+model Project {
+  projectID    String   @id @default(uuid())
+  title        String
+  description  String
+  groupID      String   // Foreign key to Group model
+  group        Group    @relation(fields: [groupID], references: [groupID])
+  classID      String   // Foreign key to Class model
+  class        Class    @relation(fields: [classID], references: [classID])
+}
+
+model Group{
   groupID String @id @default(uuid())
   memberIDs String[]
   meetingTimes String[]
