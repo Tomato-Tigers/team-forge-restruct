@@ -1,7 +1,6 @@
-import * as fs from 'fs';
-import * as url from 'url';
+const fs = require('fs');
+const url = require('url');
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const resourcePath = __dirname + "/../../resources/"; // (absolute) path to the resources folder
 
 // builds the dictionary using the list of words
