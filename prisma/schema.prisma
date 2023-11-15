@@ -20,7 +20,6 @@ model Entry {
   name      String
   title     String?
   classes   Class[] @relation("EntryClasses")//id of classes the user is in.
-  projects  Project[] //id of projects the user owns
 }
 
 enum Skills {
@@ -41,7 +40,7 @@ model Message {
 model Class{
   classID String @id @default(uuid())
   members Entry[] @relation("EntryClasses") //connects to records in Entry
-  projects String[]
+  projects Project[] //id of projects the class contains
   title String
   subtitle String
 
@@ -62,6 +61,7 @@ model Group{
   memberIDs String[]
   meetingTimes String[]
   name String
+  project Project[] //id of project the group owns
 
 }
 model Preferences {
