@@ -16,7 +16,7 @@ const pref = {
 
 // gets a sample set of users
 // return users: Map: the users with all information
-export function sampleUsers() {
+function sampleUsers() {
     var users = new Map();
     users.set(1, {
         "id": 1,
@@ -104,3 +104,7 @@ export function sampleUsers() {
     });
     return users;
 }
+
+module.exports = {
+    sampleUsers
+};

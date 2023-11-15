@@ -2,7 +2,7 @@
 // param dict: Dict: the dictionary
 // param s: string: the word that is entered
 // return res: array:string: all words in dict that start with s
-export function autocomplete(dict, s) {
+function autocomplete(dict, s) {
     var words = findPrefix(dict, 0, s);
 
     // sort the words based on the frequency
@@ -58,3 +58,7 @@ function findAll(dict, s) {
     }
     return res;
 }
+
+module.exports = {
+    autocomplete
+};

@@ -16,7 +16,7 @@ const filter = {
 // param id: int: user id
 // param filter: Filter: the search filter
 // return list: array: a sorted list of users
-export function search(users, id, pref, filter) {
+function search(users, id, pref, filter) {
     var list = [];
     for (var user of users.values()) {
         var pt = score(users.get(id), user, pref, filter);
@@ -34,3 +34,7 @@ export function search(users, id, pref, filter) {
 
     return list;
 }
+
+module.exports = {
+    search,
+};
