@@ -27,11 +27,11 @@ jobs:
     - name: Clear cache
       run: npm cache clean --force
 
-    - name: Clear node module directory
-      run: rm -rf node_modules
+    - name: Install LTS nodejs
+      run: n lts
     
-    - name: Install dependencies
-      run: npm install
+    - name: Uninstall previous version
+      run: n prune
 
     - name: Run the tests and generate coverage report
       run: npm test -- --coverage
