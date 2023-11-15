@@ -19,7 +19,8 @@ model Entry {
   email     String   @unique
   name      String
   title     String?
-  classes   Class[] @relation(fields: [classID], references: [classID])
+  groupID   String?  // Foreign key to Group model
+  classes   Class[] @relation("EntryClasses")//id of classes the user is in.
   group     Group @relation(fields: [groupID], references: [groupID])
 }
 
@@ -40,7 +41,7 @@ model Message {
 
 model Class{
   classID String @id @default(uuid())
-  members Entry[] @relation (fields: email, references: email)
+  members Entry[] @relation("EntryClasses") //connects to records in Entry
   projects Project[] //id of projects the class contains
   title String
   subtitle String
@@ -62,7 +63,8 @@ model Group{
   members Entry[]
   meetingTimes String[]
   name String
-  project Project @relation(fields: [projectID], references: [projectID])
+  projectID String?
+  project Project? @relation(fields: [projectID], references: [projectID])
 
 }
 model Preferences {
