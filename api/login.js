@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     }
   } catch (error) {
     console.error("Login error:", error);
-    res.status(500).send('Error logging in');
+    res.status(500).send({message: 'Error logging in', error: error );
   } finally {
     await prisma.$disconnect();
   }
