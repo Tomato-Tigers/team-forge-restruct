@@ -1,5 +1,5 @@
-import { sampleUsers } from "./user.js";
-import { group } from "./network.js";
+import { sampleUsers } from "./_user.js";
+import { group } from "./_network.js";
 
 // tests forming a group
 function testGroup() {

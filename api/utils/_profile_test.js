@@ -1,4 +1,4 @@
-import { sharedAvailability, dayCnt, sharedElements } from "./profile.js";
+import { sharedAvailability, dayCnt, sharedElements } from "./_profile.js";
 
 // test function for time slot
 function testTimeSlot() {

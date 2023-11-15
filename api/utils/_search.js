@@ -1,5 +1,5 @@
 // imports
-import { score } from "./profile.js";
+import { score } from "./_profile.js";
 
 // an example filter
 const filter = {

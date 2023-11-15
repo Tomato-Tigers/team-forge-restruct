@@ -1,5 +1,5 @@
 // imports
-import { sharedElements } from "./utils.js";
+import { sharedElements } from "./_utils.js";
 
 // calculate the score of user B for user A
 // param userA: User: the current user

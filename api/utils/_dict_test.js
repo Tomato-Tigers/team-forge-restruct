@@ -1,5 +1,5 @@
-import { dtos, getDict, writeDict } from "./dict.js";
-import { select } from "./select.js";
+import { dtos, getDict, writeDict } from "./_dict.js";
+import { select } from "./_select.js";
 
 function testGetDict() {
     var dict = getDict("skills");
