@@ -24,15 +24,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Clear cache
-      run: npm cache clean --force
-
-    - name: Install LTS nodejs
-      run: n lts
-    
-    - name: Uninstall previous version
-      run: n prune
-
     - name: Run the tests and generate coverage report
       run: npm test -- --coverage
       
