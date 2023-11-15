@@ -1,7 +1,7 @@
 
-import { autocomplete } from "./autocomplete.js";
-import { dtos, getDict } from "./dict.js";
-import { select } from "./select.js";
+import { autocomplete } from "./_autocomplete.js";
+import { dtos, getDict } from "./_dict.js";
+import { select } from "./_select.js";
 
 function testSelect() {
     var dict = getDict("skills");

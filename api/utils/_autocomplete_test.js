@@ -1,6 +1,6 @@
 import * as process from 'process';
-import { autocomplete } from "./autocomplete.js";
-import { getDict } from './dict.js';
+import { autocomplete } from "./_autocomplete.js";
+import { getDict } from './_dict.js';
 
 
 // tests autocomplete on several words
