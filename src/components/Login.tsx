@@ -31,16 +31,16 @@ const Login: React.FC = () => {
       .then((response) => {
         // Handle successful login here
         console.log(response.data);
-        navigate('/home'); 
+        navigate("/Home"); 
       })
       .catch((error) => {
         // Handle login error here
         if (error.response) {
           // Display server-provided error message to the user
-          console.error(`Error during login: ${error.response.data}`);
+          console.error(`Error during login: ${JSON.stringify(error.response.data)}`);
         } else {
           // Handle other errors (e.g., network error)
-          console.error(`Error during login: ${error.message}`);
+          console.error(`Error during login: ${JSON.stringify(error.response.data)}`);
         }
       });
   };
