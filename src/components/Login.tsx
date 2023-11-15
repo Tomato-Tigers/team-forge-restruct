@@ -31,7 +31,7 @@ const Login: React.FC = () => {
       .then((response) => {
         // Handle successful login here
         console.log(response.data);
-        navigate('/home'); 
+        navigate("/Home"); 
       })
       .catch((error) => {
         // Handle login error here
