@@ -9,19 +9,19 @@ datasource db {
 }
 
 model Entry {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  skills    String?
-  interests String[]
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  skills       Skills[]
+  interests    String[]
   availability String[]
-  relation String[] //id of students the user wants to work with.
-  password  String
-  email     String   @unique
-  name      String
-  title     String?
-  groupID   String?  // Foreign key to Group model
-  classes   Class[] @relation("EntryClasses")//id of classes the user is in.
-  group     Group @relation(fields: [groupID], references: [groupID])
+  relation     String[] //id of students the user wants to work with.
+  password     String
+  email        String   @unique
+  name         String
+  title        String?
+  groupID      String? // Foreign key to Group model
+  group        Group?   @relation(fields: [groupID], references: [groupID])
+  classes      Class[]  @relation("EntryClasses") //id of classes the user is in.
 }
 
 enum Skills {
@@ -31,47 +31,42 @@ enum Skills {
 }
 
 model Message {
-
-  Messageid       String   @id @default(uuid())
-  userID String
-  datetime DateTime @default(now())
-  recipientID String  
-  message String
+  Messageid   String   @id @default(uuid())
+  userID      String
+  datetime    DateTime @default(now())
+  recipientID String
+  message     String
 }
 
-model Class{
-  classID String @id @default(uuid())
-  members Entry[] @relation("EntryClasses") //connects to records in Entry
+model Class {
+  classID  String    @id @default(uuid())
+  members  Entry[]   @relation("EntryClasses") //connects to records in Entry
   projects Project[] //id of projects the class contains
-  title String
+  title    String
   subtitle String
-
 }
 
 model Project {
-  projectID    String   @id @default(uuid())
-  title        String
-  description  String
-  groupID      String   // Foreign key to Group model
-  group        Group    @relation(fields: [groupID], references: [groupID])
-  classID      String   // Foreign key to Class model
-  class        Class    @relation(fields: [classID], references: [classID])
+  projectID   String  @id @default(uuid())
+  title       String
+  description String
+  groupID     String? // Foreign key to Group model
+  group       Group?  @relation(fields: [groupID], references: [groupID])
+  classID     String // Foreign key to Class model
+  class       Class   @relation(fields: [classID], references: [classID])
 }
 
-model Group{
-  groupID String @id @default(uuid())
-  members Entry[]
+model Group {
+  groupID      String    @id @unique @default(uuid())
+  members      Entry[]
   meetingTimes String[]
-  name String
-  projectID String?
-  project Project? @relation(fields: [projectID], references: [projectID])
-
+  name         String
+  Project      Project[]
 }
-model Preferences {
 
-  id        String   @id @default(uuid())
-  groupID String @unique
+model Preferences {
+  id       String @id @default(uuid())
+  groupID  String @unique
   interest Int
-  skill Int
- 
+  skill    Int
 }
