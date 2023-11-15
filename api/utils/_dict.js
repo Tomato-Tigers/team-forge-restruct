@@ -36,7 +36,7 @@ function build(dict) {
 
 // gets the dictionary
 // return dict: array:string: the dictionary with each entry being a word
-export function getDict(path) {
+function getDict(path) {
     var dict = [];
 
     // get data from the file
@@ -58,14 +58,14 @@ export function getDict(path) {
 // write the dictionary into the file
 // param path: string: the (relative) path (under the resources folder) of the file
 // param dict: Dict: the dictionary
-export function writeDict(path, dict) {
+function writeDict(path, dict) {
     fs.writeFileSync(resourcePath + path + ".txt", dtos(dict))
 }
 
 // prints the dictionary in text format
 // param dict: Dict: the dictionary
 // return str: string: the dictionary in text format 
-export function dtos(dict) {
+function dtos(dict) {
     return ditos(dict, "");
 }
 
@@ -87,3 +87,9 @@ function ditos(dict, s) {
     }
     return res;
 }
+
+module.exports = {
+    getDict,
+    writeDict,
+    dtos
+};

@@ -1,4 +1,4 @@
-import { search } from "./_search.js";
+const { search } = require("./_search.js");
 var adj = 0;
 
 // sample user object
@@ -41,16 +41,18 @@ function build(users) {
 // param users: Map: contains all information with the id as the key
 // param id: int: id of the user
 // param size: int: size of group
+// param pref: Pref: user's preference
+// filter filter: Filter: the search filter
 // return list: array: the id of the students in the group
-export function group(users, id, size) {
+function group(users, id, size, pref, filter) {
     if (adj == 0)
         preprocess(users);
     var list = groupByRelation(id, size);
     if (list.length == size) return list;
-    var search = search(users, id, );
-    for (var i = 0; i < search.length && list.length < size; i++) {
-        if (list.includes(search[i].id)) continue;
-        list.push(search[i].id);
+    var res = search(users, id, pref, filter);
+    for (var i = 0; i < res.length && list.length < size; i++) {
+        if (list.includes(res[i].id)) continue;
+        list.push(res[i].id);
     }
     return list;
 }
@@ -81,3 +83,8 @@ function groupByRelation(id, size) {
 function preprocess(users) {
     adj = build(users);
 }
+
+
+module.exports = {
+    group,
+};
