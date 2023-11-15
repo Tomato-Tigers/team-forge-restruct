@@ -9,6 +9,16 @@ function sharedElements(arrA, arrB) {
     return filteredArray;
 }
 
+function arrayEqual(arrA, arrB) {
+    if (arrA.length != arrB.length)
+        return 0;
+    for (var i in arrA)
+        if (arrA[i] != arrB[i])
+            return 0;
+    return 1;
+}
+
 module.exports = {
-    sharedElements
+    sharedElements,
+    arrayEqual
 };
