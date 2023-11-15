@@ -1,6 +1,6 @@
-import * as process from 'process';
-import { autocomplete } from "./_autocomplete.js";
-import { getDict } from './_dict.js';
+const process = require('process');
+const { autocomplete } = require("./_autocomplete.js");
+const { getDict } = require('./_dict.js');
 
 
 // tests autocomplete on several words

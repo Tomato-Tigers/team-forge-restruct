@@ -1,5 +1,5 @@
 // imports
-import { score } from "./_profile.js";
+const { score } = require("./_profile.js");
 
 // an example filter
 const filter = {

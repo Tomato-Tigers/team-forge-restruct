@@ -1,4 +1,4 @@
-import { search } from "./_search.js";
+const { search } = require("./_search.js");
 var adj = 0;
 
 // sample user object

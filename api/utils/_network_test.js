@@ -1,5 +1,5 @@
-import { sampleUsers } from "./_user.js";
-import { group } from "./_network.js";
+const { sampleUsers } = require("./_user.js"};
+const { group } = require("./_network.js"};
 
 // tests forming a group
 function testGroup() {
@@ -14,7 +14,7 @@ function testGroup() {
     console.log("form a group of 4 for student 2: " + group(students, 2, 4));
     console.log("form a group of 5 for student 2: " + group(students, 2, 5));
     console.log("form a group of 4 for student 3: " + group(students, 3, 4));
-    console.log("from a group of 4 for student 4: " + group(students, 4, 4));
+    console.log("= require(a group of 4 for student 4: " + group(students, 4, 4));
 }
 
 testGroup();

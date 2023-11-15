@@ -1,4 +1,4 @@
-import { sharedAvailability, dayCnt, sharedElements } from "./_profile.js";
+const { sharedAvailability, dayCnt, sharedElements } = require("./_profile.js");
 
 // test function for time slot
 function testTimeSlot() {

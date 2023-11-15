@@ -1,5 +1,5 @@
-import { dtos, getDict, writeDict } from "./_dict.js";
-import { select } from "./_select.js";
+const { dtos, getDict, writeDict } = require("./_dict.js");
+const { select } = require("./_select.js");
 
 function testGetDict() {
     var dict = getDict("skills");

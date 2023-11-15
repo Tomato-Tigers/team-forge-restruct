@@ -1,5 +1,5 @@
 // imports
-import { sharedElements } from "./_utils.js";
+const { sharedElements } = require("./_utils.js");
 
 // calculate the score of user B for user A
 // param userA: User: the current user
