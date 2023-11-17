@@ -4,9 +4,19 @@ import { Link } from "react-router-dom";
 
 import MainLayout from "./MainLayout";
 
-const Messages: React.FC = () => {
+interface User {
+  name: string;
+  email: string;
+}
+
+interface MessagesProps {
+  user: User;
+  onLogout: () => void;
+}
+
+const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
   return (
-    <MainLayout>
+    <MainLayout user={user} onLogout={onLogout}>
       <div>Messages</div>
     </MainLayout>
   );
