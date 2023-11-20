@@ -45,7 +45,7 @@ const ClassPage: React.FC<ClassPageProps> = ({ user, onLogout }) => {
 
   useEffect(() => {
     if (classID) {
-       axios.post("http://localhost:3001/getProjects", {
+       axios.post("/api/getProjects", {
             classID: classID
           })
           .then((res) => {
