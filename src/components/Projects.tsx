@@ -1,49 +1,99 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import "./Projects.css";
-import { useParams, Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, Outlet } from "react-router-dom";
+import axios from "axios";
 
 import MainLayout from "./MainLayout";
 import ClassPage from "./ClassPage";
+import AddClass from "./AddClass";
+
+interface User {
+  name: string;
+  email: string;
+}
 
 interface Class {
   id: string;
   title: string;
   subtitle: string;
-  members: number;
+  members: string[];
 }
 
-interface ProjectProps {
-  classes: Class[];
+interface ProjectsProps {
+  user: User;
+  onLogout: () => void;
 }
 
-const Projects: React.FC<ProjectProps> = ({ classes }) => {
+interface RouteParams {
+  id: string;
+  [key: string]: string | undefined;
+}
+
+const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
+  const [classes, setClasses] = useState<Class[]>([]);
+
+  useEffect(() => {
+    if (user?.email) {
+      axios
+        .post("/api/getClasses", {
+          email: user?.email,
+        })
+        .then((res) => {
+          setClasses(res.data);
+        })
+        .catch((error) => {
+          // alert(`Error fetching classes: ${error.message}`);
+          console.error(`Error fetching classes: ${error.message}`);
+        });
+    }
+  }, []);
+
   return (
-    <MainLayout>
+    <MainLayout user={user} onLogout={onLogout}>
       <div className="projects-container">
         <Routes>
           <Route
             path="/"
             element={
               <>
-                {classes.map(({ id, title, subtitle, members }) => (
-                  <Link to={"/Projects/${id}"}>
-                    <div key={id} className="class-card">
-                      <div className="title-subtitle">
-                        <div className="title">{title}</div>
-                        <div className="subtitle">{subtitle}</div>
+                {Array.isArray(classes) &&
+                  classes.map(({ id, title, subtitle, members }) => (
+                    <Link
+                      to={`ClassPage/${id}`}
+                      style={{ textDecoration: "none" }}
+                      key={id}
+                    >
+                      <div className="class-card">
+                        <div className="title-subtitle">
+                          <div className="title">{title}</div>
+                          <div className="subtitle">{subtitle}</div>
+                        </div>
+                        <div className="members">
+                          Members:{" "}
+                          <span className="membersCount">{members.length}</span>
+                        </div>
                       </div>
-                      <div className="members">
-                        Members: <span className="membersCount">{members}</span>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-                <button className="add-button">+</button>
+                    </Link>
+                  ))}
+                <Link
+                  to="/Projects/AddClass"
+                  style={{ textDecoration: "none" }}
+                >
+                  <button className="add-button">+</button>
+                </Link>
               </>
             }
           />
-          <Route path=":id/*" element={<ClassPage />} />
+          <Route
+            path="/Projects/AddClass/*"
+            element={<AddClass user={user} onLogout={onLogout} />}
+          />
+          <Route
+            path="/Projects/ClassPage/:id/*"
+            element={<ClassPage user={user} onLogout={onLogout} />}
+          />
         </Routes>
+        <Outlet />
       </div>
     </MainLayout>
   );
