@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   useParams,
   Link,
@@ -40,6 +40,8 @@ const ClassPage: React.FC<ClassPageProps> = ({ user, onLogout }) => {
   const [newProjectTitle, setNewProjectTitle] = useState<string>("");
   const [newProjectDesc, setNewProjectDesc] = useState<string>("");
   const [newGroupName, setNewGroupName] = useState<string>("");
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     if (classID) {
@@ -112,6 +114,7 @@ const ClassPage: React.FC<ClassPageProps> = ({ user, onLogout }) => {
         <p className="class-page-nav-item" onClick = {() => setShowForm(!showForm)}> Add a Project</p>
         {showForm && (
           <form className={`new-project-form ${showForm ? 'animate' : ''}`} onSubmit={handleNewProjectSubmission}>
+            errorMessage && <div className="error-message">{errorMessage}</div>
             <input
               type="text"
               placeholder="Group Name"
