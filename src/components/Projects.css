@@ -55,11 +55,19 @@
   }
 
   .add-button {
-    height: 220px;
+    height: 100px;
+    width: 100px;
     border: 1px solid #000;
-    padding: 10px;
+    padding: 0px 0px;
     font-size: 5em;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
+
+.add-button:hover{
+    cursor: pointer;
+    background-color: var(--steel-blue);
+    transform: scale(1.1);
+    transition: background-color 0.3s ease;
+}
