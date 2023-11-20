@@ -59,7 +59,7 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
                 {Array.isArray(classes) &&
                   classes.map(({ classID, title, subtitle, members }) => (
                     <Link
-                      to={`ClassPage/${classID}`}
+                      to={`./${classID}`}
                       state={{ subtitle: subtitle }}
                       style={{ textDecoration: "none" }}
                       key={classID}
