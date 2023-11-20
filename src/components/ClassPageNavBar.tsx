@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, Link, Routes, Route } from "react-router-dom";
+import { useLocation, useParams, Link, Routes, Route } from "react-router-dom";
 
 import "./ClassPageNavBar.css";
 
@@ -16,24 +16,28 @@ interface ProjectProps {
 }
 
 const ClassPageNavBar: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { classID } = useParams<{ classID: string }>();
+  
+  const location = useLocation();
+  const subtitle = location.state.subtitle || "Class Name";
+  
   return (
     <>
       <div className="navigation">
-        <h1>Class Name</h1>
-        <Link className="class-page-nav-item" to={`./projects`}>
+        <h1>{subtitle}</h1>
+        <Link className="class-page-nav-item" to={`./Projects`}>
           Projects
         </Link>
-        <Link className="class-page-nav-item" to={`./people`}>
+        <Link className="class-page-nav-item" to={`./People`}>
           People
         </Link>
       </div>
       <Routes>
         <Route
-          path="projects"
+          path="Projects"
           element={<div>Projects content goes here</div>}
         />
-        <Route path="people" element={<div>People content goes here</div>} />
+        <Route path="People" element={<div>People content goes here</div>} />
       </Routes>
     </>
   );
