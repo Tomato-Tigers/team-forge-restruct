@@ -120,7 +120,7 @@ const App: React.FC = () => {
               element={<Projects user={user} onLogout={handleLogout} />}
             />
             <Route
-              path=":classID"
+              path="/Projects/ClassPage/:classID"
               element={<ClassPage user={user} onLogout={handleLogout} />}
             />
             <Route
