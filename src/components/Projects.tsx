@@ -89,7 +89,7 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
             element={<AddClass user={user} onLogout={onLogout} />}
           />
           <Route
-            path="/Projects/ClassPage/:id/*"
+            path="/Projects/ClassPage/:classID/*"
             element={<ClassPage user={user} onLogout={onLogout} />}
           />
         </Routes>
