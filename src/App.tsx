@@ -90,7 +90,7 @@ const classes = [
 */
 
 const App: React.FC = () => {
-  const { id } = useParams();
+  const { classID } = useParams();
 
   //  const classObj = classes.find((cls) => cls.id === id);
 
