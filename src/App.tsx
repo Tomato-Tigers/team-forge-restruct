@@ -114,7 +114,7 @@ const App: React.FC = () => {
             path="/Home"
             element={<Home user={user} onLogout={handleLogout} />}
           />
-          <Route path="/Projects/*">
+          <Route path="/Projects">
             <Route
               path=""
               element={<Projects user={user} onLogout={handleLogout} />}
