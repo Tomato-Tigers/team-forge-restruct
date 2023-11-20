@@ -13,7 +13,7 @@ interface User {
 }
 
 interface Class {
-  id: string;
+  classID: string;
   title: string;
   subtitle: string;
   members: string[];
@@ -25,7 +25,7 @@ interface ProjectsProps {
 }
 
 interface RouteParams {
-  id: string;
+  classID: string;
   [key: string]: string | undefined;
 }
 
@@ -57,11 +57,11 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
             element={
               <>
                 {Array.isArray(classes) &&
-                  classes.map(({ id, title, subtitle, members }) => (
+                  classes.map(({ classID, title, subtitle, members }) => (
                     <Link
-                      to={`ClassPage/${id}`}
+                      to={`ClassPage/${classID}`}
                       style={{ textDecoration: "none" }}
-                      key={id}
+                      key={classID}
                     >
                       <div className="class-card">
                         <div className="title-subtitle">
