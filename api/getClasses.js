@@ -17,7 +17,11 @@ module.exports = async(req, res) => {
                     email: email,
                     },
                 select: {
-                    classes: true,
+                    classes: {
+                        include: {
+                            members: true,
+                        },
+                    }
                 },
             });
         // send empty array if no classes found
