@@ -39,11 +39,9 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
         <Link to="/Messages">Messages</Link>
         <Link to="/Projects">Projects</Link>
       </div>
-      {/*}
      <div className="menuIcon">
         < img src={menuIcon} alt="Menu" onClick={toggleDropdown} />
       </div>
-    */}
       {showDropdown && (
         <div className={`dropdown ${showDropdown ? "animate" : ""}`}>
           <p>Hello, {user.name}!</p>
