@@ -1,84 +1,23 @@
-// the file
-const file = `accents
-accentuable
-accentual
-accentuality
-accentually
-accentuate
-accentuated
-accentuates
-accentuating
-accentuation
-accentuator
-accentus
-accept
-acceptability
-acceptable
-acceptableness
-acceptably
-acceptance
-acceptances
-acceptancy
-acceptancies
-acceptant
-acceptation
-acceptavit
-accepted
-acceptedly
-acceptee
-acceptees
-accepter
-accepters
-acceptilate
-acceptilated
-acceptilating
-C
-C++
-communication
-Java
-JavaScript`
-
-// builds the dictionary
-function build() {
-    // get the dictionary
-    var dict = getDict();
-
-    // the top of the trie
-    var top = {
-        flag: false,
-        child: new Map()
-    };
-
-    // loop through all words in the dictionary
-    for (var idx in dict) {
-        // insert the word into the dictionary
-        var s = dict[idx];
-        var tmp = top;
-        for (var i = 0; i < s.length; i++) {
-            if (!tmp.child.has(s[i]))
-                tmp.child.set(s[i], {
-                    flag: false,
-                    child: new Map()
-                })
-            tmp = tmp.child.get(s[i]);
-        }
-        tmp.flag = true;
-    }
-    return top;
-}
-
-// gets the dictionary (in text format)
-// return dict: array: the dictionary with each entry being a word
-export function getDict() {
-    var dict = file.split("\n");
-    return dict;
-}
-
 // gets all possible words start with s in the dictionary dict
-// param dict: array: the dictionary
+// param dict: Dict: the dictionary
 // param s: string: the word that is entered
-export function autocomplete(dict, s) {
-    return findPrefix(dict, 0, s);
+// return res: array:string: all words in dict that start with s
+function autocomplete(dict, s) {
+    var words = findPrefix(dict, 0, s);
+
+    // sort the words based on the frequency
+    // frequently used words come first
+    // word is a list of objects
+    words.sort(function (a, b) {
+        return parseInt(b.freq) - parseInt(a.freq);
+    });
+
+    // put the strings into an array
+    var res = [];
+    for (var elem of words)
+        res.push(elem.str);
+
+    return res;
 }
 
 // finds the possible words based on the prefix (up to position i)
@@ -88,6 +27,9 @@ function findPrefix(dict, i, s) {
         // console.log("find all [" + s + "]");
         return findAll(dict, s);
     }
+
+    // combine and return the results 
+    // check both upper case and lower case
     var res = [];
     if (dict.child.has(s[i].toUpperCase()))
         res = res.concat(findPrefix(dict.child.get(s[i].toUpperCase()), i + 1, s.substring(0, i) + s[i].toUpperCase() + s.substring(i + 1)));
@@ -99,17 +41,24 @@ function findPrefix(dict, i, s) {
 // finds all words inside the dictionary
 function findAll(dict, s) {
     var res = [];
-    if (dict.flag) {
-        res.push(s);
-        // console.log("push [" + s + "]");
+
+    // if this is a word, put it into dictionary
+    if (dict.freq) {
+        res.push({
+            str: s,
+            freq: dict.freq
+        });
     }
+
+    // go through all branches and find possible words
     for (var i = 32; i <= 127; i++) {
         var c = String.fromCharCode(i);
-        if (dict.child.has(c)) {
-            var next = s.concat(c);
-            // console.log(s + " + " + c + " = " + next);
-            res = res.concat(findAll(dict.child.get(c), next));
-        }
+        if (dict.child.has(c))
+            res = res.concat(findAll(dict.child.get(c), s + c));
     }
     return res;
 }
+
+module.exports = {
+    autocomplete
+};

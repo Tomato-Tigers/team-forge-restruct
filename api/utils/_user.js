@@ -16,27 +16,16 @@ const pref = {
 
 // gets a sample set of users
 // return users: Map: the users with all information
-export function sampleUsers() {
+function sampleUsers() {
     var users = new Map();
     users.set(1, {
         "id": 1,
         "name": "Person 1",
         "skills": [
-            "Springboot",
-            "React.js",
-            "AWS",
-            "HTML",
-            "CSS",
-            "MongoDB",
-            "Java",
-            "Python",
-            "C",
-            "Github"
+            "Java"
         ],
         "interests": [
-            "video Games",
-            "music",
-            "esports"
+            "music"
         ],
         "availability": [
             ";08:00-9:00;10:00-13:00", "", "", "", "", "", ""
@@ -47,24 +36,9 @@ export function sampleUsers() {
         "id": 2,
         "name": "Person 2",
         "skills": [
-            "Java",
-            "Python",
-            "C",
-            "Jupyter Notebook",
-            "PyTorch",
-            "Scikit Learn",
-            "Matlab",
-            "Wolfram Mathematica",
-            "design",
-            "public speaking",
-            "problem solving",
-            "creativity",
-            "teamwork"
+            "Java"
         ],
         "interests": [
-            "video Games",
-            "monkeys",
-            "crocheting",
             "food"
         ],
         "availability": [
@@ -76,20 +50,10 @@ export function sampleUsers() {
         "id": 3,
         "name": "Person 3",
         "skills": [
-            "HTML",
-            "CSS",
-            "JavaScript",
-            "Python",
-            "Java",
-            "Photoshop",
-            "hardware",
             "graphic design"
         ],
         "interests": [
-            "baking",
-            "reading",
-            "hiking",
-            "fashion"
+            "food"
         ],
         "availability": [
             ";08:00-9:00;10:00-13:00", "", "", "", "", "", ""
@@ -100,13 +64,10 @@ export function sampleUsers() {
         "id": 4,
         "name": "Person 4",
         "skills": [
+            "C"
         ],
         "interests": [
-            "basketball",
-            "derivatives",
-            "equity trading",
-            "biking",
-            "video games"
+            "biking"
         ],
         "availability": [
             ";08:00-9:00;10:00-13:00", "", "", "", "", "", ""
@@ -117,19 +78,33 @@ export function sampleUsers() {
         "id": 5,
         "name": "Person 5",
         "skills": [
-            "Java",
-            "C",
-            "Python",
-            "R",
             "SQL"
         ],
         "interests": [
-            "sports"
+            "music"
         ],
         "availability": [
             ";08:00-9:00;10:00-13:00", "", "", "", "", "", ""
         ],
         "relation": [1, 3]
     });
+    users.set(6, {
+        "id": 6,
+        "name": "Person 6",
+        "skills": [
+            "SQL"
+        ],
+        "interests": [
+            "music"
+        ],
+        "availability": [
+            "", "", "", "", "", "", ""
+        ],
+        "relation": [1, 3]
+    });
     return users;
 }
+
+module.exports = {
+    sampleUsers
+};

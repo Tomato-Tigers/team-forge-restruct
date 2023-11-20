@@ -1,5 +1,5 @@
 // imports
-import { sharedElements } from "./utils.js";
+const { sharedElements } = require("./_utils.js");
 
 // calculate the score of user B for user A
 // param userA: User: the current user
@@ -10,7 +10,7 @@ import { sharedElements } from "./utils.js";
 // the score depends on availability and interests
 // a higher score indicates a more likely chance of working together
 // a score of 0 means that user B should not work with user A
-export function score(userA, userB, pref, filter) {
+function score(userA, userB, pref, filter) {
     if (userA.id == userB.id)
         return 0;
 
@@ -41,7 +41,7 @@ export function score(userA, userB, pref, filter) {
             res += pref.skills;
     for (var int of filter.mayInt)
         if (userB.interests.includes(int) && !userA.interests.includes(int))
-            res += pref.skills;
+            res += pref.interests;
 
     return res;
 }
@@ -50,7 +50,7 @@ export function score(userA, userB, pref, filter) {
 // param timeA: array:string: avaiable time for user A
 // param timeB: array:string: avaiable time for user B
 // return availability: array:string(7): the share available time
-export function sharedAvailability(timeA, timeB) {
+function sharedAvailability(timeA, timeB) {
     var availability = ["", "", "", "", "", "", ""];
     for (var i = 0; i < 7; i++) {
         var inter = intersection(timeA[i], timeB[i]);
@@ -169,7 +169,7 @@ function timeCnt(time) {
 // if a time segment is less than 30 minutes, 
 // it will not be counted towards the total length of time
 // this is because a small segment of time cannot be enough for a meeting
-export function dayCnt(time) {
+function dayCnt(time) {
     var length = 0;
     var segment = time.split(";");
     for (var j = 1; j < segment.length; j++) {
@@ -186,3 +186,9 @@ function timeDiff(time) {
     var diff = h * 60 + m;
     return diff;
 }
+
+module.exports = {
+    score,
+    sharedAvailability,
+    dayCnt,
+};
