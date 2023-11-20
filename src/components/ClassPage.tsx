@@ -61,6 +61,60 @@ const ClassPage: React.FC<ClassPageProps> = ({ user, onLogout }) => {
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <div className="class-page">
+        <div className="navigation">
+        <h1>{subtitle}</h1>
+        <Link className="class-page-nav-item" to={`./people`}>
+          Explore People
+        </Link>
+        <p className="class-page-nav-item" onClick = {() => setShowForm(!showForm)}> Add a Project</p>
+        {showForm && (
+          <form className={`new-project-form ${showForm ? 'animate' : ''}`} onSubmit={handleNewProjectSubmission}>
+            <input
+              type="text"
+              placeholder="Group Name"
+              value={newProjectTitle}
+              onChange={handleNewProjectTitleChange}
+            />
+            <input
+              type="text"
+              placeholder="Project Name"
+              value={newGroupName}
+              onChange={handleNewGroupNameChange}
+            />
+            <input
+              type="text"
+              placeholder="Project Description"
+              value={newProjectDesc}
+              onChange={handleNewProjectDescChange}
+            />
+            <button type="submit">Add Project</button>
+          </form>
+        )}
+        <p className="class-code">Class Code: {classID}</p>
+      </div>
+      <div className="projects">
+        <h2>Projects</h2>
+    
+          {Array.isArray(projects) && projects.map(({ title, description, members }) => (
+
+            <div className="class-card">
+            <div className="title-subtitle">
+              <div className="title">{title}</div>
+              <div className="description">{description}</div>
+            </div>
+            <div className="members">
+              Members: <span className="membersCount">{members}</span>
+            </div>
+          </div>
+          ))}
+      <Routes>
+        <Route
+          path="Projects"
+          element={<div>Projects content goes here</div>}
+        />
+        <Route path="./People" element={<div>People content goes here</div>} />
+      </Routes>
+      </div>
         <ClassPageNavBar />
       </div>
     </MainLayout>
