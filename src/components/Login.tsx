@@ -49,10 +49,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         },
       })
       .then((res) => {
-        const username: string = JSON.stringify(res.data.name);
-        const editedUsername = username.slice(8, -1);
-        const useremail: string = JSON.stringify(res.data.email);
-        const user: User = { name: editedUsername, email: useremail };
+        const userName: string = JSON.stringify(res.data.name);
+        let editedUserName = userName.slice(8, -1);
+        editedUserName = editedUserName.replaceAll(/['"]/g, '');
+        let userEmail: string = JSON.stringify(res.data.email);
+        userEmail = userEmail.replaceAll(/['"]/g, '');
+        const user: User = { name: editedUserName, email: userEmail };
+
+        
         setUser(user);
         onLogin(user);
         setShowSuccessMessage(true);
