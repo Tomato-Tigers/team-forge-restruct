@@ -30,6 +30,8 @@ module.exports = async(req, res) => {
         } catch (error) {
             console.error("Error getting classes:", error);
             return res.status(500).send('Internal server error');
+        } finally {
+            await prisma.$disconnect();
         }
 
 }
