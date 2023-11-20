@@ -2,7 +2,7 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
-module.exports = (async (req, res) => {
+module.exports = async (req, res) => {
     const data = req.body;
     const classID = data.classID;
     console.log("classID: ", classID);
@@ -28,4 +28,4 @@ module.exports = (async (req, res) => {
     } finally {
         await prisma.$disconnect();
     }
-});
+};
