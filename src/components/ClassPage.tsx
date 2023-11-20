@@ -6,6 +6,7 @@ import {
   Route,
   useNavigate,
   useLocation,
+  Outlet,
 } from "react-router-dom";
 
 import MainLayout from "./MainLayout";
