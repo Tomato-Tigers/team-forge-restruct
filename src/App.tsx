@@ -17,6 +17,7 @@ import AddClass from "./components/AddClass";
 import JoinClass from "./components/JoinClass";
 import CreateClass from "./components/CreateClass";
 import Messages from "./components/Messages";
+import ProfilePage from "./components/ProfilePage"
 
 interface User {
   name: string;
@@ -114,6 +115,7 @@ const App: React.FC = () => {
             path="/Home"
             element={<Home user={user} onLogout={handleLogout} />}
           />
+          <Route path="/ProfilePage"  element={<ProfilePage/>}/>
           <Route path="/Projects/*">
             <Route
               path=""
@@ -139,7 +141,7 @@ const App: React.FC = () => {
           </Route>
           <Route
             path="/Messages"
-            element={<Messages user={user} onLogout={handleLogout} />}
+            element={<Messages user={user} onLogout={handleLogout}  />}
           />
         </Routes>
       </Router>
