@@ -1,4 +1,6 @@
 //API to get all projects specific to a class
+const {PrismaClient} = require('@prisma/client');
+const prisma = new PrismaClient();
 
 module.exports = (async (req, res) => {
     const data = req.body;
@@ -23,5 +25,7 @@ module.exports = (async (req, res) => {
     } catch (error) {
         console.error("Error getting projects:", error);
         return res.status(500).send('Internal server error');
+    } finally {
+        await $prisma.disconnect;
     }
 });
