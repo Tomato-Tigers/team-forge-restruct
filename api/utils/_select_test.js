@@ -1,4 +1,5 @@
 
+const { autocomplete } = require("./_autocomplete.js");
 const { dtos, getDict } = require("./_dict.js");
 const { select } = require("./_select.js");
 
