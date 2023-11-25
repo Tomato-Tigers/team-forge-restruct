@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.9.0]
+        node-version: [21.2.0]
 
     steps:
     - name: Checkout repository
@@ -27,8 +27,29 @@ jobs:
     - name: Install Node.js
       run: npm install
 
+    - name: Install Jest
+      run: npm install --save-dev jest
+
     - name: Run the tests and generate coverage report
-      run: npm test -- --coverage
+      run: npm run test -- --coverage
       
+    # - name: Upload coverage to Codewcov
+    #   uses: codecov/codecov-action@v3
+
+    # - name: test autocomplete
+    #   run: node api/utils/_autocomplete_test.js
+
+    # - name: test dict
+    #   run: node api/utils/_dict_test.js
+
+    # - name: test network
+    #   run: node api/utils/_network_test.js
+
+    # - name: test profile
+    #   run: node api/utils/_profile_test.js
+
+    # - name: test search
+    #   run: node api/utils/_select_test.js
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3

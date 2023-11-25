@@ -16,7 +16,7 @@ function score(userA, userB, pref, filter) {
 
     var res = 0;    // the final score
 
-    var slots = sharedAvailability(userA.availability, userB.availability);
+    var slots = sharedTime(userA.availability, userB.availability);
     var slotCnt = timeCnt(slots);
     if (slotCnt == 0) return 0;
 
@@ -50,7 +50,7 @@ function score(userA, userB, pref, filter) {
 // param timeA: array:string: avaiable time for user A
 // param timeB: array:string: avaiable time for user B
 // return availability: array:string(7): the share available time
-function sharedAvailability(timeA, timeB) {
+function sharedTime(timeA, timeB) {
     var availability = ["", "", "", "", "", "", ""];
     for (var i = 0; i < 7; i++) {
         var inter = intersection(timeA[i], timeB[i]);
@@ -173,6 +173,7 @@ function dayCnt(time) {
     var length = 0;
     var segment = time.split(";");
     for (var j = 1; j < segment.length; j++) {
+        // count the length of the time slot and add it to the counter if it is more than 30 minutes
         var chunk = atot(segment[j]);
         var diff = timeDiff(chunk);
         if (diff >= 30) length += diff;
@@ -189,6 +190,6 @@ function timeDiff(time) {
 
 module.exports = {
     score,
-    sharedAvailability,
-    dayCnt,
+    sharedTime,
+    dayCnt
 };
