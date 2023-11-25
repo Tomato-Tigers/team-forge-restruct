@@ -36,5 +36,5 @@ function search(users, id, pref, filter) {
 }
 
 module.exports = {
-    search
+    search,
 };

@@ -1,4 +1,6 @@
 //API to allow a user to create a new group/project for a specific class
+const {PrismaClient} = require('@prisma/client');
+const prisma = new PrismaClient();
 
 module.exports = (async (req, res) => {
     const data = req.body;
@@ -62,7 +64,9 @@ module.exports = (async (req, res) => {
         } catch (error) {
             console.error("Error creating project:", error);
             return res.status(500).send({message: 'Error creating project'});
-        }  
+        }  finally {
+            await prisma.$disconnect();
+        }
     }
     
     

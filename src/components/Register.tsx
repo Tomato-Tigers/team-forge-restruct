@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import "../App.css";
 import "./Login-Register.css";
 
 interface User {
@@ -25,7 +24,9 @@ const Register: React.FC = () => {
     navigate("/");
   };
 
-  const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFirstNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setFirstName(event.target.value);
   };
 
@@ -41,7 +42,9 @@ const Register: React.FC = () => {
     setPassword(event.target.value);
   };
 
-  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setConfirmPassword(event.target.value);
   };
 
@@ -52,25 +55,26 @@ const Register: React.FC = () => {
       alert("Passwords do not match.");
       return;
     }
-    
+
     const name = `${firstName} ${lastName}`;
-    
-    axios.post("/api/register", {
-      name: name,
-      email: email,
-      password: password,
-    })
-    .then((response) => {
-      console.log("User registered successfully:", response.data);
-      redirectToLogin();
-    })
-    .catch((error) => {
-      if (error.response && error.response.status === 400) {
-        alert("Error registering: " + error.response.data);
-      } else {
-        console.error(`Error registering user: ${error}`);
-      }
-    });
+
+    axios
+      .post("/api/register", {
+        name: name,
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log("User registered successfully:", response.data);
+        redirectToLogin();
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          alert("Error registering: " + error.response.data);
+        } else {
+          console.error(`Error registering user: ${error}`);
+        }
+      });
   };
 
   return (
@@ -121,13 +125,13 @@ const Register: React.FC = () => {
           </div>
           <footer>
             <div className="login_bottom_left">
-              Already have an account? <span className="link" onClick={redirectToLogin}>Login here.</span>
+              Already have an account?{" "}
+              <span className="link" onClick={redirectToLogin}>
+                Login here.
+              </span>
             </div>
             <div className="login_bottom_right">
-              <button
-                className="login_redirect_button"
-                type="submit"
-              >
+              <button className="login_redirect_button" type="submit">
                 Register
               </button>
             </div>

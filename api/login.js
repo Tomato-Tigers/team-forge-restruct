@@ -10,20 +10,30 @@ module.exports = async (req, res) => {
     return res.status(405).send('Method Not Allowed');
   }
 
-  const { email, password } = req.body;
-
+      const { email, password } = req.body;
+    
   try {
-    const storedHashedPassword = await getPasswordByEmail(prisma, email);
-
+     const storedHashedPassword = await getPasswordByEmail(prisma, email);
+    
+    
     if (!storedHashedPassword) {
-      return res.status(401).send('Invalid login credentials');
+        return res.status(400).send('Username not found');
     }
-
-    const isPasswordMatch = await bcrypt.compare(password, storedHashedPassword);
-    if (isPasswordMatch) {
-      res.status(200).send('Login successful');
+        // get user's name
+    const username = await prisma.entry.findUnique({
+            where: {
+                email: email,
+            },
+            select: {
+                name: true,
+            },
+        });
+    
+    
+    if (bcrypt.compareSync(password, storedHashedPassword)) {
+        res.status(200).send({email: email, name: username, message: 'Login successful'}); 
     } else {
-      res.status(401).send('Invalid login credentials');
+        res.status(400).send('Incorrect password. Please Try again.');
     }
   } catch (error) {
     console.error("Login error:", error);
