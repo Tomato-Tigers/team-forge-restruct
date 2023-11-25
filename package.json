@@ -34,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "prisma generate && react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "mock-server": "json-server --watch db.json --port 4000"
   },
@@ -42,6 +42,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/src"
     ]
   },
   "browserslist": {
