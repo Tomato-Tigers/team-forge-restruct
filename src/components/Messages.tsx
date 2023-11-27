@@ -598,6 +598,7 @@ const handleSendMessage = () => {
      return (
       <MainLayout user = {user} onLogout = {onLogout}>
         <div className="MessagesRoot">
+        <div className="LeftPane">
             <div className="SearchContainer">
                 <input
                     type="text"
@@ -612,8 +613,11 @@ const handleSendMessage = () => {
                     onClick={handleSearch}
                 />
             </div>
-            <div className="LeftPane">
-                <h1>Messages for {user.name}  </h1>
+            <button className="MenuItem" onClick={handleInboxMessages}>Inbox</button>
+            <button className="MenuItem" onClick={handleSentMessages}>Sent</button>
+            </div>
+            <div className="RightPane">
+                <h1>  </h1>
                 <div className="NewMessageContainer">
                     <input
                         type="text"
@@ -630,12 +634,10 @@ const handleSendMessage = () => {
                         Send New Message
                     </button>
                 </div>
-                <button className="MenuItem" onClick={handleInboxMessages}>Inbox</button>
-                <button className="MenuItem" onClick={handleSentMessages}>Sent</button>
                 <div className="MsgPane">
                     {showSentMsgs && (
                         <div className="InboxPane">
-                            <h1>Inbox</h1>
+                            <h1></h1>
                             <table>
                                 <tr>
                                     <th>
@@ -662,7 +664,7 @@ const handleSendMessage = () => {
                     )}
                     {showSentMessages && (
                         <div className="SentdPane">
-                            <h1>Sent</h1>
+                            <h1></h1>
                             <table>
                                 <tr>
                                     <th>

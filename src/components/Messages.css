@@ -8,19 +8,31 @@
     padding: 20px;
 }
 
-
+.SearchContainer img{
+    min-width: 50px;
+    min-height: 20px;
+}
 .LeftPane {
     background-color: var(--dark-gray);
-    padding: 20px;
+    margin-left: -50px;
+    padding: 70px;
+    align-self: flex-start; 
 }
 
+.RightPane {
+    background-color: var(--dark-gray);
+    margin-left: -90px;
+    padding: 80px;
+    align-self: flex-start; 
+    width: 100%
+}
 
 
 
 h1 {
     font-size: 24px;
     margin-bottom: 20px;
-    font-family: "proximanova", sans-sherif;
+    /*font-family: "proximanova", sans-sherif;*/
 
 }
 
@@ -75,7 +87,8 @@ p {
 }
 
 .MessagesRoot {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -90,9 +103,17 @@ p {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+    margin-left: 30px;
+    width: 70%
 }
 
 .NewMessageContainer input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+.NewMessageContainer textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -106,6 +127,7 @@ p {
     padding: 5px 10px;
     cursor: pointer;
     margin-bottom: 10px;
+    width: 15%
 }
 
 
@@ -160,29 +182,67 @@ h1 {
     margin-bottom: 10px;
 }
 
-.LeftPane h1{
-    color:var(--steel-blue);
+.RightPane h1{
+    color: white;
+
 }
+
+
 
 .MsgPane {
     color:var(--steel-blue);
 }
-
+/*
 .InboxPane table , th, td {
     border: 1px solid;
     border-collapse: collapse;
+    width: 100%;
 
+}
+*/ 
+
+.InboxPane table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed; /* Set table layout to fixed */
+    color: white;
+    background-color: black; 
+}
+
+
+.InboxPane th, .InboxPane td {
+    border: 1px solid;
+    padding: 8px; /* Adjust padding as needed */
+    text-align: left; /* Adjust text alignment as needed */
+}
+.InboxPane th:first-child,
+.InboxPane td:first-child {
+    width: 20%; /* Set the width of the first column to half */
+}
+
+.InboxPane th:not(:first-child),
+.InboxPane td:not(:first-child) {
+    width: 80%; /* Set the width of other columns to half */
+}
+
+.InboxPane {
+    width: 80%;
+}
+
+.InboxPane th {
+    text-align: center;
 }
 
 
 
-.InboxPane .MenuItem {
+/*.InboxPane .MenuItem {
     background-color: var(--steel-blue); 
     color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
 }
+*/
 
 .SentdPane .MenuItem {
     background-color: var(--steel-blue);
@@ -190,4 +250,35 @@ h1 {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+}
+.SentdPane table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed; /* Set table layout to fixed */
+    color: white;
+    background-color: black; 
+}
+
+
+.SentdPane th, .SentdPane td {
+    border: 1px solid;
+    padding: 8px; /* Adjust padding as needed */
+    text-align: left; /* Adjust text alignment as needed */
+}
+.SentdPane th:first-child,
+.SentdPane td:first-child {
+    width: 20%; /* Set the width of the first column to half */
+}
+
+.SentdPane th:not(:first-child),
+.SentdPane td:not(:first-child) {
+    width: 80%; /* Set the width of other columns to half */
+}
+
+.SentdPane {
+    width: 80%;
+}
+
+.SentdPane th {
+    text-align: center;
 }
