@@ -46,7 +46,7 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "<rootDir>/src"
+      "<rootDir>/src/api"
     ]
   },
   "browserslist": {
