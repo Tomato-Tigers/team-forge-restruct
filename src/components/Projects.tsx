@@ -6,10 +6,12 @@ import axios from "axios";
 import MainLayout from "./MainLayout";
 import ClassPage from "./ClassPage";
 import AddClass from "./AddClass";
+import ClassPagePeople from "./ClassPagePeople";
 
 interface User {
   name: string;
   email: string;
+  id: string;
 }
 
 interface Class {
@@ -82,6 +84,12 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
                 >
                   <button className="add-button">+</button>
                 </Link>
+                <Link
+                  to="/Projects/test"
+                  style={{ textDecoration: "none" }}
+                >
+                  <button className="add-button">test</button>
+                </Link>
               </>
             }
           />
@@ -92,6 +100,10 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
           <Route
             path="/Projects/:classID/*"
             element={<ClassPage user={user} onLogout={onLogout} />}
+          />
+          <Route
+            path="/Projects/test/*"
+            element={<ClassPagePeople user={user} onLogout={onLogout} />}
           />
         </Routes>
         <Outlet />

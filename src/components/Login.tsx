@@ -10,6 +10,7 @@ import "./Login-Register.css";
 interface User {
   name: string;
   email: string;
+  id: string;
 }
 
 interface LoginProps {
@@ -22,7 +23,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [user, setUser] = useState<User>({ name: "", email: "" });
+  const [user, setUser] = useState<User>({ name: "", email: "", id: "" });
 
   const navigate = useNavigate();
 
@@ -54,9 +55,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         editedUserName = editedUserName.replaceAll(/['"]/g, '');
         let userEmail: string = JSON.stringify(res.data.email);
         userEmail = userEmail.replaceAll(/['"]/g, '');
-        const user: User = { name: editedUserName, email: userEmail };
+        //TODO: get ID here
+        const user: User = { name: editedUserName, email: userEmail, id: "a33f3238-b960-4180-83cc-35be7fa71e55" };
 
-        
+
         setUser(user);
         onLogin(user);
         setShowSuccessMessage(true);

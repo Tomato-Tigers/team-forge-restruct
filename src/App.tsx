@@ -22,6 +22,7 @@ import ProfilePage from "./components/ProfilePage"
 interface User {
   name: string;
   email: string;
+  id: string;
 }
 
 /* { interface Project {
@@ -95,14 +96,14 @@ const App: React.FC = () => {
 
   //  const classObj = classes.find((cls) => cls.id === id);
 
-  const [user, setUser] = useState<User>({ name: "", email: "" });
+  const [user, setUser] = useState<User>({ name: "", email: "", id: "" });
 
   const handleLogin = (user: User) => {
     setUser(user);
   };
 
   const handleLogout = () => {
-    setUser({ name: "", email: "" });
+    setUser({ name: "", email: "", id: "" });
   };
 
   return (
@@ -115,7 +116,7 @@ const App: React.FC = () => {
             path="/Home"
             element={<Home user={user} onLogout={handleLogout} />}
           />
-          <Route path="/ProfilePage"  element={<ProfilePage/>}/>
+          <Route path="/ProfilePage" element={<ProfilePage />} />
           <Route path="/Projects/*">
             <Route
               path=""
@@ -141,7 +142,7 @@ const App: React.FC = () => {
           </Route>
           <Route
             path="/Messages"
-            element={<Messages user={user} onLogout={handleLogout}  />}
+            element={<Messages user={user} onLogout={handleLogout} />}
           />
         </Routes>
       </Router>
