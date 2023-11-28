@@ -61,6 +61,11 @@ const CreateClass: React.FC<CreateClassProps> = ({ user, onLogout }) => {
               onChange={handleCapacityChange}
             />
           </div>
+          <footer>
+            <button className="create-class-button" type="submit">
+              Create
+            </button>
+          </footer>
         </form>
       </div>
     </MainLayout>
