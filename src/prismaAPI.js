@@ -80,6 +80,44 @@ async function getTableIdByID(prisma, id) {
     return entry?.id;
 }
 
+async function getClassPreferences(email, classID) {
+    const classPreferences = await prisma.classPreferences.findUnique({
+      where: {
+        userId_classId: {
+          userID: email,
+          classID: classID
+        }
+      }
+    })
+    return classPreferences
+  }
+
+async function setClassPreferences(email, classID, preferredSkills, preferredSkillsWeight, interests, interestsWeight) {
+const classPreferences = await prisma.classPreferences.upsert({
+    where: {
+    userID_classID: {
+        userID: email,
+        classID: classID
+    }
+    },
+    update: {
+    preferredSkills: preferredSkills,
+    preferredSkillsWeight: preferredSkillsWeight,
+    interests: interests,
+    interestsWeight: interestsWeight
+    },
+    create: {
+    userID: email,
+    classID: classID,
+    preferredSkills: preferredSkills,
+    preferredSkillsWeight: preferredSkillsWeight,
+    interests: interests,
+    interestsWeight: interestsWeight
+    }
+})
+return classPreferences
+}
+
 module.exports = {
     prisma,
     createNewUser,
@@ -88,4 +126,6 @@ module.exports = {
     deleteEntryByID,
     modifyEntryByID,
     getTableIdByID,
+    getClassPreferences,
+    setClassPreferences
 };

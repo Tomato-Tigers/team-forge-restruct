@@ -33,11 +33,10 @@ interface ClassPageProps {
 const ClassPage: React.FC<ClassPageProps> = ({ user, onLogout }) => {
   const { classID } = useParams<{ classID: string }>();
 
-  
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <div className="class-page">
-        <ClassPageNavBar />
+        <ClassPageNavBar user={user} onLogout={onLogout} />
         <Outlet />
       </div>
     </MainLayout>

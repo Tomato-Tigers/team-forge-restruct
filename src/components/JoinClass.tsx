@@ -40,6 +40,11 @@ const JoinClass: React.FC<JoinClassProps> = ({ user, onLogout }) => {
               onChange={handleCodeChange}
             />
           </div>
+          <footer>
+            <button className="create-class-button" type="submit">
+              Join
+            </button>
+          </footer>
         </form>
       </div>
     </MainLayout>

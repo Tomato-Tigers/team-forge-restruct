@@ -4,6 +4,7 @@ import { Link, Routes, Route, Outlet } from "react-router-dom";
 import axios from "axios";
 
 import MainLayout from "./MainLayout";
+import PopoutComponent from "./PopoutComponent";
 import ClassPage from "./ClassPage";
 import AddClass from "./AddClass";
 
@@ -50,6 +51,7 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
 
   return (
     <MainLayout user={user} onLogout={onLogout}>
+      <PopoutComponent user={user} classID="1234567890" onLogout={onLogout} />
       <div className="projects-container">
         <Routes>
           <Route

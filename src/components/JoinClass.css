@@ -40,3 +40,14 @@
     padding-bottom: 18px;
 }
 
+footer {
+    padding: 26px 0 22px 0;
+    font-size: 0.82em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.create-class-button {
+    background-color: var(--steel-blue);
+}

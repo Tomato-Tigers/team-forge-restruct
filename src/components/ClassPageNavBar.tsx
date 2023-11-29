@@ -3,24 +3,25 @@ import { useLocation, useParams, Link, Routes, Route } from "react-router-dom";
 
 import "./ClassPageNavBar.css";
 
-interface Project {
-  id: string;
-  creator: string;
-  title: string;
-  description: string;
-  members: string[];
+interface User {
+  name: string;
+  email: string;
 }
 
-interface ProjectProps {
-  projects: Project[];
+interface ClassPageNavBarProps {
+  user: User;
+  onLogout: () => void;
 }
 
-const ClassPageNavBar: React.FC = () => {
+const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({
+  user,
+  onLogout,
+}) => {
   const { classID } = useParams<{ classID: string }>();
-  
+
   const location = useLocation();
   const subtitle = location.state.subtitle || "Class Name";
-  
+
   return (
     <>
       <div className="navigation">
