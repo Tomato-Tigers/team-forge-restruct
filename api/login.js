@@ -2,7 +2,9 @@
 const { getPasswordByEmail } = require('../src/prismaAPI');
 const bcrypt = require('bcryptjs');
 const { PrismaClient } = require('@prisma/client');
+const jwt = require('jsonwebtoken');
 
+const jwtSecret = process.env.JWT_SECRET;
 const prisma = new PrismaClient();
 
 module.exports = async (req, res) => {
@@ -31,7 +33,9 @@ module.exports = async (req, res) => {
     
     
     if (bcrypt.compareSync(password, storedHashedPassword)) {
-        res.status(200).send({email: email, name: username, message: 'Login successful'}); 
+      // Generate a JWT token
+      const token = jwt.sign({ email: email }, 'your-secret-key', { expiresIn: '1h' }); //  
+        res.status(200).send({email: email, name: username, token: token, message: 'Login successful'}); 
     } else {
         res.status(400).send('Incorrect password. Please Try again.');
     }

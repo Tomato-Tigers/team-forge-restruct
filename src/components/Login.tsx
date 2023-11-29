@@ -56,6 +56,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         userEmail = userEmail.replaceAll(/['"]/g, '');
         const user: User = { name: editedUserName, email: userEmail };
 
+
+        // Assuming the JWT is in res.data.jwt
+        const jwt = res.data.jwt;
+        window.localStorage.setItem("jwt", jwt); // Store JWT in localStorage
+
         
         setUser(user);
         onLogin(user);
