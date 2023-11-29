@@ -84,12 +84,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         if (error.response && error.response.data) {
           setErrorMessage(error.response.data);
           setTimeout(() => {
-            setErrorMessage("");
+            setErrorMessage("asdasd");
           }, 5000);
         } else {
           setErrorMessage(error.message);
           setTimeout(() => {
-            setErrorMessage("");
+            setErrorMessage("qweqwe");
           }, 5000);
         }
       });
