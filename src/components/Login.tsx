@@ -15,6 +15,12 @@ interface User {
 interface LoginProps {
   onLogin: (user: User) => void;
 }
+interface LoginResponse {
+  email: string;
+  name: string;
+  token: string;
+  message: string;
+}
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   // State hooks
@@ -43,7 +49,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     event.preventDefault();
     const data = { email: email, password: password };
     axios
-      .post("/api/login", data, {
+      .post<LoginResponse>("/api/login", data, {
         headers: {
           "Content-Type": "application/json",
         },
