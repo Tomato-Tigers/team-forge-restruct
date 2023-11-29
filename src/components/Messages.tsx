@@ -496,18 +496,11 @@ interface MessagesProps {
 
 const Messages: React.FC<MessagesProps> = ({ user, onLogout })  =>  {
     const location = useLocation();
-    // State variables, hooks
-    //let fullname = location.state.email.split('@')[0];
-   // let firstname = fullname.split('.')[0];
-    //let lastname = fullname.split('.')[1];
-    //let upperfirst = firstname.charAt(0).toUpperCase() + firstname.slice(1);
-    //let upperlast = lastname.charAt(0).toUpperCase() + lastname.slice(1);
-
+   
     const [messages, setMessages] = useState([
         { sender: 'student1@emory.edu', recepient:  'alexandra.iotzova@emory.edu' , content: 'Hi! I would like to join your group.' },
         { sender: 'student1@emory.edu', recepient:  'alexandra.iotzova@emory.edu' , content: 'Hello, do you have any spaces left?' },
         { sender: 'alexandra.iotzova@emory.edu', recepient:  'student1@emory.edu' , content: 'Hi Alex' },
-        // Add more messages as needed
     ]);
 
     interface Msg {
@@ -528,10 +521,12 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout })  =>  {
     const [newRecipient, setNewRecipient] = useState('');
     const [newMessage, setNewMessage] = useState('');
     const [showSentMsgs, setShowSentMsgs] = useState(false);
+    const [showOutgoingMsgs, setOutgoingMsgs] = useState(true);
     const [showSentMessages, setSentMessages] = useState(false);
 
     const handleInboxMessages = () => {
         setSentMessages(false);
+        setOutgoingMsgs(false);
         setShowFiltered(false);
         setShowSentMsgs(true);
         const inb = messages.filter((message) =>
@@ -541,11 +536,21 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout })  =>  {
 
     const handleSentMessages = () => {
         setShowSentMsgs(false);
+        setOutgoingMsgs(false);
         setShowFiltered(false);
         setSentMessages(true);
         const s = messages.filter((message) =>
         message.sender.toLowerCase().includes(location.state.email));
         setSent(s);
+    }
+    const handleBackOriginal = () => {
+      setShowSentMsgs(false);
+      setOutgoingMsgs(true);
+      setShowFiltered(false);
+      setSentMessages(false);
+      //const s = messages.filter((message) =>
+     // message.sender.toLowerCase().includes(location.state.email));
+      //setSent(s);
     }
 
     const handleReply = (e: React.SetStateAction<string> , b: React.SetStateAction<string> ) => {
@@ -555,8 +560,8 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout })  =>  {
     }
 
     const handleSearch = () => {
-        // Filter messages based on the searchQuery
         setShowSentMsgs(false);
+        setOutgoingMsgs(false);
         setSentMessages(false);
         setShowFiltered(true);
         const filtered = messages.filter((message) =>
@@ -615,10 +620,11 @@ const handleSendMessage = () => {
             </div>
             <button className="MenuItem" onClick={handleInboxMessages}>Inbox</button>
             <button className="MenuItem" onClick={handleSentMessages}>Sent</button>
+            <button className="MenuItem" onClick = {handleBackOriginal}>Send New Messages</button>
             </div>
             <div className="RightPane">
-                <h1>  </h1>
-                <div className="NewMessageContainer">
+            {showOutgoingMsgs && (
+            <div className="NewMessageContainer">
                     <input
                         type="text"
                         placeholder="Recipient"
@@ -633,7 +639,7 @@ const handleSendMessage = () => {
                     <button className="MenuItem" onClick={handleSendMessage}>
                         Send New Message
                     </button>
-                </div>
+                </div>)}
                 <div className="MsgPane">
                     {showSentMsgs && (
                         <div className="InboxPane">
