@@ -1,10 +1,9 @@
 
 const { getPasswordByEmail } = require('../src/prismaAPI');
 const bcrypt = require('bcryptjs');
-const { PrismaClient } = require('@prisma/client');
 const jwt = require('jsonwebtoken');
+const { PrismaClient } = require('@prisma/client');
 
-const jwtSecret = process.env.JWT_SECRET;
 const prisma = new PrismaClient();
 
 module.exports = async (req, res) => {
@@ -22,21 +21,23 @@ module.exports = async (req, res) => {
         return res.status(400).send('Username not found');
     }
         // get user's name
-    const username = await prisma.entry.findUnique({
+    const user = await prisma.entry.findUnique({
             where: {
                 email: email,
             },
-            select: {
-                name: true,
-            },
-        });
+            select: {//fetches
+              id: true, 
+              password: true, 
+              name: true, 
+             
+          },
+      });
     
     
-    if (bcrypt.compareSync(password, storedHashedPassword)) {
-      // Generate a JWT token
-      const token = jwt.sign({ email: email }, jwtSecret, { expiresIn: '1h' });  
-        res.status(200).send({email: email, name: username, token: token, message: 'Login successful'}); 
-    } else {
+        if (bcrypt.compareSync(password, storedHashedPassword)) {
+          const token = jwt.sign({ id: user.id }, process.env.JSON_WEB_TOKEN_KEY, { expiresIn: '1h' });
+          res.status(200).send({ email: user.email, name: user.name, token, message: 'Login successful' });; 
+      } else {
         res.status(400).send('Incorrect password. Please Try again.');
     }
   } catch (error) {
