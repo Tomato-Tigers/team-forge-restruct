@@ -59,7 +59,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
         // Assuming the JWT is in res.data.jwt
         const jwt = res.data.jwt;
-        window.localStorage.setItem("jwt", jwt); // Store JWT in localStorage
+        console.log("login.tsx line");
+        localStorage.setItem('jwt', jwt); // Store JWT in localStorage
+        console.log('Stored JWT:', localStorage.getItem('jwt')); // Log the stored JWT
+        console.log("login.tsx afterline");
 
         
         setUser(user);
