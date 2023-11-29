@@ -18,7 +18,7 @@ import JoinClass from "./components/JoinClass";
 import CreateClass from "./components/CreateClass";
 import Messages from "./components/Messages";
 import ProfilePage from "./components/ProfilePage"
-import PrivateRoute from "./PrivateRoutes";
+import PrivateRoute from "./PrivateRoutes/index";
 
 interface User {
   name: string;
