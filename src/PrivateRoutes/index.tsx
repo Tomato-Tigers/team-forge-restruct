@@ -10,8 +10,9 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }): ReactElement | null => {
     console.log("privateRoute");
-    console.log(jwt)
+    
   const [jwt, setJwt] = useLocalState("", "jwt");
+  console.log(jwt);
   return jwt ? <>{children}</> : <Navigate to="/login" />;
 };
 
