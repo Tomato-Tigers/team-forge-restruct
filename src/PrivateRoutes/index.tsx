@@ -13,7 +13,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }): ReactElement |
     
   const [jwt, setJwt] = useLocalState("jwt", "");
   console.log(jwt);
-  return jwt ? <>{children}</> : <Navigate to="/login" />;
+  return jwt ? <>{children}</> : <Navigate to="/" />;
 };
 
 export default PrivateRoute;
