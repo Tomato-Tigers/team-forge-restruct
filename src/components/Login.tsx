@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import useLocalState from './useLocalStorage';
 import SuccessMessage from "./SuccessMessage";
 
 import "../App.css";
@@ -66,6 +66,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         // Assuming the JWT is in res.data.jwt
         const jwt = res.data.token;
         console.log("login.tsx line");
+        // const [jwtToken, setJwtToken] = useLocalState("jwt", '');
         localStorage.setItem('jwt', jwt); // Store JWT in localStorage
         console.log('Stored JWT:', localStorage.getItem('jwt')); // Log the stored JWT
         console.log("login.tsx afterline");
