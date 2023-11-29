@@ -9,19 +9,21 @@ datasource db {
 }
 
 model Entry {
-  id           String   @id @default(uuid())
-  createdAt    DateTime @default(now())
-  skills       Skills[]
-  interests    String[]
-  availability String[]
-  relation     String[] //id of students the user wants to work with.
-  password     String
-  email        String   @unique
-  name         String
-  title        String?
-  groupID      String? // Foreign key to Group model
-  group        Group?   @relation(fields: [groupID], references: [groupID])
-  classes      Class[]  @relation("EntryClasses") //id of classes the user is in.
+  id                String             @id @default(uuid())
+  createdAt         DateTime           @default(now())
+  skills            Skills[]
+  interests         String[]
+  availability      String[]
+  relation          String[] //id of students the user wants to work with.
+  password          String
+  email             String             @unique
+  name              String
+  title             String?
+  groupID           String? // Foreign key to Group model
+  group             Group?             @relation(fields: [groupID], references: [groupID])
+  classes           Class[]            @relation("EntryClasses") //id of classes the user is in.
+  staticPreferences StaticPreferences?
+  classPreferences  ClassPreferences[]
 }
 
 enum Skills {
@@ -39,11 +41,12 @@ model Message {
 }
 
 model Class {
-  classID  String    @id @default(uuid())
-  members  Entry[]   @relation("EntryClasses") //connects to records in Entry
-  projects Project[] //id of projects the class contains
-  title    String
-  subtitle String
+  classID          String             @id @default(uuid())
+  members          Entry[]            @relation("EntryClasses") //connects to records in Entry
+  projects         Project[] //id of projects the class contains
+  title            String
+  subtitle         String
+  classPreferences ClassPreferences[]
 }
 
 model Project {
@@ -69,4 +72,28 @@ model Preferences {
   groupID  String @unique
   interest Int
   skill    Int
+}
+
+model StaticPreferences {
+  id             String   @id @default(uuid())
+  userId         String // Link to the User table, assuming it's 'Entry'
+  selectedSkills String[] // Array of skills (e.g., Java, Python)
+  availability   Json // Storing availability data as JSON
+  user           Entry    @relation(fields: [userId], references: [id])
+
+  @@unique([userId]) // Ensure one entry per user
+}
+
+model ClassPreferences {
+  id                    String   @id @default(uuid())
+  userId                String
+  classId               String
+  preferredSkills       String[]
+  preferredSkillsWeight Int
+  interests             String[]
+  interestsWeight       Int
+  user                  Entry    @relation(fields: [userId], references: [id])
+  class                 Class    @relation(fields: [classId], references: [classID])
+
+  @@unique([userId, classId]) // Ensure one entry per user-class combination
 }

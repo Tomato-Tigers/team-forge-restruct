@@ -80,6 +80,25 @@ async function getTableIdByID(prisma, id) {
     return entry?.id;
 }
 
+async function getStudentsByClassID(prisma, classID) {
+    return await prisma.class.findUnique({
+        where: {
+            classID: classID
+        },
+        select: {
+            members: true // Retrieves all Entry (student) records associated with the class
+        }
+    });
+}
+
+async function upsertUserStaticPreferences(prisma, data) {
+    return await prisma.staticPreferences.upsert({
+        where: { userId: data.userId },
+        update: data,
+        create: data,
+    });
+}
+
 module.exports = {
     prisma,
     createNewUser,
@@ -88,4 +107,6 @@ module.exports = {
     deleteEntryByID,
     modifyEntryByID,
     getTableIdByID,
+    getStudentsByClassID,
+    upsertUserStaticPreferences,
 };

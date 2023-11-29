@@ -42,43 +42,45 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = { email: email, password: password };
-    axios
-      .post("/api/login", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        const userName: string = JSON.stringify(res.data.name);
-        let editedUserName = userName.slice(8, -1);
-        editedUserName = editedUserName.replaceAll(/['"]/g, '');
-        let userEmail: string = JSON.stringify(res.data.email);
-        userEmail = userEmail.replaceAll(/['"]/g, '');
-        const user: User = { name: editedUserName, email: userEmail };
 
-        
-        setUser(user);
-        onLogin(user);
-        setShowSuccessMessage(true);
-        setTimeout(() => {
-          setShowSuccessMessage(false);
-          navigate("/Home");
-        }, 2000);
-      })
-      .catch((error) => {
-        if (error.response && error.response.data) {
-          setErrorMessage(error.response.data);
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 5000);
+    axios.post("/api/login", data, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then((res) => {
+        // Extract user details from the response
+        const userName = res.data.name;
+        const userEmail = res.data.email;
+
+        // Check if userName and userEmail are defined
+        if (typeof userName === 'string' && typeof userEmail === 'string') {
+          const user: User = { name: userName, email: userEmail };
+
+            setUser(user);
+            onLogin(user);
+            setShowSuccessMessage(true);
+            setTimeout(() => {
+                setShowSuccessMessage(false);
+                navigate("/Home");
+            }, 2000);
         } else {
-          setErrorMessage(error.message);
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 5000);
+            // Handle the case where userName or userEmail is not defined
+            setErrorMessage("Invalid login response received.");
         }
-      });
-  };
+    })
+    .catch((error) => {
+        // Error handling
+        if (error.response && error.response.data) {
+            setErrorMessage(error.response.data);
+        } else {
+            setErrorMessage("Login failed. Please try again.");
+        }
+        setTimeout(() => {
+            setErrorMessage("");
+        }, 5000);
+    });
+};
 
   return (
     <div className="login_box" id="login">
