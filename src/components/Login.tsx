@@ -70,7 +70,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         console.log("login.tsx line");
         // const [jwtToken, setJwtToken] = useLocalState("jwt", '');
         localStorage.setItem('jwt', jwt); // Store JWT in localStorage
-        console.log('Stored JWT:', localStorage.getItem('jwt')); // Log the stored JWT
+        const storedJwt = localStorage.getItem('jwt');
+        console.log('Stored JWT:', storedJwt);
         console.log("login.tsx afterline");
 
         
