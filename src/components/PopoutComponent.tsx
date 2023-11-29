@@ -53,7 +53,7 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
     if (user?.email) {
       axios
         .post("/api/getClassPreferences", {
-          email: user?.email,
+          userID: user.email,
           classID: classID,
         })
         .then((res) => {
