@@ -18,6 +18,7 @@ import JoinClass from "./components/JoinClass";
 import CreateClass from "./components/CreateClass";
 import Messages from "./components/Messages";
 import ProfilePage from "./components/ProfilePage"
+import PrivateRoute from "./PrivateRoutes";
 
 interface User {
   name: string;
@@ -113,35 +114,67 @@ const App: React.FC = () => {
           <Route path="/Register" element={<Register />} />
           <Route
             path="/Home"
-            element={<Home user={user} onLogout={handleLogout} />}
+            element={
+            <PrivateRoute>
+            <Home user={user} onLogout={handleLogout} />
+            </PrivateRoute>
+            }
           />
-          <Route path="/ProfilePage"  element={<ProfilePage/>}/>
+          <Route path="/ProfilePage"  element={
+          <PrivateRoute>
+          <ProfilePage/>
+          </PrivateRoute>
+          }/>
           <Route path="/Projects/*">
             <Route
               path=""
-              element={<Projects user={user} onLogout={handleLogout} />}
+              element={
+              <PrivateRoute>
+                <Projects user={user} onLogout={handleLogout} />
+              </PrivateRoute>
+              }
             />
             <Route
               path="/Projects/*/:classID"
-              element={<ClassPage user={user} onLogout={handleLogout} />}
+              element={
+                <PrivateRoute>
+              <ClassPage user={user} onLogout={handleLogout} />
+              </PrivateRoute>
+              }
             />
             <Route
               path="AddClass"
-              element={<AddClass user={user} onLogout={handleLogout} />}
+              element={
+                <PrivateRoute>
+              <AddClass user={user} onLogout={handleLogout} />
+              </PrivateRoute>
+              }
             >
               <Route
                 path="JoinClass"
-                element={<JoinClass user={user} onLogout={handleLogout} />}
+                element={
+                  <PrivateRoute>
+                <JoinClass user={user} onLogout={handleLogout} />
+                </PrivateRoute>
+                }
               />
               <Route
                 path="CreateClass"
-                element={<CreateClass user={user} onLogout={handleLogout} />}
+                element={
+                  <PrivateRoute>
+                <CreateClass user={user} onLogout={handleLogout} />
+                </PrivateRoute>
+                }
               />
             </Route>
           </Route>
           <Route
             path="/Messages"
-            element={<Messages user={user} onLogout={handleLogout}  />}
+            element={
+              <PrivateRoute>
+            <Messages user={user} onLogout={handleLogout}  />
+            </PrivateRoute>
+            }
           />
         </Routes>
       </Router>
