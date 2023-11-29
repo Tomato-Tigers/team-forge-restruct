@@ -18,8 +18,8 @@ module.exports = async (req, res) => {
       const classPreferences = await prisma.classPreferences.upsert({
         where: {
           userID_classID: {
-            userID: email,
-            classID: classID
+            userID: req.body.email,
+            classID: req.body.classID
           }
         },
         update: {

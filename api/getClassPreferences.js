@@ -11,9 +11,9 @@ module.exports = async (req, res) => {
     try {
       const classPreferences = await prisma.classPreferences.findUnique({
         where: {
-          userId_classId: {
-            userID: email,
-            classID: classID
+          userID_classID: {
+            userID: req.body.userID,
+            classID: req.body.classID
           }
         }
       });
