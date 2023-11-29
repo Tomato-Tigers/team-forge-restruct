@@ -103,6 +103,7 @@ const App: React.FC = () => {
   };
 
   const handleLogout = () => {
+    window.localStorage.removeItem('jwt');
     setUser({ name: "", email: "" });
   };
 
