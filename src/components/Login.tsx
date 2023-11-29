@@ -56,11 +56,13 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       })
       .then((res) => {
         const userName: string = JSON.stringify(res.data.name);
-        let editedUserName = userName.slice(8, -1);
-        editedUserName = editedUserName.replaceAll(/['"]/g, '');
-        let userEmail: string = JSON.stringify(res.data.email);
-        userEmail = userEmail.replaceAll(/['"]/g, '');
-        const user: User = { name: editedUserName, email: userEmail };
+        const editedUserName = (userName.slice(8, -1) ?? '').replaceAll(/['"]/g, '');
+      
+        const userEmail: string = JSON.stringify(res.data.email);
+        const editedUserEmail = (userEmail ?? '').replaceAll(/['"]/g, '');
+      
+        const user: User = { name: editedUserName, email: editedUserEmail };
+        
 
 
         // Assuming the JWT is in res.data.jwt
