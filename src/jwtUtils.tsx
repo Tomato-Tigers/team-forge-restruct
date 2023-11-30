@@ -1,43 +1,40 @@
+import { jwtDecode } from "jwt-decode";
  
-const jwtDecode = require('jwt-decode');
 
 
-interface DecodedToken {
-    id: string;
+interface JWTPayload {
     name: string;
     email: string;
   }
-  
 
-export const getUsernameFromJWT = (): string | null => {
+export const getUsernameFromJWT = (): string  => {
   const token = localStorage.getItem('jwt');
   console.log('JWT Token:', token); // Log the token for debugging
 
   if (token) {
     try {
-      const decoded = jwtDecode(token);
-      console.log("decoded successfully!");
-      return decoded.name;
+        const decoded: JWTPayload = jwtDecode<JWTPayload>(token);
+        return decoded.name;
     } catch (error) {
       console.error('Error decoding token:', error);
-      return null;
+      return "";
     }
   }
-  return null;
+  return "";
 };
 
-export const getEmailFromJWT = (): string | null => {
+export const getEmailFromJWT = (): string => {
     const token = localStorage.getItem('jwt');
     console.log('JWT Token:', token); // Log the token for debugging
   
     if (token) {
       try {
-        const decoded = jwtDecode(token);
+        const decoded: JWTPayload = jwtDecode<JWTPayload>(token);
         return decoded.email;
       } catch (error) {
         console.error('Error decoding token:', error);
-        return null;
+        return "";
       }
     }
-    return null;
+    return "";
   };

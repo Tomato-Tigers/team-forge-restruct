@@ -109,10 +109,10 @@ const App: React.FC = () => {
   useEffect(() => {
     const decodedUsername = getUsernameFromJWT();
     const decodedEmail = getEmailFromJWT();
-    if (decodedUsername && decodedEmail) {
+    if (decodedUsername  ) {
       setUser({
         name: decodedUsername,
-        email: decodedEmail,
+        email: decodedEmail
         // Set other properties as needed
       });
     }
