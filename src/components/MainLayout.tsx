@@ -1,19 +1,16 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import NavBar from "./NavBar";
-import { useState } from "react";
 
-
-interface MainLayoutProps {
-  children: ReactNode;
-  user: User;
-  onLogout: () => void;
-
-}
 
 interface User {
   name: string;
   email: string;
 }
+
+interface MainLayoutProps {
+  children: ReactNode;
+  user: User;
+  onLogout: () => void;
 
 const MainLayout: React.FC<MainLayoutProps> = ({ user, onLogout, children }) => {
 

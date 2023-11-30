@@ -23,4 +23,5 @@ const SuccessMessage = ({ message }: Props) => {
   );
 };
 
+
 export default SuccessMessage;

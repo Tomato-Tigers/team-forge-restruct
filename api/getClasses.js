@@ -17,6 +17,11 @@ module.exports = async(req, res) => {
                     email: email,
                     },
                 select: {
+                    classes: {
+                        include: {
+                            members: true,
+                        },
+                    }
                     classes: true,
                 },
             });
@@ -30,8 +35,12 @@ module.exports = async(req, res) => {
         } catch (error) {
             console.error("Error getting classes:", error);
             return res.status(500).send('Internal server error');
+          
+        } finally {
+            await prisma.$disconnect();
         }
 
 }
+        }
 
-module.exports = getClasses;
+}

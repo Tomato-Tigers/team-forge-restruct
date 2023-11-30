@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { Route, useNavigate } from "react-router-dom";
-import SuccessMessage from "./SuccessMessage";
-
-
 import axios from "axios";
+
+import SuccessMessage from "./SuccessMessage";
 
 import "../App.css";
 import "./Login-Register.css";
-import { on } from "events";
-import e from "express";
+
+
 
 
 interface User {
@@ -19,17 +17,15 @@ interface User {
 
 interface LoginProps {
   onLogin: (user: User) => void;
-
 }
 
-
-const Login: React.FC<LoginProps> = ({onLogin}) => {
-  // Hooks
+const Login: React.FC<LoginProps> = ({ onLogin }) => {
+  // State hooks
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [user, setUser] = useState<User>({name: "", email: ""});
+  const [user, setUser] = useState<User>({ name: "", email: "" });
 
   const navigate = useNavigate();
 
@@ -43,58 +39,54 @@ const Login: React.FC<LoginProps> = ({onLogin}) => {
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const handleLogin = () => {
+
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const data = { email: email, password: password };
-    axios.post("http://localhost:3001/login", data, { 
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-        console.log(res.data.name);
-        //remove the {name:} from the name so it is just the name
-        const username: string = JSON.stringify(res.data.name);
-        console.log(username)
-        const editedUsername = username.slice(8, -1);
-        console.log(editedUsername)
-        
-        const useremail: string = JSON.stringify(res.data.email);
-        console.log(useremail)
-        
-        // Handle successful login here, e.g., navigate to home page
-        
-        const user: User = { name: editedUsername, email: useremail };
+    axios
+      .post("/api/login", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        const userName: string = JSON.stringify(res.data.name);
+        let editedUserName = userName.slice(8, -1);
+        editedUserName = editedUserName.replaceAll(/['"]/g, '');
+      
+        let userEmail: string = JSON.stringify(res.data.email);
+        userEmail = userEmail.replaceAll(/['"]/g, '');
+      
+        const user: User = { name: editedUserName, email: userEmail };
         setUser(user);
         onLogin(user);
         setShowSuccessMessage(true);
         setTimeout(() => {
-            setShowSuccessMessage(false);
-            navigate("/Home");
+          setShowSuccessMessage(false);
+          navigate("/Home");
         }, 2000);
-       
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         if (error.response && error.response.data) {
-          // Here, error.response.data will contain the error message
-          // sent by the server ('Username not found' or 'Incorrect password').
           setErrorMessage(error.response.data);
           setTimeout(() => {
             setErrorMessage("");
-        }, 5000);
+          }, 5000);
         } else {
           setErrorMessage(error.message);
           setTimeout(() => {
             setErrorMessage("");
-        }, 5000);
-      }
-    });
+          }, 5000);
+        }
+      });
   };
-
-  
+   
 
   return (
     <div className="login_box" id="login">
-      {showSuccessMessage && (<SuccessMessage message = {`Logged in as ${(user.name)}!`}/>)}
+      {showSuccessMessage && (
+        <SuccessMessage message={`Logged in as ${user.name}!`} />
+      )}
       <div className="login_header">
         <span className="blue_text">Team</span>Forge
       </div>

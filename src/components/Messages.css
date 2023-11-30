@@ -1,0 +1,284 @@
+.MessagesRoot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-gray);
+    height: 100vh;
+    padding: 20px;
+}
+
+.SearchContainer img{
+    min-width: 50px;
+    min-height: 20px;
+}
+.LeftPane {
+    background-color: var(--dark-gray);
+    margin-left: -50px;
+    padding: 70px;
+    align-self: flex-start; 
+}
+
+.RightPane {
+    background-color: var(--dark-gray);
+    margin-left: -70px;
+    padding: 100px;
+    align-self: flex-start; 
+    width: 100%
+}
+
+
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    /*font-family: "proximanova", sans-sherif;*/
+
+}
+
+
+.MenuItem {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+
+.SearchButton img {
+    display: block;
+    padding: 5px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+
+.MessageText {
+    margin-top: 20px;
+}
+
+
+p {
+    margin: 0;
+}
+.SearchIcon {
+    width: 16px;
+    height: 16px; 
+}
+
+
+.MessageItem {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f4f4f4;
+}
+
+.MessageItem p {
+    margin: 0;
+    padding: 0;
+}
+
+.MessagesRoot {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-gray);
+    min-height: 100vh; /* Use min-height to take up at least 100% of the viewport height */
+    padding: 20px;
+}
+
+
+
+.NewMessageContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    width: 70%
+}
+
+.NewMessageContainer input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+.NewMessageContainer textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.NewMessageContainer button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: 15%
+}
+
+
+
+
+.SearchContainer {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.SearchIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px; 
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0; 
+    text-align: center;
+}
+
+
+.MessageText {
+    margin-top: 70px; 
+}
+
+
+.NewMessageContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    background-color: var(--dark-gray);
+    color: white;
+    padding: 20px;
+}
+
+.NewMessageContainer input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.NewMessageContainer button {
+    background-color: black; 
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.RightPane h1{
+    color: white;
+
+}
+
+
+
+.MsgPane {
+    color:var(--steel-blue);
+}
+/*
+.InboxPane table , th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 100%;
+
+}
+*/ 
+
+.InboxPane table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed; /* Set table layout to fixed */
+    color: white;
+    background-color: black; 
+}
+
+
+.InboxPane th, .InboxPane td {
+    border: 1px solid;
+    padding: 8px; /* Adjust padding as needed */
+    text-align: left; /* Adjust text alignment as needed */
+}
+.InboxPane th:first-child,
+.InboxPane td:first-child {
+    width: 20%; /* Set the width of the first column to half */
+}
+
+.InboxPane th:not(:first-child),
+.InboxPane td:not(:first-child) {
+    width: 80%; /* Set the width of other columns to half */
+}
+
+.InboxPane {
+    width: 80%;
+}
+
+.InboxPane th {
+    text-align: center;
+}
+
+
+
+/*.InboxPane .MenuItem {
+    background-color: var(--steel-blue); 
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+*/
+
+.SentdPane .MenuItem {
+    background-color: var(--steel-blue);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.SentdPane table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed; /* Set table layout to fixed */
+    color: white;
+    background-color: black; 
+}
+
+
+.SentdPane th, .SentdPane td {
+    border: 1px solid;
+    padding: 8px; /* Adjust padding as needed */
+    text-align: left; /* Adjust text alignment as needed */
+}
+.SentdPane th:first-child,
+.SentdPane td:first-child {
+    width: 20%; /* Set the width of the first column to half */
+}
+
+.SentdPane th:not(:first-child),
+.SentdPane td:not(:first-child) {
+    width: 80%; /* Set the width of other columns to half */
+}
+
+.SentdPane {
+    width: 80%;
+}
+
+.SentdPane th {
+    text-align: center;
+}

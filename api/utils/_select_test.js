@@ -1,7 +1,7 @@
 
-import { autocomplete } from "./autocomplete.js";
-import { dtos, getDict } from "./dict.js";
-import { select } from "./select.js";
+const { autocomplete } = require("./_autocomplete.js");
+const { dtos, getDict } = require("./_dict.js");
+const { select } = require("./_select.js");
 
 function testSelect() {
     var dict = getDict("skills");

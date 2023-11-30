@@ -32,8 +32,6 @@
     margin-right: 50px;
     cursor: pointer;
     position: relative;
-    ;
-
 }
 
 .navbar .links {
@@ -134,7 +132,7 @@
 }
 
 .dropdown.animateOut {
-        animation: fadeOutDrop 0.7s ease forwards;
+        animation: fadeOutDrop 0.7s ease-out;
 }
 
 
@@ -181,3 +179,7 @@
     transform: scale(1.1);
     transition: background-color 0.3s ease;
 }
+
+p span {
+    text-decoration: underline;
+  }

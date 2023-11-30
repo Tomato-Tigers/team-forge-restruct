@@ -1,0 +1,68 @@
+:root {
+    --dark-gray: #3C3838;
+    --steel-blue: #7AC1D1;
+    --dark-blue: #1E4862;
+}
+
+.HomePageRoot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-gray); 
+    color: var(--steel-blue); 
+    height: 120vh;
+}
+
+.TwoPanes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.Menu {
+    width: 30%;
+    color: var(--dark-blue);
+    float: left;
+}
+
+.Images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 100px;
+}
+
+.toProfilePage,
+.toMessagesePage,
+.toMyProjects,
+.toPreferences,
+.toDiscover {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+}
+
+.toProfilePage img,
+.toMessagesePage img,
+.toMyProjects img,
+.toPreferences img,
+.toDiscover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.HomePageRoot h3 {
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 3em; 
+    margin-top: 20px; 
+}

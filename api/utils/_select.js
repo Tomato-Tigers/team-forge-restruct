@@ -2,7 +2,7 @@
 // param dict: Dict: the dictionary
 // param s: string: the word chosen
 // the method returns nothing because it edits dict in the parameter
-export function select(dict, s) {
+function select(dict, s) {
     // start from the root
     var tmp = dict;
     // go to the position of the word
@@ -17,3 +17,7 @@ export function select(dict, s) {
     // increase the frequency by 1
     tmp.freq = tmp.freq + 1;
 }
+
+module.exports = {
+    select
+};

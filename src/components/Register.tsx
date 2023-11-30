@@ -5,7 +5,6 @@ import SuccessMessage from "./SuccessMessage";
 
 import axios from "axios";
 
-import "../App.css";
 import "./Login-Register.css";
 
 
@@ -26,8 +25,11 @@ const Register: React.FC = () => {
   const redirectToLogin = () => {
     navigate("/");
   };
-  const handleFirstNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
+
+  const handleFirstNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFirstName(event.target.value);
   };
   const handleLastNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLastName(e.target.value);
@@ -38,8 +40,11 @@ const Register: React.FC = () => {
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
+
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPassword(event.target.value);
   };
 
   
@@ -57,10 +62,10 @@ const Register: React.FC = () => {
       }, 5000);
       return;
     }
-    
+
     const name = `${firstName} ${lastName}`;
     
-    axios.post("http://localhost:3001/register", {
+    axios.post("/api/register", {
       name: name,
       email: email,
       password: password,
@@ -142,17 +147,13 @@ const Register: React.FC = () => {
           {errorMessage && (<div className="error_message">{errorMessage}</div>)}
           <footer>
             <div className="login_bottom_left">
-              Using Google? Return to Login.
+              Already have an account?{" "}
+              <span className="link" onClick={redirectToLogin}>
+                Login here.
+              </span>
             </div>
             <div className="login_bottom_right">
-              <button
-                className="login_redirect_button"
-                type="button"
-                onClick={redirectToLogin}
-              >
-                Login
-              </button>
-              <button type="button" className = "register_button" onClick={handleRegistration}>
+              <button className="login_redirect_button" type="submit">
                 Register
               </button>
             </div>
