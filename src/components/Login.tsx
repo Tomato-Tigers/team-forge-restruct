@@ -62,12 +62,9 @@ const user: User = { name, email };
 
         // Assuming the JWT is in res.data.jwt
         const jwt = res.data.token;
-        console.log("login.tsx line");
-        // const [jwtToken, setJwtToken] = useLocalState("jwt", '');
+        
         localStorage.setItem('jwt', jwt); // Store JWT in localStorage
-        const storedJwt = localStorage.getItem('jwt');
-        console.log('Stored JWT:', storedJwt);
-        console.log("login.tsx afterline");
+ 
 
        
         setUser(user);
