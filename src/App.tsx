@@ -142,11 +142,17 @@ const App: React.FC = () => {
             </PrivateRoute>
             }
           />
-          <Route path="/ProfilePage"  element={
-          <PrivateRoute>
-          <ProfilePage/>
-          </PrivateRoute>
-          }/>
+
+
+          <Route 
+          path="/ProfilePage" 
+          element={
+              <PrivateRoute>
+              <ProfilePage user={user} onLogout={handleLogout} />
+              </PrivateRoute>  
+                }
+          />
+          
           <Route path="/Projects/*">
             <Route
               path=""
@@ -188,6 +194,7 @@ const App: React.FC = () => {
                 </PrivateRoute>
                 }
               />
+               
             </Route>
           </Route>
           <Route
