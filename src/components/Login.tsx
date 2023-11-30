@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { Route, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -6,6 +6,9 @@ import SuccessMessage from "./SuccessMessage";
 
 import "../App.css";
 import "./Login-Register.css";
+
+
+
 
 interface User {
   name: string;
@@ -26,17 +29,15 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const navigate = useNavigate();
 
-  // Event handlers
+  // Handlers.
   const redirectToRegister = () => {
     navigate("/Register");
   };
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
   };
 
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
@@ -52,11 +53,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         const userName: string = JSON.stringify(res.data.name);
         let editedUserName = userName.slice(8, -1);
         editedUserName = editedUserName.replaceAll(/['"]/g, '');
+      
         let userEmail: string = JSON.stringify(res.data.email);
         userEmail = userEmail.replaceAll(/['"]/g, '');
+      
         const user: User = { name: editedUserName, email: userEmail };
-
-        
         setUser(user);
         onLogin(user);
         setShowSuccessMessage(true);
@@ -79,6 +80,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         }
       });
   };
+   
 
   return (
     <div className="login_box" id="login">
@@ -88,7 +90,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       <div className="login_header">
         <span className="blue_text">Team</span>Forge
       </div>
-      <form className="login_form" onSubmit={handleLogin}>
+      <form className="login_form">
         <div className="subtitle">Login</div>
         <div className="form-group">
           <input
@@ -96,6 +98,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             placeholder="Email"
             value={email}
             onChange={handleEmailChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleLogin();
+              }
+            }}
           />
         </div>
         <div className="form-group">
@@ -104,24 +111,33 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             placeholder="Password"
             value={password}
             onChange={handlePasswordChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleLogin();
+              }
+            }}
           />
         </div>
         <footer>
-          <div className="login_bottom_left">Forgot password.</div>
+          <div className="login_bottom_left" id="signInDiv">
+            Forgot password.
+          </div>
           <div className="login_bottom_right">
-            <button className="login_button" type="submit">
+            <button
+              className="login_button"
+              type="button"
+              onClick={handleLogin}
+            >
               Login
             </button>
+            {errorMessage && (<div className="error_message">{errorMessage}</div>)}
             <button
               className="login_redirect_button"
               type="button"
               onClick={redirectToRegister}
             >
-              Register
+              Don't have an account? Register here.
             </button>
-            {errorMessage && (
-              <div className="error_message">{errorMessage}</div>
-            )}
           </div>
         </footer>
       </form>

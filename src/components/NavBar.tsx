@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 import "./NavBar.css";
 import image from "./Logo.png";
 import menuIcon from "./menu.png";
@@ -34,6 +35,9 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
     <div className="navbar">
       <div className="logo">
         <img src={image} alt="Logo" />
+      </div>
+      <div className="branding">
+        <span className="blue_text">Team</span>Forge
       </div>
       <div className="links">
         <Link to="/Home">Home</Link>

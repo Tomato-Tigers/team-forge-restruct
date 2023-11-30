@@ -19,11 +19,11 @@ import CreateClass from "./components/CreateClass";
 import Messages from "./components/Messages";
 import ProfilePage from "./components/ProfilePage"
 
+
 interface User {
   name: string;
   email: string;
 }
-
 /* { interface Project {
   id: string;
   creator: string;

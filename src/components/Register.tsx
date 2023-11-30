@@ -1,25 +1,27 @@
 import React, { useState } from "react";
+import { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import SuccessMessage from "./SuccessMessage";
+
 import axios from "axios";
 
 import "./Login-Register.css";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-}
+
 
 const Register: React.FC = () => {
+  // Hooks
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const navigate = useNavigate();
 
+  // Handlers
   const redirectToLogin = () => {
     navigate("/");
   };
@@ -29,17 +31,14 @@ const Register: React.FC = () => {
   ) => {
     setFirstName(event.target.value);
   };
-
-  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(event.target.value);
+  const handleLastNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value);
   };
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
   };
 
   const handleConfirmPasswordChange = (
@@ -48,34 +47,51 @@ const Register: React.FC = () => {
     setConfirmPassword(event.target.value);
   };
 
-  const handleRegistration = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+  
+  const handleRegistration = () => {
+    if (firstName === "" || lastName === "" || email === "" || password === "" || confirmPassword === "") {
+      setErrorMessage("Please fill out all fields.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return;
+    } else if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
       return;
     }
 
     const name = `${firstName} ${lastName}`;
-
-    axios
-      .post("/api/register", {
-        name: name,
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log("User registered successfully:", response.data);
+    
+    axios.post("/api/register", {
+      name: name,
+      email: email,
+      password: password,
+    })
+    .then((response) => {
+      // Handle successful registration here, e.g., redirect to login page.
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
         redirectToLogin();
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 400) {
-          alert("Error registering: " + error.response.data);
-        } else {
-          console.error(`Error registering user: ${error}`);
-        }
-      });
-  };
+      }, 5000);
+      console.log("User registered successfully:", response.data);
+    })
+    .catch((error) => {
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data);
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 5000);
+      } else {
+        console.error(`Error registering user: ${error}`);
+      }
+    });
+    };
+  
+
 
   return (
     <div className="register_page" id="register">
@@ -83,18 +99,18 @@ const Register: React.FC = () => {
         <div className="login_header">
           <span className="blue_text">Team</span>Forge
         </div>
-        <form className="login_form" onSubmit={handleRegistration}>
+        <form className="login_form">
           <div className="subtitle">Register</div>
           <div className="form-group">
             <div className="name-group">
               <input
-                type="text"
+                type="firstName"
                 placeholder="First name"
                 value={firstName}
                 onChange={handleFirstNameChange}
               />
               <input
-                type="text"
+                type="lastName"
                 placeholder="Last name"
                 value={lastName}
                 onChange={handleLastNameChange}
@@ -118,11 +134,17 @@ const Register: React.FC = () => {
           <div className="form-group">
             <input
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Confirm password"
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleRegistration();
+                }
+              }}
             />
           </div>
+          {errorMessage && (<div className="error_message">{errorMessage}</div>)}
           <footer>
             <div className="login_bottom_left">
               Already have an account?{" "}
@@ -138,6 +160,7 @@ const Register: React.FC = () => {
           </footer>
         </form>
       </div>
+      {showSuccessMessage && <SuccessMessage message="Registered successfully!" />}
     </div>
   );
 };
