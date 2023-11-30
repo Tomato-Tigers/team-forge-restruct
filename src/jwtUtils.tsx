@@ -24,3 +24,19 @@ export const getUsernameFromJWT = (): string | null => {
   }
   return null;
 };
+
+export const getEmailFromJWT = (): string | null => {
+    const token = localStorage.getItem('jwt');
+    console.log('JWT Token:', token); // Log the token for debugging
+  
+    if (token) {
+      try {
+        const decoded: DecodedToken = jwtDecode(token);
+        return decoded.email;
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
+    }
+    return null;
+  };
