@@ -55,14 +55,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         },
       })
       .then((res) => {
-        const userName: string = JSON.stringify(res.data.name);
-        const editedUserName = (userName.slice(8, -1) ?? '').replaceAll(/['"]/g, '');
-      
-        const userEmail: string = JSON.stringify(res.data.email);
-        const editedUserEmail = (userEmail ?? '').replaceAll(/['"]/g, '');
-      
-        const user: User = { name: editedUserName, email: editedUserEmail };
-        
+        const { name, email } = res.data;
+const user: User = { name, email };
+       
 
 
         // Assuming the JWT is in res.data.jwt
@@ -74,7 +69,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         console.log('Stored JWT:', storedJwt);
         console.log("login.tsx afterline");
 
-        
+       
         setUser(user);
         onLogin(user);
         setShowSuccessMessage(true);
