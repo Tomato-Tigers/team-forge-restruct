@@ -4,7 +4,7 @@ body {
     margin: 0; 
   }
   
-  
+  /*
   rc-slider {
     position: relative;
     width: 100%;
@@ -302,6 +302,7 @@ body {
   
   
   /* Center the sliders and buttons */
+  /*
   .rc-slider {
     position: relative;
     width: 50%;
@@ -333,7 +334,7 @@ body {
     text-align: center;
     background-color: var(--dark); 
   }
-  
+  */
   .InfoContainer, .AvailabilityContainer {
     display: flex;
     flex-direction: column;
@@ -397,4 +398,20 @@ body {
   .profile_page h3{
     color: var(--steel-blue);
   }
+  .AvailabilityHeader {
+    color: var(--steel-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .centeredContainer {
+    justify-content: center;
+    align-items: center;
+    display: flex; 
   
+  
+}
+table {
+  width: 100%; /* Set the table width to 100% */
+  border-collapse: collapse;
+}
