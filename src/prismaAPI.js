@@ -17,7 +17,7 @@ async function createNewUser(data) {
 }
 
 async function getPasswordByEmail(prisma, email) {
-    
+   
     const entry = await prisma.entry.findUnique({
         where: {
             email:email,
@@ -32,7 +32,7 @@ async function getPasswordByEmail(prisma, email) {
     } else {
         console.log(`No password found for email: ${email}`);
     }
-    
+   
     return entry?.password;
 }
 
@@ -80,6 +80,91 @@ async function getTableIdByID(prisma, id) {
     return entry?.id;
 }
 
+async function getStudentsByClassID(prisma, classID) {
+    return await prisma.Class.findUnique({
+        where: {
+            classID: classID
+        },
+        select: {
+            members: true // Retrieves all Entry (student) records associated with the class
+        }
+    });
+}
+
+async function upsertUserStaticPreferences(data) {
+    console.log('Upserting Data:', data);
+    try {
+        return await prisma.staticPreferences.upsert({
+            where: {
+                userId: data.userId,
+            },
+            update: {
+                selectedSkills: data.selectedSkills,
+                availability: data.availability,
+            },
+            create: {
+                userId: data.userId,
+                selectedSkills: data.selectedSkills,
+                availability: data.availability,
+            },
+        });
+    } catch (error) {
+        console.error('Error in upsertUserStaticPreferences:', error);
+        throw error; // Rethrow the error to handle it in the calling function
+    }
+}
+
+async function createMessage(senderId, recipientId, content) {
+    return await prisma.message.create({
+      data: {
+        senderId,
+        recipientId,
+        content
+      }
+    });
+  }
+ 
+  async function getUserIdByEmail(email) {
+    const user = await prisma.entry.findUnique({
+      where: { email }
+    });
+    return user?.id;
+  }
+ 
+  async function getInbox(userId) {
+    if (userId === undefined) {
+      throw new Error('User ID is undefined');
+    }
+ 
+    return await prisma.message.findMany({
+      where: {
+        recipientId: userId, // Corrected field name
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
+
+  async function getSentMessages(userId) {
+    if (userId === undefined) {
+      throw new Error('User ID is undefined');
+    }
+ 
+    return await prisma.message.findMany({
+      where: {
+        senderId: userId, // Corrected field name
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
+
+
+
+
+
 module.exports = {
     prisma,
     createNewUser,
@@ -88,4 +173,11 @@ module.exports = {
     deleteEntryByID,
     modifyEntryByID,
     getTableIdByID,
+    getStudentsByClassID,
+    upsertUserStaticPreferences,
+    createMessage,
+    getUserIdByEmail,
+    getInbox,
+    getSentMessages
+
 };
