@@ -14,6 +14,7 @@ export const getUsernameFromJWT = (): string  => {
   if (token) {
     try {
         const decoded: JWTPayload = jwtDecode<JWTPayload>(token);
+        console.log(decoded.name);
         return decoded.name;
     } catch (error) {
       console.error('Error decoding token:', error);
@@ -30,6 +31,7 @@ export const getEmailFromJWT = (): string => {
     if (token) {
       try {
         const decoded: JWTPayload = jwtDecode<JWTPayload>(token);
+        console.log(decoded.email);
         return decoded.email;
       } catch (error) {
         console.error('Error decoding token:', error);
