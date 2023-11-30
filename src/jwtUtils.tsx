@@ -15,7 +15,7 @@ export const getUsernameFromJWT = (): string | null => {
 
   if (token) {
     try {
-      const decoded: DecodedToken = jwtDecode(token);
+      const decoded = jwtDecode(token);
       return decoded.name;
     } catch (error) {
       console.error('Error decoding token:', error);
@@ -31,7 +31,7 @@ export const getEmailFromJWT = (): string | null => {
   
     if (token) {
       try {
-        const decoded: DecodedToken = jwtDecode(token);
+        const decoded = jwtDecode(token);
         return decoded.email;
       } catch (error) {
         console.error('Error decoding token:', error);
