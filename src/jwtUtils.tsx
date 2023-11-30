@@ -16,6 +16,7 @@ export const getUsernameFromJWT = (): string | null => {
   if (token) {
     try {
       const decoded = jwtDecode(token);
+      console.log("decoded successfully!");
       return decoded.name;
     } catch (error) {
       console.error('Error decoding token:', error);
