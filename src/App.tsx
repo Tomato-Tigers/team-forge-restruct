@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { useState } from "react";
+import { useState , useEffect} from "react";
 
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -19,6 +19,12 @@ import CreateClass from "./components/CreateClass";
 import Messages from "./components/Messages";
 import ProfilePage from "./components/ProfilePage"
 import PrivateRoute from "./PrivateRoutes/index";
+
+
+import { getUsernameFromJWT } from './jwtUtils';
+
+ 
+
 
 interface User {
   name: string;
@@ -97,6 +103,13 @@ const App: React.FC = () => {
   //  const classObj = classes.find((cls) => cls.id === id);
 
   const [user, setUser] = useState<User>({ name: "", email: "" });
+
+  useEffect(() => {
+    const name = getUsernameFromJWT();
+    if (name) {
+      setUser(prevUser => ({ ...prevUser, name }));
+    }
+  }, []);
 
   const handleLogin = (user: User) => {
     setUser(user);
