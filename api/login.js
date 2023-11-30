@@ -35,8 +35,16 @@ module.exports = async (req, res) => {
     
     
         if (bcrypt.compareSync(password, storedHashedPassword)) {
-          const token = jwt.sign({ id: user.id }, process.env.JSON_WEB_TOKEN_KEY, { expiresIn: '1h' });
-          res.status(200).send({ email: user.email, name: user.name, token, message: 'Login successful' });; 
+          const token = jwt.sign(
+            { 
+              
+              name: user.name, 
+              email: user.email
+            }, 
+            process.env.JSON_WEB_TOKEN_KEY, 
+            { expiresIn: '1h' }
+          );
+                    res.status(200).send({ email: user.email, name: user.name, token, message: 'Login successful' });; 
       } else {
         res.status(400).send('Incorrect password. Please Try again.');
     }

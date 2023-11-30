@@ -21,7 +21,7 @@ import ProfilePage from "./components/ProfilePage"
 import PrivateRoute from "./PrivateRoutes/index";
 
 
-import { getUsernameFromJWT } from './jwtUtils';
+import { getEmailFromJWT, getUsernameFromJWT } from './jwtUtils';
 
  
 
@@ -104,12 +104,20 @@ const App: React.FC = () => {
 
   const [user, setUser] = useState<User>({ name: "", email: "" });
 
+
+  
   useEffect(() => {
-    const name = getUsernameFromJWT();
-    if (name) {
-      setUser(prevUser => ({ ...prevUser, name }));
+    const decodedUsername = getUsernameFromJWT();
+    const decodedEmail = getEmailFromJWT();
+    if (decodedUsername && decodedEmail) {
+      setUser({
+        name: decodedUsername,
+        email: decodedEmail,
+        // Set other properties as needed
+      });
     }
   }, []);
+ 
 
   const handleLogin = (user: User) => {
     setUser(user);
