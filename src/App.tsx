@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 
-import { useState } from "react";
+import { useState , useEffect} from "react";
 
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -18,6 +18,13 @@ import JoinClass from "./components/JoinClass";
 import CreateClass from "./components/CreateClass";
 import Messages from "./components/Messages";
 import ProfilePage from "./components/ProfilePage"
+import PrivateRoute from "./PrivateRoutes/index";
+
+
+import { getEmailFromJWT, getUsernameFromJWT } from './jwtUtils';
+
+ 
+
 
 interface User {
   name: string;
@@ -97,11 +104,27 @@ const App: React.FC = () => {
 
   const [user, setUser] = useState<User>({ name: "", email: "" });
 
+
+  
+  useEffect(() => {
+    const decodedUsername = getUsernameFromJWT();
+    const decodedEmail = getEmailFromJWT();
+    if (decodedUsername  ) {
+      setUser({
+        name: decodedUsername,
+        email: decodedEmail
+        // Set other properties as needed
+      });
+    }
+  }, []);
+ 
+
   const handleLogin = (user: User) => {
     setUser(user);
   };
 
   const handleLogout = () => {
+    window.localStorage.removeItem('jwt');
     setUser({ name: "", email: "" });
   };
 
@@ -113,39 +136,74 @@ const App: React.FC = () => {
           <Route path="/Register" element={<Register />} />
           <Route
             path="/Home"
-            element={<Home user={user} onLogout={handleLogout} />}
+            element={
+            <PrivateRoute>
+            <Home user={user} onLogout={handleLogout} />
+            </PrivateRoute>
+            }
           />
+
+
           <Route 
           path="/ProfilePage" 
-          element={<ProfilePage user={user} onLogout={handleLogout} />}
+          element={
+              <PrivateRoute>
+              <ProfilePage user={user} onLogout={handleLogout} />
+              </PrivateRoute>  
+                }
           />
+          
           <Route path="/Projects/*">
             <Route
               path=""
-              element={<Projects user={user} onLogout={handleLogout} />}
+              element={
+              <PrivateRoute>
+                <Projects user={user} onLogout={handleLogout} />
+              </PrivateRoute>
+              }
             />
             <Route
               path="/Projects/*/:classID"
-              element={<ClassPage user={user} onLogout={handleLogout} />}
+              element={
+                <PrivateRoute>
+              <ClassPage user={user} onLogout={handleLogout} />
+              </PrivateRoute>
+              }
             />
             <Route
               path="AddClass"
-              element={<AddClass user={user} onLogout={handleLogout} />}
+              element={
+                <PrivateRoute>
+              <AddClass user={user} onLogout={handleLogout} />
+              </PrivateRoute>
+              }
             >
               <Route
                 path="JoinClass"
-                element={<JoinClass user={user} onLogout={handleLogout} />}
+                element={
+                  <PrivateRoute>
+                <JoinClass user={user} onLogout={handleLogout} />
+                </PrivateRoute>
+                }
               />
               <Route
                 path="CreateClass"
-                element={<CreateClass user={user} onLogout={handleLogout} />}
+                element={
+                  <PrivateRoute>
+                <CreateClass user={user} onLogout={handleLogout} />
+                </PrivateRoute>
+                }
               />
                
             </Route>
           </Route>
           <Route
             path="/Messages"
-            element={<Messages user={user} onLogout={handleLogout}  />}
+            element={
+              <PrivateRoute>
+            <Messages user={user} onLogout={handleLogout}  />
+            </PrivateRoute>
+            }
           />
         </Routes>
       </Router>

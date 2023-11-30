@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import useLocalState from './useLocalStorage';
 import SuccessMessage from "./SuccessMessage";
 
 import "../App.css";
@@ -14,6 +14,12 @@ interface User {
 
 interface LoginProps {
   onLogin: (user: User) => void;
+}
+interface LoginResponse {
+  email: string;
+  name: string;
+  token: string;
+  message: string;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
@@ -43,20 +49,27 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     event.preventDefault();
     const data = { email: email, password: password };
     axios
-      .post("/api/login", data, {
+      .post<LoginResponse>("/api/login", data, {
         headers: {
           "Content-Type": "application/json",
         },
       })
       .then((res) => {
-        const userName: string = JSON.stringify(res.data.name);
-        let editedUserName = userName.slice(8, -1);
-        editedUserName = editedUserName.replaceAll(/['"]/g, '');
-        let userEmail: string = JSON.stringify(res.data.email);
-        userEmail = userEmail.replaceAll(/['"]/g, '');
-        const user: User = { name: editedUserName, email: userEmail };
+        const { name, email } = res.data;
+const user: User = { name, email };
+       
 
-        
+
+        // Assuming the JWT is in res.data.jwt
+        const jwt = res.data.token;
+        console.log("login.tsx line");
+        // const [jwtToken, setJwtToken] = useLocalState("jwt", '');
+        localStorage.setItem('jwt', jwt); // Store JWT in localStorage
+        const storedJwt = localStorage.getItem('jwt');
+        console.log('Stored JWT:', storedJwt);
+        console.log("login.tsx afterline");
+
+       
         setUser(user);
         onLogin(user);
         setShowSuccessMessage(true);
@@ -69,12 +82,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         if (error.response && error.response.data) {
           setErrorMessage(error.response.data);
           setTimeout(() => {
-            setErrorMessage("");
+            setErrorMessage("asdasd");
           }, 5000);
         } else {
           setErrorMessage(error.message);
           setTimeout(() => {
-            setErrorMessage("");
+            setErrorMessage("qweqwe");
           }, 5000);
         }
       });
