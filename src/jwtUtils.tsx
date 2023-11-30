@@ -3,9 +3,11 @@ const jwtDecode = require('jwt-decode');
 
 
 interface DecodedToken {
-  name: string;
+    id: string;
+    name: string;
+    email: string;
+  }
   
-}
 
 export const getUsernameFromJWT = (): string | null => {
   const token = localStorage.getItem('jwt');
