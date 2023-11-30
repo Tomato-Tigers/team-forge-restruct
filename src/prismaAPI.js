@@ -36,7 +36,21 @@ async function getPasswordByEmail(prisma, email) {
     return entry?.password;
 }
 
-
+// Input: classID
+// Output: Class
+async function getClassByID(classID) {
+    const classElement = await prisma.class.findUnique({
+        where: {
+            classID: classID,
+        },
+    });
+    if (classElement !== null) {
+        console.log(classElement.name); // prints the name of the user
+      } else {
+        console.log('No class found with this ID');
+      }
+    return classElement;
+}
 
 async function getSkillsByID(prisma, id) {
     const entry = await prisma.entry.findFirst({
@@ -80,15 +94,26 @@ async function getTableIdByID(prisma, id) {
     return entry?.id;
 }
 
-async function createClassPreferences(email, classID) {
+// Input: email, classID
+// Output: initializes a row in ClassPreferences
+async function createClassPreferences(user, classID) {;
+    console.log("ccp %s %s", user, classID);
     return await prisma.classPreferences.create({
         data: {
-            userID: email,
-            classID: classID,
+            user: {
+                connect: {
+                    id: user
+                }
+            },
+            class: {
+                connect: {
+                    classID: classID
+                }
+            },
             preferredSkills: [],
             preferredSkillsWeight: 0,
             interests: [],
-            interestsWeight: 0
+            interestsWeight: 0,
         }
     });
 }
@@ -101,5 +126,5 @@ module.exports = {
     deleteEntryByID,
     modifyEntryByID,
     getTableIdByID,
-    createClassPreferences
+    createClassPreferences,
 };
