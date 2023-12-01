@@ -10,7 +10,7 @@ import "./ClassPagePeople.css"
 import { useParams } from "react-router-dom";
 import ClassPageNavBar from "./ClassPageNavBar";
 
-const Search = require("./../api/utils/_search.js");
+// const Search = require("./../api/utils/_search.js");
 
 interface User {
   name: string;
