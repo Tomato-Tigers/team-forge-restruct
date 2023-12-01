@@ -24,14 +24,11 @@ interface ProjectsProps {
   onLogout: () => void;
 }
 
-
 const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
-  
-  
   const [classes, setClasses] = useState<Class[]>([]);
-
   useEffect(() => {
-    if (user?.email) { // replace for user.token
+    if (user?.email) {
+      // replace for user.token
       axios
         .post("/api/getClasses", {
           email: user?.email,
@@ -45,7 +42,6 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
         });
     }
   }, []);
-
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <div className="projects-container">

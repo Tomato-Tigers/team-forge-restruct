@@ -37,7 +37,12 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
   const subtitle = location.state.subtitle || "Class Name";
 
   let ID = useParams<{ classID: string }>();
-  const classID = ID.classID;
+  let classID: string = "";
+  if (typeof ID.classID === "string") {
+    classID = ID.classID;
+  } else {
+    classID = "";
+  }
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -239,6 +244,7 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <ClassPageNavBar user={user} onLogout={onLogout} />
+      <PopoutComponent user={user} classID={classID} onLogout={onLogout} />
       <div className="add-project">
         <div className="add-project-text">
           Have an idea? Create a project and start a group here!

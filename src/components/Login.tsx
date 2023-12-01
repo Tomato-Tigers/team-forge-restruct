@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Route, useNavigate } from "react-router-dom";
 import axios from "axios";
-import useLocalState from './useLocalStorage';
+import useLocalState from "./useLocalStorage";
 import SuccessMessage from "./SuccessMessage";
+import { getEmailFromJWT } from "../jwtUtils";
 
 import "../App.css";
 import "./Login-Register.css";
@@ -55,18 +56,16 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         },
       })
       .then((res) => {
-        const { name, email } = res.data;
-const user: User = { name, email };
-       
-
-
-        // Assuming the JWT is in res.data.jwt
         const jwt = res.data.token;
-        
-        localStorage.setItem('jwt', jwt); // Store JWT in localStorage
- 
+        console.log("JWT: ", jwt);
+        localStorage.setItem("jwt", jwt); // Store JWT in localStorage
 
-       
+        const { name } = res.data;
+        const email = getEmailFromJWT();
+        console.log("Name and email: ", name, email);
+        const user: User = { name, email };
+        console.log("user prop: ", user);
+
         setUser(user);
         onLogin(user);
         setShowSuccessMessage(true);
