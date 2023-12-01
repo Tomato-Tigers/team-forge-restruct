@@ -44,7 +44,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ user, onLogout }) => {
       return;
     } else {
       axios
-        .post("http://localhost:3001/addClass", {
+        .post("/api/addClass", {
           title: title,
           subtitle: subtitle,
           email: user?.email,

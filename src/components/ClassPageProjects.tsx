@@ -54,7 +54,7 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
       console.log("classID: ", classID);
       if (user?.email) {
         axios
-          .post("http://localhost:3001/getProjects", {
+          .post("/api/getProjects", {
             classID: classID,
           })
           .then((res) => {
@@ -80,7 +80,7 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
   const handleProjectDelete = (projectID: string) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       axios
-        .delete("http://localhost:3001/deleteProject", {
+        .delete("/api/deleteProject", {
             data: {
               projectID: projectID,
               email: user.email,
@@ -102,7 +102,7 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
 
   const handleProjectJoin = (projectID: string) => {
     axios
-      .post("http://localhost:3001/joinProject", {
+      .post("/api/joinProject", {
         projectID: projectID,
         email: user.email,
         classID: classID,
@@ -134,7 +134,7 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
 
   const handleProjectLeave = (projectID: string) => {
     axios
-      .post("http://localhost:3001/leaveProject", {
+      .post("/api/leaveProject", {
         projectID: projectID,
         email: user.email,
         classID: classID,
@@ -173,7 +173,7 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
       }, 2000);
     } else {
       axios
-        .post("http://localhost:3001/createProject", {
+        .post("/api/createProject", {
           classID: classID,
           email: user.email,
           title: newProjectTitle,
