@@ -1,4 +1,5 @@
 //API to allow a user to create a new group/project for a specific class
+
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
@@ -15,40 +16,59 @@ module.exports = (async (req, res) => {
     email = data.email.replace(/['"]+/g, '');
 
 
-    //check if user is already in a group, if they are, they cannot create a project
-    const userInGroup = await prisma.entry.findUnique({
-        where: {
-            email: email,
-        },
-        include: {
-            group: true,
-        },
-    });
-
-    if (userInGroup.group) {
-        return res.status(400).send({message: 'You are already in a group. Please leave your current group to create a new project.'});
-    } else { // user is not in a group, they can create a project/group
-         const newGroup = await prisma.group.create({
-            data: {
-                name: groupName,
-                // add users email to members list
-                members: {
-                    connect: {
+  try {  //check if user is already an owner of a Project in the current class
+            const projectOwner = await prisma.project.findFirst({
+                where: {
+                    classID: classID,
+                    owner: {
                         email: email,
-                    },
+                    }
                 },
-            },
-        });
-        console.log("Done creating group");
+            });
+            
+            if (projectOwner) {
+                return res.status(400).send({message: 'You are already an owner for a group/project for this class. Please delete your current project to create a new project.'});
+            }
 
-        try { // create new project and link it to the new group and class
+            //check if user is already a member of a project in the current class
+            const classWithProjects = await prisma.class.findUnique({
+                where: { classID },
+                select: {
+                  projects: {
+                    select: {
+                      group: {
+                        select: {
+                          members: {
+                            select: {
+                              email: true,
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              });
+
+            const isMember = classWithProjects.projects.some(project =>
+                project.group?.members.some(member => member.email === email)
+              );
+            if (isMember) {
+                return res.status(400).send({message: 'You are already in a group/project for this class. Please leave your current project to create a new project. If you are a project owner, you must delete the project before attempting to create a new one.'});
+            }
+         // create new project and group and link them
             const newProject = await prisma.project.create({
                 data: {
                     title: title,
                     description: description,
                     group: {
-                        connect: {
-                            groupID: newGroup.groupID,
+                        create: {
+                            name: groupName,
+                            members: {
+                                connect: {
+                                    email: email,
+                                },
+                            },
                         },
                         },
                     class: {
@@ -56,18 +76,45 @@ module.exports = (async (req, res) => {
                             classID: classID,
                         },
                     },
+                    owner: {
+                        connect: {
+                            email: email,
+                        },
                     },
-                });
+                },
+            });
 
+            //add project to user's projects list
+            const updateUser = await prisma.entry.update({
+                where: {
+                    email: email,
+                },
+                data: {
+                    Projects: {
+                        connect: {
+                            projectID: newProject.projectID,
+                        },
+                    },
+                },
+            });
             console.log("Success:", newProject);
-            return res.json(newProject);
+            const projectWithGroup = await prisma.project.findUnique({
+                where: {
+                    projectID: newProject.projectID, // Use the project ID from the newProject object
+                },
+                include: {
+                    group: {
+                        select:{
+                            members: true, // retrieve all members of the group
+                            name: true, // retrieve group name
+                        }
+                    } // Include the group data
+                },
+            });
+
+            return res.json({project: projectWithGroup, message: 'Project created successfully!'});
         } catch (error) {
             console.error("Error creating project:", error);
             return res.status(500).send({message: 'Error creating project'});
-        }  finally {
-            await prisma.$disconnect();
-        }
-    }
-    
-    
+        }  
 });
