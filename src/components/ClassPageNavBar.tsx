@@ -27,7 +27,7 @@ const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({ user, onLogout }) => 
   const handleLeaveClass = () => {
     if (window.confirm("Are you sure you want to leave this class?") && user?.email) {
 
-      axios.post("http://localhost:3001/leaveClass", {
+      axios.post("/api/leaveClass", {
         email: user?.email,
         classID: classID,
       })
