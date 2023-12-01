@@ -5,6 +5,7 @@ import axios from "axios";
 import "./ClassPageNavBar.css";
 import ClassPageProjects from "./ClassPageProjects";
 import ClassPagePeople from "./ClassPagePeople";
+import SuccessMessage from "./SuccessMessage";
 
 
 interface User {
@@ -20,6 +21,7 @@ interface ClassPageNavBarProps {
 const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({ user, onLogout }) => {
   const { classID } = useParams<{ classID: string }>();
   const [subtitle, setSubtitle] = useState<string>("Class Name"); // replace with subtitle from classID
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const navigate = useNavigate();
   
 
@@ -48,7 +50,11 @@ const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({ user, onLogout }) => 
         classID: classID,
       })
       .then((res) => {
-        navigate("/Projects");
+        setSuccessMessage(res.data.message);
+        setTimeout(() => {
+          setSuccessMessage("");
+          navigate("/Projects");
+        }, 3000);
     })
     .catch((error) => {
       console.error(`Error leaving class: ${error.response.message}`);
@@ -66,6 +72,7 @@ const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({ user, onLogout }) => 
         <Link className="class-page-nav-item" to={`/./Projects/${classID}/people`} state={{ subtitle: subtitle }}>
           People
         </Link>
+        {successMessage && <SuccessMessage message={successMessage} />}
         <button className="leave-class-button" onClick={handleLeaveClass}>
           Leave Class
         </button>

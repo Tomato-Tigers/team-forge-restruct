@@ -7,6 +7,7 @@ import MainLayout from "./MainLayout";
 import "./ClassPage.css";
 import "./JoinClass.css";
 import AddClassNavBar from "./AddClassNavBar";
+import SuccessMessage from "./SuccessMessage";
 
 interface User {
   name: string;
@@ -30,6 +31,7 @@ const JoinClass: React.FC<JoinClassProps> = ({ user, onLogout }) => {
   const [classes, setClasses] = useState<Class[]>([]);
   const [classCode, setClassCode] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,8 +57,11 @@ const JoinClass: React.FC<JoinClassProps> = ({ user, onLogout }) => {
       classID: classID,
     })
     .then((res) => {
-      alert(res.data.message); //replace with success message
-      navigate("/Projects");
+      setSuccessMessage(res.data.message);
+      setTimeout(() => {
+        setSuccessMessage("");
+        navigate("/Projects");
+      }, 3000);
     })
     .catch((error) => {
       if (error.response && error.response.status === 400) {
@@ -83,6 +88,7 @@ const JoinClass: React.FC<JoinClassProps> = ({ user, onLogout }) => {
         </div>
       )}
       <div className="class-card-container">
+      {successMessage && <SuccessMessage message={successMessage} />} 
       {classes.map(({ classID, title, subtitle, members }) => (
         <div key={classID} className="class-card">
         <div className="title-subtitle">

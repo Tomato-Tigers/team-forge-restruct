@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 import "./CreateClass.css";
 import MainLayout from "./MainLayout";
 import AddClassNavBar from "./AddClassNavBar";
+import SuccessMessage from "./SuccessMessage";
 
 interface User {
   name: string;
@@ -20,6 +23,8 @@ const CreateClass: React.FC<CreateClassProps> = ({ user, onLogout }) => {
   const [subtitle, setSubtitle] = useState<string>("");
   const [capacity, setCapacity] = useState<number>();
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -34,7 +39,10 @@ const CreateClass: React.FC<CreateClassProps> = ({ user, onLogout }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(title === "" || subtitle === "" || capacity === undefined){
-      alert("Please fill out all fields");
+      setErrorMessage("Please fill out all fields");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
       return;
     } else if (!validateInput(title) ){
       setErrorMessage("Please enter the title and subtitle as it appears in the Emory Course Atlas | Ex. CS 325 (Artificial Intelligence)"); 
@@ -50,7 +58,14 @@ const CreateClass: React.FC<CreateClassProps> = ({ user, onLogout }) => {
           email: user?.email,
         })
         .then((res) => {
-          alert(res.data.message); //replace with success message
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessMessage("");
+            navigate("/Projects")
+          }, 3000);
+          setTitle("");
+          setSubtitle("");
+          setCapacity(undefined);
         })
         .catch((error) => {
           if (error.response && error.response.status === 500) {
@@ -84,6 +99,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ user, onLogout }) => {
         <div className="create-class-header">Create Class</div>
         <form className="create-class-form" onSubmit={handleSubmit}>
           {errorMessage && <div className="create-class-error-message">{errorMessage}</div>}
+          {successMessage && <SuccessMessage message={successMessage} />}
           <div className="subtitle">
             Enter the information for your new class
           </div>

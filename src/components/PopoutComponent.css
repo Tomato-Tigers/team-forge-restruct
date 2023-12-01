@@ -54,13 +54,14 @@
 }
   
   .icon-open {
-    position: absolute;
+    position: fixed;
     background-color: black;
     padding: 10px;
     border-radius: 10px;
     height: 30px;
     left: 20px;
-    top: -90px;
+    bottom: 0;
+    margin-bottom: 20px;
   }
   
   .nav-menu.active {
@@ -76,6 +77,7 @@
     padding: 8px, 0px, 8px, 16px;
     list-style: none;
     height: 60px;
+    text-decoration: underline;
   }
   
   label {

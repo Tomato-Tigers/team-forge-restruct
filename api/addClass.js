@@ -65,7 +65,6 @@ module.exports = async(req, res) => {
             data: {
                 title: title,
                 subtitle: subtitle,
-                projects: ["Placeholder"],
                 // add users email to members list
                 members: {
                     connect: {
