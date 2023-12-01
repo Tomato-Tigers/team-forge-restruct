@@ -1,16 +1,25 @@
 // imports
 const { score } = require("./_profile.js");
-const { prisma, getStudentsByClassID } = require('./../../prismaAPI.js');
+
+// an example filter
+const filter = {
+    hasSki: [],     // skills that must have
+    hasInt: [],     // interests that must have
+    notSki: [],     // skills that must not have
+    notInt: [],     // interests that must not have
+    maySki: [],     // skills prefered
+    mayInt: []      // interests prefered
+}
 
 // gets a list of suggested users for user {id}
 // param users: Map: contains all information with the id as the key
 // param id: int: user id
+// param filter: Filter: the search filter
 // return list: array: a sorted list of users
-function search(id, pref) {
-    var users = getStudentsByClassID(prisma, "696b7b56-2871-4773-af68-f071bb660829");
+function search(users, id, pref, filter) {
     var list = [];
     for (var user of users.values()) {
-        var pt = score(users.get(id), user, pref);
+        var pt = score(users.get(id), user, pref, filter);
         if (pt != 0)
             list.push({
                 id: user.id,
@@ -27,5 +36,5 @@ function search(id, pref) {
 }
 
 module.exports = {
-    search
+    search,
 };

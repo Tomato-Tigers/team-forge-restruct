@@ -1,7 +1,7 @@
 const fs = require('fs');
 const url = require('url');
 
-const resourcePath = __dirname + "/../../../resources/"; // (absolute) path to the resources folder
+const resourcePath = __dirname + "/../../resources/"; // (absolute) path to the resources folder
 
 // builds the dictionary using the list of words
 function build(dict) {
