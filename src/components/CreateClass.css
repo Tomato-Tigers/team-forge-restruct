@@ -12,6 +12,7 @@
     margin-left: -171px;
     top: 50%;
     left: 50%;
+    animation: fadeInUp 0.5s ease-in-out;
 }
 
 .create-class-header {
@@ -26,6 +27,7 @@
 
 .create-class-form {
     padding: 18px 28px 0 28px;
+    animation: fadeInUp 0.5s ease-in-out;
 }
 
 .subtitle {
@@ -39,10 +41,39 @@
     font-size: 1.05em;
     font-weight: 300;
     padding-bottom: 18px;
+    margin-bottom: -2px;
+}
+
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px); /* Start from below its final position */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  input[type = title], input[type = subTitle], input[type = capacity], textarea, select {
+    width: 90%;
+    outline: none;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #333;
+    font-size: 1em;
+    color: rgb(246, 242, 242);
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+input[type = title]:focus, input[type = subTitle]:focus, input[type = capacity]:focus, textarea:focus, select:focus {
+    background-color: rgb(118, 115, 115);
 }
 
 footer {
-    padding: 26px 0 22px 0;
+    padding: 0 0 20px 0;
     font-size: 0.82em;
     display: flex;
     flex-direction: row;
@@ -51,4 +82,19 @@ footer {
 
 .create-class-button {
     background-color: var(--steel-blue);
+    border-radius:8px;
+    transition: background-color 0.5s ease;
+    font-size: 1.1em;
+}
+
+.create-class-button:hover {
+    background-color: rgba(243, 237, 237, 0.933);
+    cursor: pointer;
+}
+
+.create-class-error-message{
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

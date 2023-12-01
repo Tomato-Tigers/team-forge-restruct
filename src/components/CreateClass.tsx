@@ -3,6 +3,7 @@ import axios from "axios";
 
 import "./CreateClass.css";
 import MainLayout from "./MainLayout";
+import AddClassNavBar from "./AddClassNavBar";
 
 interface User {
   name: string;
@@ -18,6 +19,7 @@ const CreateClass: React.FC<CreateClassProps> = ({ user, onLogout }) => {
   const [title, setTitle] = useState<string>("");
   const [subtitle, setSubtitle] = useState<string>("");
   const [capacity, setCapacity] = useState<number>();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -31,13 +33,57 @@ const CreateClass: React.FC<CreateClassProps> = ({ user, onLogout }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Class created called ${title}");
+    if(title === "" || subtitle === "" || capacity === undefined){
+      alert("Please fill out all fields");
+      return;
+    } else if (!validateInput(title) ){
+      setErrorMessage("Please enter the title and subtitle as it appears in the Emory Course Atlas | Ex. CS 325 (Artificial Intelligence)"); 
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return;
+    } else {
+      axios
+        .post("http://localhost:3001/addClass", {
+          title: title,
+          subtitle: subtitle,
+          email: user?.email,
+        })
+        .then((res) => {
+          alert(res.data.message); //replace with success message
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 500) {
+            const message = error.response.data.message;
+            setErrorMessage(message);
+            setTimeout(() => {
+              setErrorMessage("");
+            }, 3000);
+          } else {
+            setErrorMessage(error.response.data.message);
+            setTimeout(() => {
+              setErrorMessage("");
+            }, 3000);
+          }
+        });
+
+    }
   };
+
+  const validateInput = (input: string): boolean => {
+    // Regular expression to match the pattern 'CS <3 numbers>' or 'MATH <3 numbers>'
+    const pattern = /^(CS|MATH|) \d{3}$/;
+    return pattern.test(input);
+};
+
+
   return (
     <MainLayout user={user} onLogout={onLogout}>
+      <AddClassNavBar user={user} onLogout={onLogout} />
       <div className="create-class-box">
         <div className="create-class-header">Create Class</div>
         <form className="create-class-form" onSubmit={handleSubmit}>
+          {errorMessage && <div className="create-class-error-message">{errorMessage}</div>}
           <div className="subtitle">
             Enter the information for your new class
           </div>

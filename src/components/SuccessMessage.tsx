@@ -1,11 +1,11 @@
 import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
 
-interface Props {
+interface SuccessMessageProps {
   message: string;
 }
 
-const SuccessMessage = ({ message }: Props) => {
+const SuccessMessage = ({ message }: SuccessMessageProps) => {
   return (
     <div
       style={{

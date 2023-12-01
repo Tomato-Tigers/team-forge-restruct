@@ -22,23 +22,13 @@ const AddClassNavBar: React.FC<AddClassNavBarProps> = ({ user, onLogout }) => {
     <>
       <div className="navigation">
         <h1>Add Class</h1>
-        <Link className="class-page-nav-item" to={"JoinClass"}>
+        <Link className="class-page-nav-item" to={"/./Projects/AddClass/JoinClass"}>
           Join Class
         </Link>
-        <Link className="class-page-nav-item" to={"CreateClass"}>
+        <Link className="class-page-nav-item" to={"/./Projects/AddClass/CreateClass"}>
           Create Class
         </Link>
       </div>
-      <Routes>
-        <Route
-          path="JoinClass"
-          element={<JoinClass user={user} onLogout={onLogout} />}
-        />
-        <Route
-          path="CreateClass"
-          element={<CreateClass user={user} onLogout={onLogout} />}
-        />
-      </Routes>
     </>
   );
 };

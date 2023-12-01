@@ -12,6 +12,7 @@
     margin-left: -271px;
     top: 50%;
     left: 50%;
+    border-radius: 5px;
 }
 
 .login_header {
@@ -32,6 +33,13 @@
     padding: 18px 28px 0 28px;
 }
 
+.form-group input {
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--dark-gray);
+}
+
+
 .subtitle {
     font-size: 0.92em;
     margin-bottom: 10px;
@@ -41,21 +49,43 @@
     display: flex;
     flex-direction: column;
     font-size: 1.05em;
-    font-weight: 300;
+    font-weight: 600;
+    justify-content: space-between;
+    font-size: 1em;
+    border-radius: 2px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .name-group {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1em;
+    border-radius: 2px;
+    font-weight: 600;
 }
 
 .name-group input {
     flex: 1;
+    
+}
+.register_button{
+    font-weight: 575;
+    font-size: .9em;
+    border-radius:1px;
+    padding: 2px 0;
+    margin-top: 10px;
+
 }
 
+.register_button:hover{
+    background-color: #9c9898;
+    cursor: pointer;
+}
 footer {
     padding: 26px 0 22px 0;
-    font-size: 0.82em;
+    font-size: 0.9em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -64,4 +94,50 @@ footer {
 
 .login_redirect_button {
     background-color: var(--steel-blue);
+    font-size: .9em;
+    font-weight: 575;
+}
+
+.login_redirect_button:hover {
+    background-color: #f1ececcf;
+    cursor: pointer;
+}
+
+.login_button{
+    font-weight: 575;
+    font-size: .9em;
+    border-radius:1px;
+    padding: 2px 0;
+    margin-top: 20px;
+
+}
+
+input[type="email"],
+input[type="password"] {
+
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  width: 100%;
+  padding: 1px;
+  border: 1px solid #070707;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  font-size: .9em;
+  transition: background-color 0.3s ease;
+}
+
+input[type="email"]:hover,
+input[type="password"]:hover {
+  background-color: #e0e0e0;
+}
+
+.login_button:hover{
+    background-color: #9c9898;
+    cursor: pointer;
+}
+
+.error_message{
+    color: red;
+    font-size: .9em;
+    margin-top: 7px;
+
 }

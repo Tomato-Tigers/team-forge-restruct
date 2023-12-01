@@ -1,0 +1,250 @@
+
+
+.class-page-projects {
+    margin-top: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 300px;
+}
+
+.project-card{
+    width: 300px;
+    border: 1px solid var(--dark-gray);
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
+    background-color: black;
+    color: white;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding-top: 20px;
+    border-radius: 10px;
+    animation: fadeInUp 0.5s ease-in-out;
+}
+.project-card:hover .delete-project-button{
+    animation: fadeIn 0.5s ease-in-out;
+    display: block;
+    translate: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.title-description {
+    border-bottom: 1px solid var(--dark-gray);
+    width: 50%;
+    color: white;
+}
+
+.project-title {
+    font-size: 1em;
+    font-weight: bold;
+    position: relative;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+
+
+.description {
+    font-size: .9em;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.project-members {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.project-membersCount {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--steel-blue);
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+
+
+.add-project-text {
+    font-size: 1em;
+    font-weight: bolder;
+    color: white;
+    margin-top: 150px;
+    margin-left: 300px;
+    margin-bottom: -90px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.new-project-form{
+   
+    padding: 20px;
+    width: 50%;
+    background-color: black;
+    border: 1px solid var(--dark-gray);
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    margin-left: 300px;
+    margin-bottom: -150px;
+    margin-top: 100px;
+}
+
+input[type = text], textarea, select {
+    width: 90%;
+    outline: none;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #333;
+    font-size: 1em;
+    color: rgb(246, 242, 242);
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+}
+
+input[type = text]:focus, textarea:focus, select:focus {
+    background-color: rgb(118, 115, 115);
+}
+
+
+.group-name{
+    margin-top: 10px;
+}
+
+
+.new-project-button {
+    font-weight: bolder;
+    background-color: var(--steel-blue);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    transition: color 0.5s ease;
+    margin-top: 10px;
+}
+
+.new-project-button:hover {
+    background-color: rgba(243, 237, 237, 0.933);
+    color: black;
+}
+
+.new-project-button:active {
+    transform: scale(0.98);
+}
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px); /* Start from below its final position */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .new-project-form.animate {
+    animation: fadeInUp 0.7s ease-in-out;
+  }
+
+  .projects-error-message{
+    color: red;
+    font-size: 1em;
+    text-align: center;
+    position: relative;
+    margin-bottom: 50px;
+    margin-left: 100px;
+    padding-top: 50px;
+
+  }
+
+
+  .delete-project-button {
+    display: none;
+    font-size: .8em;
+    background-color: #ff4d4d; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 15px; /* Top/bottom and left/right padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor changes to pointer to indicate a button */
+    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition for hover and click */
+    margin-bottom: 15px;
+  }
+  
+  .delete-project-button:hover {
+    background-color: #e60000; /* Darker red on hover */
+  }
+  
+  .delete-project-button:active {
+    transform: scale(0.98); /* Slightly smaller on click */
+    background-color: #cc0000; /* Even darker red on click */
+  }
+
+
+
+  .join-project-button{
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid var(--dark-gray);
+    background-color: var(--steel-blue);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    transition: background-color 0.5s ease;
+    transition: color 0.5s ease;
+  }
+
+    .join-project-button:hover{
+        background-color: rgb(243, 237, 237);
+        cursor: pointer;
+        color: black;
+    }
+
+    .leave-project-button{
+        width: 100px;
+        height: 30px;
+        border-radius: 10px;
+        border: 1px solid var(--dark-gray);
+        background-color: var(--steel-blue);
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        transition: background-color 0.5s ease;
+        transition: color 0.5s ease;
+    }
+
+    .leave-project-button:hover{
+        background-color: rgb(243, 237, 237);
+        cursor: pointer;
+        color: black;
+    }
+
+    .join-project-button:active {
+        transform: scale(0.98); /* Slightly smaller on click */
+    }
+
+    .leave-project-button:active {
+        transform: scale(0.98); /* Slightly smaller on click */
+    }
