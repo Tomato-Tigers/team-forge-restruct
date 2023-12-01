@@ -9,20 +9,22 @@ datasource db {
 }
 
 model Entry {
-  id           String   @id @default(uuid())
-  createdAt    DateTime @default(now())
-  skills       Skills[]
-  interests    String[]
-  availability String[]
-  relation     String[] //id of students the user wants to work with.
-  password     String
-  email        String   @unique
-  name         String
-  title        String?
-  groupID      String? // Foreign key to Group model
-  group        Group?   @relation(fields: [groupID], references: [groupID])
-  classes      Class[]  @relation("EntryClasses") //id of classes the user is in.
+  id                String             @id @default(uuid())
+  createdAt         DateTime           @default(now())
+  skills            Skills[]
+  interests         String[]
+  availability      String[]
+  relation          String[] //id of students the user wants to work with.
+  password          String
+  email             String             @unique
+  name              String
+  title             String?
+  groupID           String? // Foreign key to Group model
+  group             Group?             @relation(fields: [groupID], references: [groupID])
+  classes           Class[]            @relation("EntryClasses") //id of classes the user is in.
+  staticPreferences StaticPreferences?
   classPreferences  ClassPreferences[]
+  Projects           Project[]
 }
 
 enum Skills {
@@ -40,11 +42,11 @@ model Message {
 }
 
 model Class {
-  classID  String    @id @default(uuid())
-  members  Entry[]   @relation("EntryClasses") //connects to records in Entry
-  projects Project[] //id of projects the class contains
-  title    String
-  subtitle String
+  classID          String             @id @default(uuid())
+  members          Entry[]            @relation("EntryClasses")
+  projects         Project[] //id of projects the class contains
+  title            String
+  subtitle         String
   classPreferences ClassPreferences[]
 }
 
@@ -53,9 +55,11 @@ model Project {
   title       String
   description String
   groupID     String? // Foreign key to Group model
-  group       Group?  @relation(fields: [groupID], references: [groupID])
+  group       Group?  @relation(fields: [groupID], references: [groupID], onDelete: Cascade)
   classID     String // Foreign key to Class model
   class       Class   @relation(fields: [classID], references: [classID])
+  ownerEmail  String // Foreign key to Entry model
+  owner       Entry   @relation(fields: [ownerEmail], references: [email])
 }
 
 model Group {
@@ -73,6 +77,16 @@ model Preferences {
   skill    Int
 }
 
+model StaticPreferences {
+  id             String   @id @default(uuid())
+  userId         String // Link to the User table, assuming it's 'Entry'
+  selectedSkills String[] // Array of skills (e.g., Java, Python)
+  availability   Json // Storing availability data as JSON
+  user           Entry    @relation(fields: [userId], references: [id])
+
+  @@unique([userId]) // Ensure one entry per user
+}
+
 model ClassPreferences {
   id                    String   @id @default(uuid())
   userID                String
@@ -84,5 +98,5 @@ model ClassPreferences {
   user                  Entry    @relation(fields: [userID], references: [id])
   class                 Class    @relation(fields: [classID], references: [classID])
 
- @@unique([userID, classID]) //  Ensure one entry per user-class combination
+  @@unique([userID, classID]) // Ensure one entry per user-class combination
 }
