@@ -18,6 +18,9 @@
 
   h1 {
     margin-top: 50px;
+    text-align: center;
+    font-size: 1.7em;
+
   }
 
   .class-page-nav-item {
@@ -31,4 +34,29 @@
     background-color: var(--steel-blue);
     border-radius: 10px;
     color: black;
+  }
+
+  .leave-class-button {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid var(--dark-gray);
+    background-color: var(--steel-blue);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 100px;
+    transition: background-color 0.5s ease;
+    transition: color 0.5s ease;
+  }
+
+  .leave-class-button:hover {
+    background-color: rgba(243, 237, 237, 0.933);
+    cursor: pointer;
+    color: black;
+  }
+
+  .leave-class-button:active {
+    transform: scale(.98);
   }

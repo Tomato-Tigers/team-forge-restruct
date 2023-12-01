@@ -18,7 +18,10 @@ import JoinClass from "./components/JoinClass";
 import CreateClass from "./components/CreateClass";
 import Messages from "./components/Messages";
 import ProfilePage from "./components/ProfilePage"
+import ClassPageProjects from "./components/ClassPageProjects";
+import ClassPagePeople from "./components/ClassPagePeople";
 import PrivateRoute from "./PrivateRoutes/index";
+
 
 
 import { getEmailFromJWT, getUsernameFromJWT } from './jwtUtils';
@@ -153,7 +156,7 @@ const App: React.FC = () => {
                 }
           />
           
-          <Route path="/Projects/*">
+          <Route path="/Projects">
             <Route
               path=""
               element={
@@ -163,15 +166,31 @@ const App: React.FC = () => {
               }
             />
             <Route
-              path="/Projects/*/:classID"
+              path="/Projects/:classID"
               element={
                 <PrivateRoute>
               <ClassPage user={user} onLogout={handleLogout} />
               </PrivateRoute>
               }
             />
+            <Route 
+                path="/Projects/:classID/projects" 
+                element={
+                  <PrivateRoute>
+                <ClassPageProjects user = {user} onLogout={handleLogout}/>
+                </PrivateRoute>
+                }
+              />
+              <Route 
+                path="/Projects/:classID/people" 
+                element={
+                  <PrivateRoute>
+                <ClassPagePeople user = {user} onLogout={handleLogout} />
+                </PrivateRoute>
+                }
+              />
             <Route
-              path="AddClass"
+              path="/Projects/AddClass"
               element={
                 <PrivateRoute>
               <AddClass user={user} onLogout={handleLogout} />
@@ -179,7 +198,7 @@ const App: React.FC = () => {
               }
             >
               <Route
-                path="JoinClass"
+                path="/Projects/AddClass/JoinClass"
                 element={
                   <PrivateRoute>
                 <JoinClass user={user} onLogout={handleLogout} />
@@ -187,7 +206,7 @@ const App: React.FC = () => {
                 }
               />
               <Route
-                path="CreateClass"
+                path="/Projects/AddClass/CreateClass"
                 element={
                   <PrivateRoute>
                 <CreateClass user={user} onLogout={handleLogout} />

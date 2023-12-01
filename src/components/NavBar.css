@@ -12,6 +12,7 @@
     position: fixed;
     height: 90px;
     top: 0;
+    z-index: 100;
 }
 
 .navbar .logo {
@@ -66,11 +67,6 @@
     cursor: pointer;
 }
 
-.dropdown {
-    position: absolute; 
-    top: 200px;
-    right: 20px;
-}
 
 .branding {
     font-weight: bold;
@@ -84,6 +80,7 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     position: absolute;
 }
+
 
 .blue_text {
     color: var(--steel-blue);
@@ -108,6 +105,9 @@
 }
 
 .dropdown {
+    position: absolute;
+    top: 200px;
+    right: 20px;
     background-color: #040404b4;
     padding: 20px; 
     margin-top: -100px;
@@ -180,7 +180,3 @@
     transform: scale(1.1);
     transition: background-color 0.3s ease;
 }
-
-p span {
-    text-decoration: underline;
-  }

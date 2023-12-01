@@ -3,10 +3,6 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 module.exports = async(req, res) => {
-    if (req.method !== 'POST') {
-        return res.status(405).json({error: 'Method not allowed, please use POST'});
-    }
-
     const data = req.body;
     const title = data.title;
     const subtitle = data.subtitle;
@@ -55,10 +51,10 @@ module.exports = async(req, res) => {
             },
         });
         console.log("Success:", updatedClass);
-        return res.status(409).json(updatedClass);
+        return res.json({class: updatedClass, message: 'Existing class found, you have joined successfully!'});
         } catch (error) {
             console.error("Error adding class:", error);
-            return res.status(500).send('Error adding class');
+            return res.status(500).send({message: 'Internal server error when adding class'});
 
         }
         
@@ -95,10 +91,10 @@ module.exports = async(req, res) => {
             },
         });
         console.log("Success:", newClass);
-        return res.json(newClass);
+        return res.json({class: newClass, message: 'New class created successfully!'});
     } catch (error) {
         console.error("Error adding class:", error);
-        return res.status(500).send('Error adding class');
+        return res.status(500).send({message: 'Internal server error when adding class'});
     }
 }
 }

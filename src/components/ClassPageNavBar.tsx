@@ -1,45 +1,60 @@
 import React, { useState } from "react";
-import { useLocation, useParams, Link, Routes, Route } from "react-router-dom";
+import { useNavigate, useLocation, useParams, Link, Routes, Route, Outlet } from "react-router-dom";
+import axios from "axios";
 
 import "./ClassPageNavBar.css";
+import ClassPageProjects from "./ClassPageProjects";
+import ClassPagePeople from "./ClassPagePeople";
 
-interface Project {
-  id: string;
-  creator: string;
-  title: string;
-  description: string;
-  members: string[];
+
+interface User {
+  name: string;
+  email: string;
 }
 
-interface ProjectProps {
-  projects: Project[];
+interface ClassPageNavBarProps {
+  user: User;
+  onLogout: () => void;
 }
 
-const ClassPageNavBar: React.FC = () => {
+const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({ user, onLogout }) => {
   const { classID } = useParams<{ classID: string }>();
-  
+  const navigate = useNavigate();
+
   const location = useLocation();
   const subtitle = location.state.subtitle || "Class Name";
-  
+
+  const handleLeaveClass = () => {
+    if (window.confirm("Are you sure you want to leave this class?") && user?.email) {
+
+      axios.post("http://localhost:3001/leaveClass", {
+        email: user?.email,
+        classID: classID,
+      })
+      .then((res) => {
+        navigate("/Projects");
+    })
+    .catch((error) => {
+      console.error(`Error leaving class: ${error.response.message}`);
+    });
+  };
+};
+
   return (
-    <>
+    <div>
       <div className="navigation">
         <h1>{subtitle}</h1>
-        <Link className="class-page-nav-item" to={`./Projects`}>
+        <Link className="class-page-nav-item" to={`/./Projects/${classID}/projects`} state={{ subtitle: subtitle }}>
           Projects
         </Link>
-        <Link className="class-page-nav-item" to={`./People`}>
+        <Link className="class-page-nav-item" to={`/./Projects/${classID}/people`} state={{ subtitle: subtitle }}>
           People
         </Link>
+        <button className="leave-class-button" onClick={handleLeaveClass}>
+          Leave Class
+        </button>
       </div>
-      <Routes>
-        <Route
-          path="Projects"
-          element={<div>Projects content goes here</div>}
-        />
-        <Route path="People" element={<div>People content goes here</div>} />
-      </Routes>
-    </>
+    </div>
   );
 };
 

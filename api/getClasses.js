@@ -28,14 +28,11 @@ module.exports = async(req, res) => {
             if (!classes) {
                 return res.json([]);
             } else {
-                console.log("Classes: ", classes.classes);
                 return res.json(classes.classes);
             }
         } catch (error) {
             console.error("Error getting classes:", error);
-            return res.status(500).send('Internal server error');
-        } finally {
-            await prisma.$disconnect();
+            return res.status(500).send({message: 'Internal server error'});
         }
 
 }

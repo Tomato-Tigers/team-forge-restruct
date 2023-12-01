@@ -24,18 +24,16 @@ interface ProjectsProps {
   onLogout: () => void;
 }
 
-interface RouteParams {
-  classID: string;
-  [key: string]: string | undefined;
-}
 
 const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
+  
+  
   const [classes, setClasses] = useState<Class[]>([]);
 
   useEffect(() => {
-    if (user?.email) {
+    if (user?.email) { // replace for user.token
       axios
-        .post("/api/getClasses", {
+        .post("http://localhost:3001/getClasses", {
           email: user?.email,
         })
         .then((res) => {
@@ -66,7 +64,7 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
                     >
                       <div className="class-card">
                         <div className="title-subtitle">
-                          <div className="title">{title}</div>
+                          <div className="class-title">{title}</div>
                           <div className="subtitle">{subtitle}</div>
                         </div>
                         <div className="members">
