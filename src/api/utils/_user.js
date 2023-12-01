@@ -18,8 +18,8 @@ const pref = {
 // return users: Map: the users with all information
 function sampleUsers() {
     var users = new Map();
-    users.set(1, {
-        "id": 1,
+    users.set("1", {
+        "id": "1",
         "name": "Person 1",
         "skills": [
             "Java"
@@ -30,10 +30,10 @@ function sampleUsers() {
         "availability": [
             ";08:00-9:00;10:00-13:00", "", "", "", "", "", ""
         ],
-        "relation": [2]
+        "relation": ["2"]
     });
-    users.set(2, {
-        "id": 2,
+    users.set("2", {
+        "id": "2",
         "name": "Person 2",
         "skills": [
             "Java"
@@ -46,8 +46,8 @@ function sampleUsers() {
         ],
         "relation": []
     });
-    users.set(3, {
-        "id": 3,
+    users.set("3", {
+        "id": "3",
         "name": "Person 3",
         "skills": [
             "graphic design"
@@ -58,10 +58,10 @@ function sampleUsers() {
         "availability": [
             ";08:00-9:00;10:00-13:00", "", "", "", "", "", ""
         ],
-        "relation": [2]
+        "relation": ["2"]
     });
-    users.set(4, {
-        "id": 4,
+    users.set("4", {
+        "id": "4",
         "name": "Person 4",
         "skills": [
             "C"
@@ -74,8 +74,8 @@ function sampleUsers() {
         ],
         "relation": []
     });
-    users.set(5, {
-        "id": 5,
+    users.set("5", {
+        "id": "5",
         "name": "Person 5",
         "skills": [
             "SQL"
@@ -86,10 +86,10 @@ function sampleUsers() {
         "availability": [
             ";08:00-9:00;10:00-13:00", "", "", "", "", "", ""
         ],
-        "relation": [1, 3]
+        "relation": ["1", "3"]
     });
-    users.set(6, {
-        "id": 6,
+    users.set("6", {
+        "id": "6",
         "name": "Person 6",
         "skills": [
             "SQL"
@@ -100,7 +100,7 @@ function sampleUsers() {
         "availability": [
             "", "", "", "", "", "", ""
         ],
-        "relation": [1, 3]
+        "relation": ["1", "3"]
     });
     return users;
 }
