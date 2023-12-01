@@ -50,7 +50,7 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "<rootDir>/src"
+      "<rootDir>/src/App.test.tsx"
     ]
   },
   "browserslist": {
