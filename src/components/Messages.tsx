@@ -616,6 +616,7 @@ const handleSendMessage = () => {
                     alt="Search Icon"
                     className="SearchIcon"
                     onClick={handleSearch}
+                    width="21.2" height="21.2"
                 />
             </div>
             <button className="MenuItem" onClick={handleInboxMessages}>Inbox</button>
