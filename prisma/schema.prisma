@@ -95,5 +95,5 @@ model ClassPreferences {
   user                  Entry    @relation(fields: [userID], references: [id])
   class                 Class    @relation(fields: [classID], references: [classID])
 
-  @@unique([userID, classID]) // Ensure one entry per user-class combination
+ @@unique([userID, classID]) //  Ensure one entry per user-class combination
 }

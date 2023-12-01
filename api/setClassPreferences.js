@@ -5,37 +5,40 @@ module.exports = async (req, res) => {
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Method not allowed, please use POST' });
     }
-  
+    
     const {
         email,
         classID,
         preferredSkills,
         preferredSkillsWeight,
         interests,
-        interestsWeight} = req.body;
+        interestsWeight
+    } = req.body;
   
+    const User = await prisma.entry.findFirst({
+      where: {
+              email: email,
+          },
+    });
+    const user = User.id;
+
+    console.log(user);
+    console.log(classID);
+
     try {
-      const classPreferences = await prisma.classPreferences.upsert({
+      const classPreferences = await prisma.classPreferences.update({
         where: {
           userID_classID: {
-            userID: req.body.email,
-            classID: req.body.classID
+            userID: user,
+            classID: classID
           }
         },
-        update: {
+        data: {
           preferredSkills: preferredSkills,
           preferredSkillsWeight: preferredSkillsWeight,
           interests: interests,
           interestsWeight: interestsWeight
-        },
-        create: {
-            userID: email,
-            classID: classID,
-            preferredSkills: preferredSkills,
-            preferredSkillsWeight: preferredSkillsWeight,
-            interests: interests,
-            interestsWeight: interestsWeight
-          },
+        }
       });
   
       res.json(classPreferences);

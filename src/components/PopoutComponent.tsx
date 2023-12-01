@@ -50,18 +50,38 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
   const [interestsWeight, setInterestsWeight] = useState(0);
 
   useEffect(() => {
+    console.log(
+      "Default values: ",
+      selectedSkills,
+      preferredSkillsWeight,
+      selectedInterests,
+      interestsWeight
+    );
+  }, [
+    selectedSkills,
+    preferredSkillsWeight,
+    selectedInterests,
+    interestsWeight,
+  ]);
+
+  useEffect(() => {
     if (user?.email) {
       axios
         .post("/api/getClassPreferences", {
-          userID: user.email,
+          email: user.email,
           classID: classID,
         })
         .then((res) => {
           const preferences = res.data;
-          setSelectedSkills(preferences.preferredSkills);
-          setPreferredSkillsWeight(preferences.preferredSkillsWeight);
-          setSelectedInterests(preferences.interests);
-          setInterestsWeight(preferences.interestsWeight);
+          console.log("Preferences: ", preferences);
+          Array.isArray(preferences.preferredSkills) &&
+            setSelectedSkills(preferences.preferredSkills);
+          preferences.preferredSkillsWeight &&
+            setPreferredSkillsWeight(preferences.preferredSkillsWeight);
+          Array.isArray(preferences.interests) &&
+            setSelectedInterests(preferences.interests);
+          preferences.interestsWeight &&
+            setInterestsWeight(preferences.interestsWeight);
         })
         .catch((error) => {
           console.error(`Error fetching preferences: ${error.message}`);
@@ -73,7 +93,7 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
 
   const handleCheckboxChange = (
     setFunction: React.Dispatch<React.SetStateAction<string[]>>,
-    selectedValues: string[],
+    selectedValues: string[] = [],
     value: string
   ) => {
     if (selectedValues.includes(value)) {
@@ -87,7 +107,7 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
     if (user?.email) {
       axios
         .post("/api/setClassPreferences", {
-          email: user?.email,
+          email: user.email,
           classID: classID,
           preferredSkills: selectedSkills,
           preferredSkillsWeight: preferredSkillsWeight,
@@ -124,7 +144,10 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
                   <label>
                     <input
                       type="checkbox"
-                      checked={selectedSkills.includes(skill.value)}
+                      checked={
+                        Array.isArray(selectedSkills) &&
+                        selectedSkills.includes(skill.value)
+                      }
                       onChange={() =>
                         handleCheckboxChange(
                           setSelectedSkills,
@@ -157,7 +180,10 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
                   <label>
                     <input
                       type="checkbox"
-                      checked={selectedInterests.includes(interest.value)}
+                      checked={
+                        Array.isArray(selectedSkills) &&
+                        selectedInterests.includes(interest.value)
+                      }
                       onChange={() =>
                         handleCheckboxChange(
                           setSelectedInterests,

@@ -51,7 +51,7 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
 
   return (
     <MainLayout user={user} onLogout={onLogout}>
-      <PopoutComponent user={user} classID="1234567890" onLogout={onLogout} />
+      <PopoutComponent user={user} classID="9999999" onLogout={onLogout} />
       <div className="projects-container">
         <Routes>
           <Route
