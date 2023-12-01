@@ -5,12 +5,11 @@ const { sharedElements } = require("./_utils.js");
 // param userA: User: the current user
 // param userB: User: the target user
 // param pref: Pref: user A's preference
-// param filter: Filter: the search filter
 // return score: int: the score
 // the score depends on availability and interests
 // a higher score indicates a more likely chance of working together
 // a score of 0 means that user B should not work with user A
-function score(userA, userB, pref, filter) {
+function score(userA, userB, pref) {
     if (userA.id == userB.id)
         return 0;
 
@@ -24,24 +23,24 @@ function score(userA, userB, pref, filter) {
     res += sharedInterests.length * pref.interest;
 
     // make sure the user satisfy the filter and add corresponding score
-    for (var ski of filter.hasSki)
-        if (!userB.skills.includes(ski))
-            return 0;
-    for (var int of filter.hasInt)
-        if (!userB.interests.includes(int))
-            return 0;
-    for (var ski of filter.notSki)
+    // for (var ski of filter.hasSki)
+    //     if (!userB.skills.includes(ski))
+    //         return 0;
+    // for (var int of filter.hasInt)
+    //     if (!userB.interests.includes(int))
+    //         return 0;
+    // for (var ski of filter.notSki)
+    //     if (userB.skills.includes(ski))
+    //         return 0;
+    // for (var int of filter.notInt)
+    //     if (userB.interests.includes(int))
+    //         return 0;
+    for (var ski of pref.ski)
         if (userB.skills.includes(ski))
-            return 0;
-    for (var int of filter.notInt)
-        if (userB.interests.includes(int))
-            return 0;
-    for (var ski of filter.maySki)
-        if (userB.skills.includes(ski))
-            res += pref.skills;
-    for (var int of filter.mayInt)
+            res += pref.skillWeight;
+    for (var int of pref.int)
         if (userB.interests.includes(int) && !userA.interests.includes(int))
-            res += pref.interests;
+            res += pref.interestWeight;
 
     return res;
 }
