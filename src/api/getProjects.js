@@ -43,8 +43,5 @@ module.exports = (async (req, res) => {
     } catch (error) {
         console.error("Error getting projects:", error);
         return res.status(500).send({message: 'Internal server error'});
-    } finally {
-        await $prisma.disconnect;
-        await prisma.$disconnect();
     }
 });
