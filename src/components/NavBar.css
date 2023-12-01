@@ -22,6 +22,10 @@
     margin-left: 8px;
 }
 
+.navbar .logo :hover{
+    cursor: pointer;
+}
+
 .navbar .logo img {
     width: 75px;; 
     height: 75px;
