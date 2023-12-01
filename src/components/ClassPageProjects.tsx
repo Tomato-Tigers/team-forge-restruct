@@ -7,6 +7,7 @@ import "./Projects.css";
 import MainLayout from "./MainLayout";
 import PopoutComponent from "./PopoutComponent";
 import ClassPageNavBar from "./ClassPageNavBar";
+import SuccessMessage from "./SuccessMessage";
 import "./ClassPage.css";
 import "./ClassPageNavBar.css";
 import "./ClassPageProjects.css";
@@ -51,6 +52,7 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
   const [newGroupName, setNewGroupName] = useState<string>("");
   const [animate, setAnimate] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
 
 
@@ -94,7 +96,10 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
         })
         .then((res) => {
           setProjects(projects.filter((project) => project.projectID !== projectID));
-          alert(res.data.message);
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessMessage("");
+          }, 4000);
         })
         .catch((error) => {
           setErrorMessage(`Error deleting project: ${error.response.data.message}`)
@@ -113,7 +118,12 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
         classID: classID,
       })
       .then((res) => {
-        alert(res.data.message);
+
+        setSuccessMessage(res.data.message);
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 4000);
+
         setProjects((prevProjects) => {
           return prevProjects.map((project) => {
             if (project.projectID === projectID) {
@@ -145,7 +155,10 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
         classID: classID,
       })
       .then((res) => {
-        alert(res.data.message);
+        setSuccessMessage(res.data.message);
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 4000);
         setProjects((prevProjects) => {
           return prevProjects.map((project) => {
             if (project.projectID === projectID) {
@@ -192,7 +205,11 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
           setNewGroupName("");
           setErrorMessage("");
           setAnimate(false);
-          alert(res.data.message);
+
+          setSuccessMessage(res.data.message);
+          setTimeout(() => {
+            setSuccessMessage("");
+          }, 4000);
         })
         .catch((error) => {
           setErrorMessage(`Error creating project: ${error.response.data.message}`)
@@ -260,8 +277,11 @@ const ClassPageProjects: React.FC<ClassPageProjectsProps> = ({
               </div>
             )}
       </form>
-      <div className="class-page-projects">
       
+      <div className="class-page-projects">
+      {successMessage && (
+        <SuccessMessage message={successMessage} />
+      )}
         {Array.isArray(projects) &&
           projects.map(({ projectID, title, description, group, ownerEmail}) => (
             <div className="project-card" key = {projectID}>

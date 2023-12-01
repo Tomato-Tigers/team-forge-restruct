@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Route, useNavigate } from "react-router-dom";
 import axios from "axios";
-import useLocalState from "./useLocalStorage";
+import useLocalState from './useLocalStorage';
 import SuccessMessage from "./SuccessMessage";
-import { getEmailFromJWT } from "../jwtUtils";
 
 import "../App.css";
 import "./Login-Register.css";
@@ -56,16 +55,19 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         },
       })
       .then((res) => {
-        const jwt = res.data.token;
-        console.log("JWT: ", jwt);
-        localStorage.setItem("jwt", jwt); // Store JWT in localStorage
-
-        const { name } = res.data;
-        const email = getEmailFromJWT();
-        console.log("Name and email: ", name, email);
+        const { name, email } = res.data;
+        console.log(res.data);
         const user: User = { name, email };
-        console.log("user prop: ", user);
+       
 
+
+        // Assuming the JWT is in res.data.jwt
+        const jwt = res.data.token;
+        
+        localStorage.setItem('jwt', jwt); // Store JWT in localStorage
+ 
+
+       
         setUser(user);
         onLogin(user);
         setShowSuccessMessage(true);
@@ -76,14 +78,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       })
       .catch((error) => {
         if (error.response && error.response.data) {
-          setErrorMessage(error.response.data);
+          setErrorMessage(error.response.data.message);
           setTimeout(() => {
-            setErrorMessage("asdasd");
+            setErrorMessage("");
           }, 5000);
         } else {
-          setErrorMessage(error.message);
+          setErrorMessage(error.response.data.message);
           setTimeout(() => {
-            setErrorMessage("qweqwe");
+            setErrorMessage("");
           }, 5000);
         }
       });
