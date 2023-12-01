@@ -33,7 +33,7 @@ const Projects: React.FC<ProjectsProps> = ({ user, onLogout }) => {
   useEffect(() => {
     if (user?.email) { // replace for user.token
       axios
-        .post("http://localhost:3001/getClasses", {
+        .post("/api/getClasses", {
           email: user?.email,
         })
         .then((res) => {
