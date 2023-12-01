@@ -133,7 +133,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <Router>
+<Router>
         <Routes>
           <Route path="/" element={<Login onLogin={handleLogin} />} />
           <Route path="/Register" element={<Register />} />
@@ -152,10 +152,10 @@ const App: React.FC = () => {
           element={
               <PrivateRoute>
               <ProfilePage user={user} onLogout={handleLogout} />
-              </PrivateRoute>  
+              </PrivateRoute> 
                 }
           />
-          
+         
           <Route path="/Projects">
             <Route
               path=""
