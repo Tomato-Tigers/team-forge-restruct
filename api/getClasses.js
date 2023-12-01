@@ -10,7 +10,6 @@ module.exports = async(req, res) => {
     let email = data.email;
     //remove "" from email
     email = data.email.replace(/['"]+/g, '');
-
     try {
             const classes = await prisma.entry.findUnique({
                 where: {
