@@ -37,19 +37,6 @@ const ClassPage: React.FC<ClassPageProps> = ({user, onLogout}) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
  
-  useEffect(() => {
-    if (classID) {
-       axios.post("http://localhost:3001/getProjects", {
-            classID: classID
-          })
-          .then((res) => {
-            setProjects(res.data);
-          })
-          .catch((error) => {
-          // alert(`Error fetching classes: ${error.message}`);
-            console.error(`Error fetching projects: ${error.message}`);
-          });}
-  }, []);
 
   const handleNewProjectTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewProjectTitle(e.target.value);

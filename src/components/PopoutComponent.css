@@ -1,6 +1,8 @@
 .popout-component {
+    position: fixed;
     background-color: transparent;
-  }
+}
+
   .popout-component.background-active {
     background-color: black;
     height: 100%;
@@ -11,10 +13,10 @@
   }
   
   .pref-navbar {
-    position: absolute;
+    position: relative;
     display: flex;
     justify-content: start;
-    align-items: center
+    align-items: center;
   }
   
   .menu-bars {
@@ -25,12 +27,31 @@
   .nav-menu {
     position: fixed;
     background-color: none;
-    height: 100vh;
+    height: 85vh;
     display: flex;
     justify-content: center;
     left: -100%;
     transition: 850ms;
+    max-height: 100vh; /* This will limit the height to the viewport height */
+    overflow-y: auto; /* This will enable scrolling if content exceeds max-height */
+    padding-right: 21px;
   }
+
+   .nav-menu::-webkit-scrollbar {
+    width: 10px; /* Set scrollbar width */
+    background: var(--steel-blue); /* Track color */
+    border-radius: 10px;
+    padding-left: 10px;
+  }
+  .nav-menu::-webkit-scrollbar-track{
+    background: var(--steel-blue); /* Track color */
+    border-radius: 10px;
+  }
+
+  .nav-menu::-webkit-scrollbar-thumb {
+    background: #e3e2e2; /* Thumb color */
+    border-radius: 10px;
+}
   
   .icon-open {
     position: absolute;
@@ -74,12 +95,25 @@
   }
   
   
-  button {
+  .update-preferences-button {
     margin-top: 20px;
     font-size: 0.82em;
+    font-weight: bold;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     background-color: var(--steel-blue);
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 5px;
+  }
+
+  .update-preferences-button:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+  }
+
+  .update-preferences-button:active {
+    transform: scale(0.98)
   }
