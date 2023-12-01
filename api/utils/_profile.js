@@ -5,40 +5,41 @@ const { sharedElements } = require("./_utils.js");
 // param userA: User: the current user
 // param userB: User: the target user
 // param pref: Pref: user A's preference
+// param filter: Filter: the search filter
 // return score: int: the score
 // the score depends on availability and interests
 // a higher score indicates a more likely chance of working together
 // a score of 0 means that user B should not work with user A
-function score(userA, userB, pref) {
-    if (userA.id === userB.id)
+function score(userA, userB, pref, filter) {
+    if (userA.id == userB.id)
         return 0;
 
     var res = 0;    // the final score
 
     var slots = sharedTime(userA.availability, userB.availability);
     var slotCnt = timeCnt(slots);
-    if (slotCnt === 0) return 0;
+    if (slotCnt == 0) return 0;
 
     var sharedInterests = sharedElements(userA.interests, userB.interests);
     res += sharedInterests.length * pref.interest;
 
-    // make sure the user satisfy the pref and add corresponding score
-    for (var ski of pref.hasSki)
+    // make sure the user satisfy the filter and add corresponding score
+    for (var ski of filter.hasSki)
         if (!userB.skills.includes(ski))
             return 0;
-    for (var int of pref.hasInt)
+    for (var int of filter.hasInt)
         if (!userB.interests.includes(int))
             return 0;
-    for (var ski of pref.notSki)
+    for (var ski of filter.notSki)
         if (userB.skills.includes(ski))
             return 0;
-    for (var int of pref.notInt)
+    for (var int of filter.notInt)
         if (userB.interests.includes(int))
             return 0;
-    for (var ski of pref.maySki)
+    for (var ski of filter.maySki)
         if (userB.skills.includes(ski))
             res += pref.skills;
-    for (var int of pref.mayInt)
+    for (var int of filter.mayInt)
         if (userB.interests.includes(int) && !userA.interests.includes(int))
             res += pref.interests;
 
@@ -53,14 +54,14 @@ function sharedTime(timeA, timeB) {
     var availability = ["", "", "", "", "", "", ""];
     for (var i = 0; i < 7; i++) {
         var inter = intersection(timeA[i], timeB[i]);
-        if (inter !== "") availability[i] = inter.substring(1);
+        if (inter != "") availability[i] = inter.substring(1);
     }
     return availability;
 }
 
 // finds the intersection of two availability (on a day)
 function intersection(timeA, timeB) {
-    if (timeA === "" || timeB === "") return "";
+    if (timeA == "" || timeB == "") return "";
     var segmentA = timeA.split(";");
     var segmentB = timeB.split(";");
 
@@ -74,7 +75,7 @@ function intersection(timeA, timeB) {
         while (isEarlier(rItem.e, lItem.s)) {
             // console.log("pass " + ttoa(lItem) + " " + ttoa(rItem));
             rPtr++;
-            if (rPtr === segmentB.length)
+            if (rPtr == segmentB.length)
                 return res;
             rItem = atot(segmentB[rPtr]);
         }
@@ -87,7 +88,7 @@ function intersection(timeA, timeB) {
             res += ";" + ttoa(intersection);
 
             rPtr++;
-            if (rPtr === segmentB.length)
+            if (rPtr == segmentB.length)
                 return res;
             rItem = atot(segmentB[rPtr]);
         }
@@ -131,7 +132,7 @@ function isEarlier(timeA, timeB) {
     if (timeA.h < timeB.h)
         return 1;
     // console.log(timeA.h + " >= " + timeB.h)
-    if (timeA.h === timeB.h && timeA.m < timeB.m)
+    if (timeA.h == timeB.h && timeA.m < timeB.m)
         return 1;
     // console.log("right is later");
     return 0;

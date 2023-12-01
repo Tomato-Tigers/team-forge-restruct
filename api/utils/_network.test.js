@@ -7,14 +7,17 @@ function testGroup() {
 
     var pref = {
         interest: 5,
-        skill: 5,
+        skill: 5
+    };
+
+    var filter = {
         hasSki: [],     // skills that must have
         hasInt: [],     // interests that must have
         notSki: [],     // skills that must not have
         notInt: [],     // interests that must not have
         maySki: [],     // skills prefered
         mayInt: []      // interests prefered
-    };
+    }
 
     var testCases = [
         {
@@ -51,7 +54,7 @@ function testGroup() {
 
     describe("Test group()", () => {
         test.each(testCases)('', (testCase) => {
-            var result = group(students, testCase.id, testCase.size, pref);
+            var result = group(students, testCase.id, testCase.size, pref, filter);
             expect(result).toStrictEqual(testCase.expected);
         });
     });
