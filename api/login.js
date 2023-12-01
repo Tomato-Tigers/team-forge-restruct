@@ -1,8 +1,8 @@
-
 const { getPasswordByEmail } = require('../src/prismaAPI');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
+
 
 const prisma = new PrismaClient();
 
@@ -25,18 +25,26 @@ module.exports = async (req, res) => {
             where: {
                 email: email,
             },
-            select: {
-              id: true, // Fetch the user ID
-              password: true, // Fetch the hashed password
-              name: true, // Fetch the user's name
-              // ... include other fields you might need ...
+            select: {//fetches
+              id: true, 
+              password: true, 
+              name: true, 
+             
           },
       });
     
     
         if (bcrypt.compareSync(password, storedHashedPassword)) {
-          const token = jwt.sign({ id: user.id }, process.env.JSON_WEB_TOKEN_KEY, { expiresIn: '1h' });
-          res.status(200).send({ email: user.email, name: user.name, token, message: 'Login successful' });; 
+          const token = jwt.sign(
+            { 
+              
+              name: user.name, 
+              email: email
+            }, 
+            process.env.JSON_WEB_TOKEN_KEY, 
+            { expiresIn: '1h' }
+          );
+                    res.status(200).send({ email: email, name: user.name, token, message: 'Login successful' });; 
       } else {
         res.status(400).send('Incorrect password. Please Try again.');
     }

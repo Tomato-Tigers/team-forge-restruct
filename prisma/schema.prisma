@@ -14,56 +14,61 @@ model Entry {
   skills            Skills[]
   interests         String[]
   availability      String[]
-  relation          String[] //id of students the user wants to work with.
+  relation          String[]
   password          String
   email             String             @unique
   name              String
   title             String?
-  groupID           String? // Foreign key to Group model
+  groupID           String?
+  ClassPreferences  ClassPreferences[]
   group             Group?             @relation(fields: [groupID], references: [groupID])
-  classes           Class[]            @relation("EntryClasses") //id of classes the user is in.
+  receivedMessages  Message[]          @relation("RecipientMessages")
+  sentMessages      Message[]          @relation("SenderMessages")
+  Project           Project[]
   staticPreferences StaticPreferences?
-  classPreferences  ClassPreferences[]
-}
-
-enum Skills {
-  Java
-  Python
-  C
+  classes           Class[]            @relation("EntryClasses")
 }
 
 model Message {
-  Messageid   String   @id @default(uuid())
-  userID      String
-  datetime    DateTime @default(now())
-  recipientID String
-  message     String
+  id            String   @id @default(uuid())
+  senderEmail   String
+  recipientEmail String
+  content       String
+  createdAt     DateTime @default(now())
+
+  sender        Entry    @relation("SenderMessages", fields: [senderEmail], references: [email])
+  recipient     Entry    @relation("RecipientMessages", fields: [recipientEmail], references: [email])
+
+  @@index([senderEmail])
+  @@index([recipientEmail])
 }
 
 model Class {
   classID          String             @id @default(uuid())
-  members          Entry[]            @relation("EntryClasses") //connects to records in Entry
-  projects         Project[] //id of projects the class contains
   title            String
   subtitle         String
-  classPreferences ClassPreferences[]
+  ClassPreferences ClassPreferences[]
+  projects         Project[]
+  members          Entry[]            @relation("EntryClasses")
 }
 
 model Project {
   projectID   String  @id @default(uuid())
   title       String
   description String
-  groupID     String? // Foreign key to Group model
-  group       Group?  @relation(fields: [groupID], references: [groupID])
-  classID     String // Foreign key to Class model
+  groupID     String?
+  classID     String
+  ownerEmail  String
   class       Class   @relation(fields: [classID], references: [classID])
+  group       Group?  @relation(fields: [groupID], references: [groupID], onDelete: Cascade)
+  Entry       Entry   @relation(fields: [ownerEmail], references: [email])
 }
 
 model Group {
   groupID      String    @id @unique @default(uuid())
-  members      Entry[]
   meetingTimes String[]
   name         String
+  members      Entry[]
   Project      Project[]
 }
 
@@ -76,24 +81,28 @@ model Preferences {
 
 model StaticPreferences {
   id             String   @id @default(uuid())
-  userId         String // Link to the User table, assuming it's 'Entry'
-  selectedSkills String[] // Array of skills (e.g., Java, Python)
-  availability   Json // Storing availability data as JSON
+  userId         String   @unique
+  selectedSkills String[]
+  availability   Json
   user           Entry    @relation(fields: [userId], references: [id])
-
-  @@unique([userId]) // Ensure one entry per user
 }
 
 model ClassPreferences {
   id                    String   @id @default(uuid())
-  userId                String
-  classId               String
+  userID                String
+  classID               String
   preferredSkills       String[]
   preferredSkillsWeight Int
   interests             String[]
   interestsWeight       Int
-  user                  Entry    @relation(fields: [userId], references: [id])
-  class                 Class    @relation(fields: [classId], references: [classID])
+  Class                 Class    @relation(fields: [classID], references: [classID])
+  Entry                 Entry    @relation(fields: [userID], references: [id])
 
-  @@unique([userId, classId]) // Ensure one entry per user-class combination
+  @@unique([userID, classID])
+}
+
+enum Skills {
+  Java
+  Python
+  C
 }

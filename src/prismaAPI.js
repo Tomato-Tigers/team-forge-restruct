@@ -81,7 +81,7 @@ async function getTableIdByID(prisma, id) {
 }
 
 async function getStudentsByClassID(prisma, classID) {
-    return await prisma.class.findUnique({
+    return await prisma.Class.findUnique({
         where: {
             classID: classID
         },
@@ -91,13 +91,140 @@ async function getStudentsByClassID(prisma, classID) {
     });
 }
 
-async function upsertUserStaticPreferences(prisma, data) {
-    return await prisma.staticPreferences.upsert({
-        where: { userId: data.userId },
-        update: data,
-        create: data,
+async function upsertUserStaticPreferences(data) {
+    console.log('Upserting Data:', data);
+    try {
+        return await prisma.staticPreferences.upsert({
+            where: {
+                userId: data.userId,
+            },
+            update: {
+                selectedSkills: data.selectedSkills,
+                availability: data.availability, 
+            },
+            create: {
+                userId: data.userId,
+                selectedSkills: data.selectedSkills,
+                availability: data.availability,
+            },
+        });
+    } catch (error) {
+        console.error('Error in upsertUserStaticPreferences:', error);
+        throw error; // Rethrow the error to handle it in the calling function
+    }
+}
+
+async function createMessage(senderEmail, recipientEmail, content) {
+    console.log('createMessage started', { senderEmail, recipientEmail });
+
+    try {
+        const message = await prisma.message.create({
+            data: {
+                sender: {
+                    connect: { email: senderEmail }
+                },
+                recipient: {
+                    connect: { email: recipientEmail }
+                },
+                content
+            }
+        });
+        
+        console.log('createMessage completed', message);
+        return message;
+    } catch (error) {
+        console.error('Error in createMessage', error);
+        throw error;
+    }
+}
+
+  
+  
+  
+  
+  async function getInbox(userEmail) {
+    console.log('getInbox started', { userEmail });
+
+    try {
+        const messages = await prisma.message.findMany({
+            where: {
+                recipient: {
+                    email: userEmail
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+
+        console.log('getInbox completed', messages);
+        return messages;
+    } catch (error) {
+        console.error('Error in getInbox', error);
+        throw error;
+    }
+}
+
+
+async function getSentMessages(userEmail) {
+    console.log('getSentMessages started', { userEmail });
+
+    try {
+        const messages = await prisma.message.findMany({
+            where: {
+                sender: {
+                    email: userEmail
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+
+        console.log('getSentMessages completed', messages);
+        return messages;
+    } catch (error) {
+        console.error('Error in getSentMessages', error);
+        throw error;
+    }
+}
+
+
+async function getMessagesForUser(email) {
+    return await prisma.message.findMany({
+      where: {
+        OR: [
+          { senderEmail: email },
+          { recipientEmail: email }
+        ],
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 }
+
+async function createMessageForUser({ senderEmail, recipientEmail, messageContent }) {
+    return await prisma.message.create({
+      data: {
+        senderEmail,
+        recipientEmail,
+        content: messageContent,
+      },
+    });
+}
+
+async function getUserIdByEmail(email) {
+
+    const user = await prisma.entry.findUnique({
+
+      where: { email }
+
+    });
+
+    return user?.id;
+
+  }
 
 module.exports = {
     prisma,
@@ -109,4 +236,11 @@ module.exports = {
     getTableIdByID,
     getStudentsByClassID,
     upsertUserStaticPreferences,
+    createMessage,
+    getMessagesForUser,
+    createMessageForUser,
+    getInbox,
+    getSentMessages,
+    getUserIdByEmail,
+
 };

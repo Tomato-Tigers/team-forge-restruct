@@ -28,10 +28,16 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+  const navigateToHomepage = () => {
+    navigate("/Home");
+  };
+  const navigateToProfile = () => {
+    navigate("/ProfilePage");
+  }
 
   return (
     <div className="navbar">
-      <div className="logo">
+       <div className="logo" onClick={navigateToProfile}>
         <img src={image} alt="Logo" />
       </div>
       <div className="links">
@@ -44,7 +50,9 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
       </div>
       {showDropdown && (
         <div className={`dropdown ${showDropdown ? "animate" : ""}`}>
-          <p>Hello, {user.name}!</p>
+          <p>
+  Hello, <span onClick={navigateToHomepage}>{user.name}</span>!
+</p>
           <button className="sign-out-button" onClick={handleLogout}>
             Sign Out
           </button>
@@ -54,4 +62,4 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
   );
 };
 
-export default NavBar;
+export default NavBar; 

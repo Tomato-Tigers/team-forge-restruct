@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Route, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import useLocalState from "./useLocalStorage";
 import SuccessMessage from "./SuccessMessage";
+import { getEmailFromJWT } from "../jwtUtils";
 
 import "../App.css";
 import "./Login-Register.css";
@@ -14,6 +15,12 @@ interface User {
 
 interface LoginProps {
   onLogin: (user: User) => void;
+}
+interface LoginResponse {
+  email: string;
+  name: string;
+  token: string;
+  message: string;
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
@@ -42,45 +49,45 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = { email: email, password: password };
-
-    axios.post("/api/login", data, {
+    axios
+      .post<LoginResponse>("/api/login", data, {
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
-    })
-    .then((res) => {
-        // Extract user details from the response
-        const userName = res.data.name;
-        const userEmail = res.data.email;
+      })
+      .then((res) => {
+        const jwt = res.data.token;
+        console.log("JWT: ", jwt);
+        localStorage.setItem("jwt", jwt); // Store JWT in localStorage
 
-        // Check if userName and userEmail are defined
-        if (typeof userName === 'string' && typeof userEmail === 'string') {
-          const user: User = { name: userName, email: userEmail };
+        const { name } = res.data;
+        const email = getEmailFromJWT();
+        console.log("Name and email: ", name, email);
+        const user: User = { name, email };
+        console.log("user prop: ", user);
 
-            setUser(user);
-            onLogin(user);
-            setShowSuccessMessage(true);
-            setTimeout(() => {
-                setShowSuccessMessage(false);
-                navigate("/Home");
-            }, 2000);
-        } else {
-            // Handle the case where userName or userEmail is not defined
-            setErrorMessage("Invalid login response received.");
-        }
-    })
-    .catch((error) => {
-        // Error handling
-        if (error.response && error.response.data) {
-            setErrorMessage(error.response.data);
-        } else {
-            setErrorMessage("Login failed. Please try again.");
-        }
+        setUser(user);
+        onLogin(user);
+        setShowSuccessMessage(true);
         setTimeout(() => {
-            setErrorMessage("");
-        }, 5000);
-    });
-};
+          setShowSuccessMessage(false);
+          navigate("/Home");
+        }, 2000);
+      })
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          setErrorMessage(error.response.data);
+          setTimeout(() => {
+            setErrorMessage("asdasd");
+          }, 5000);
+        } else {
+          setErrorMessage(error.message);
+          setTimeout(() => {
+            setErrorMessage("qweqwe");
+          }, 5000);
+        }
+      });
+  };
 
   return (
     <div className="login_box" id="login">

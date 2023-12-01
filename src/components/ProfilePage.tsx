@@ -96,23 +96,35 @@ interface Profilerops {
         };
     
         const handleSubmission = async () => {
-            const token = localStorage.getItem('token');
-            const headers = { Authorization: `Bearer ${token}` };
+            console.log("handleSubmission called");
+            const token = localStorage.getItem('jwt');
+            if (!token) {
+                console.error('No JWT token found');
+                alert('You are not authenticated. Please login again.');
+                return;
+            }
+
+            const headers = {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            };
+        
             const preferenceData = {
-                //userId:user.id, 
+                // Structure your data here
                 selectedSkills: selectedAnswers,
                 availability: availability
             };
-       
+        
             try {
-                await axios.post('/api/staticPreferences', preferenceData, { headers });
+                const response = await axios.post('/api/staticPreferences', preferenceData, { headers });
+                console.log('Preferences updated:', response.data);
                 alert("Preferences saved successfully!");
             } catch (error) {
                 console.error('Error saving preferences:', error);
-                alert("Error saving preferences.");
+                alert("Error saving preferences. Please try again.");
             }
         };
-    
+        
         const location = useLocation();
         let myUsr = { myEmail: 'alexandra.iotzova@emory.edu', firstName: 'Alexandra' , lastName: 'Iotzova'}
    
@@ -294,7 +306,8 @@ interface Profilerops {
     
     
                            
-                            <button type="submit" onClick = {handleSubmission}>Submit</button>
+    <button type="button" onClick={handleSubmission}>Submit</button>
+
                         </form>
                     </div>
                 </div>
