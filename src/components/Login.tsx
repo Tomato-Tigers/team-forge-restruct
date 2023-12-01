@@ -36,6 +36,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const redirectToRegister = () => {
     navigate("/Register");
   };
+  // // Event handlers
+  // const redirectToTest = () => {
+  //   navigate("/Test");
+  // };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -130,6 +134,13 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             >
               Register
             </button>
+            {/* <button
+              className="login_redirect_button"
+              type="button"
+              onClick={redirectToTest}
+            >
+              Test
+            </button> */}
             {errorMessage && (
               <div className="error_message">{errorMessage}</div>
             )}

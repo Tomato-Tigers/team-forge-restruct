@@ -137,6 +137,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Login onLogin={handleLogin} />} />
           <Route path="/Register" element={<Register />} />
+          {/* <Route path="/Test" element={<ClassPagePeople user={user} onLogout={handleLogout} />} /> */}
           <Route
             path="/Home"
             element={

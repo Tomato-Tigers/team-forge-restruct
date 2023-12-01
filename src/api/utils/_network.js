@@ -44,7 +44,7 @@ function build(users) {
 // param pref: Pref: user's preference
 // filter filter: Filter: the search filter
 // return list: array: the id of the students in the group
-function group(users, id, size, pref, filter) {
+function group(id, classID, size) {
     if (adj == 0)
         preprocess(users);
     var list = groupByRelation(id, size);
