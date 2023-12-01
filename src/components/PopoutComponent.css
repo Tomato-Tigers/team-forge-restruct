@@ -54,13 +54,14 @@
 }
   
   .icon-open {
-    position: absolute;
+    position: fixed;
     background-color: black;
     padding: 10px;
     border-radius: 10px;
     height: 30px;
     left: 20px;
-    top: -90px;
+    bottom: 0;
+    margin-bottom: 20px;
   }
   
   .nav-menu.active {

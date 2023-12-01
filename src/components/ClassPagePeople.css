@@ -1,15 +1,33 @@
-.profiles-container {
+.class-page-people {
+    position: absolute;
     margin-top: 100px;
+    left: 250px;
     width: 80%;
     height: 100%;
     justify-content: center;
     align-items: center;
     margin-inline: auto;
-    border-spacing: 0px 20px;
+}
+
+.group-form-box {
+    width: 250px;
+    color: white;
+    background-color: black;
+    border: 1px solid var(--dark-gray);
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
+    padding: 10px;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-card {
-    background-color: white;
+    color: white;
+    background-color: black;
+    border: 1px solid var(--dark-gray);
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
+    padding: 10px 0;
+    margin-bottom: 10px;
 }
 
 .profile-row {
