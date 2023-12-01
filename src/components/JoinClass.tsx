@@ -35,7 +35,7 @@ const JoinClass: React.FC<JoinClassProps> = ({ user, onLogout }) => {
   useEffect(() => {
     if (user?.email) { // can be replaced for user.token
       axios
-        .get("http://localhost:3001/listClasses", {
+        .get("/api/listClasses", {
           params: {
             email: user?.email,
             },})
@@ -50,7 +50,7 @@ const JoinClass: React.FC<JoinClassProps> = ({ user, onLogout }) => {
   }, []);
 
   const handleJoinClass = (classID: string) => {
-    axios.post("http://localhost:3001/joinClass", {
+    axios.post("/api/joinClass", {
       email: user?.email,
       classID: classID,
     })
