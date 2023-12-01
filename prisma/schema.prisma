@@ -22,6 +22,7 @@ model Entry {
   groupID      String? // Foreign key to Group model
   group        Group?   @relation(fields: [groupID], references: [groupID])
   classes      Class[]  @relation("EntryClasses") //id of classes the user is in.
+  classPreferences  ClassPreferences[]
 }
 
 enum Skills {
@@ -44,6 +45,7 @@ model Class {
   projects Project[] //id of projects the class contains
   title    String
   subtitle String
+  classPreferences ClassPreferences[]
 }
 
 model Project {
@@ -69,4 +71,18 @@ model Preferences {
   groupID  String @unique
   interest Int
   skill    Int
+}
+
+model ClassPreferences {
+  id                    String   @id @default(uuid())
+  userID                String
+  classID               String
+  preferredSkills       String[]
+  preferredSkillsWeight Int
+  interests             String[]
+  interestsWeight       Int
+  user                  Entry    @relation(fields: [userID], references: [id])
+  class                 Class    @relation(fields: [classID], references: [classID])
+
+ @@unique([userID, classID]) //  Ensure one entry per user-class combination
 }

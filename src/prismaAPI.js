@@ -80,6 +80,28 @@ async function getTableIdByID(prisma, id) {
     return entry?.id;
 }
 
+async function createClassPreferences(user, classID) {;
+    console.log("ccp %s %s", user, classID);
+    return await prisma.classPreferences.create({
+        data: {
+            user: {
+                connect: {
+                    id: user
+                }
+            },
+            class: {
+                connect: {
+                    classID: classID
+                }
+            },
+            preferredSkills: [],
+            preferredSkillsWeight: 0,
+            interests: [],
+            interestsWeight: 0,
+        }
+    });
+}
+
 module.exports = {
     prisma,
     createNewUser,
@@ -88,4 +110,5 @@ module.exports = {
     deleteEntryByID,
     modifyEntryByID,
     getTableIdByID,
+    createClassPreferences,
 };

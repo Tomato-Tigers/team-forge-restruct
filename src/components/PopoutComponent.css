@@ -1,0 +1,85 @@
+.popout-component {
+    background-color: transparent;
+  }
+  .popout-component.background-active {
+    background-color: black;
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 90px;
+  }
+  
+  .pref-navbar {
+    position: absolute;
+    display: flex;
+    justify-content: start;
+    align-items: center
+  }
+  
+  .menu-bars {
+    font-size: 2rem;
+    background: none;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    background-color: none;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    left: -100%;
+    transition: 850ms;
+  }
+  
+  .icon-open {
+    position: absolute;
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+    height: 30px;
+    left: 20px;
+    top: -90px;
+  }
+  
+  .nav-menu.active {
+    left: 0;
+    transition: 250ms;
+  }
+  
+  .nav-text {
+    color: white;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px, 0px, 8px, 16px;
+    list-style: none;
+    height: 60px;
+  }
+  
+  label {
+    color: white;
+  }
+  
+  .nav-menu-items {
+    width: 100%;
+  }
+  
+  .popout-toggle {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+  
+  
+  button {
+    margin-top: 20px;
+    font-size: 0.82em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--steel-blue);
+  }
