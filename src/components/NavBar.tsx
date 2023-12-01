@@ -40,9 +40,6 @@ const NavBar: React.FC<NavBarProps> = ({user, onLogout}) => {
       <div className="logo">
         <img src={image} alt="Logo" onClick={handleLogoClick} />
       </div>
-      <div className="branding">
-        <span className="blue_text">Team</span>Forge
-      </div>
       <div className="links">
         <Link to="/Home">Home</Link>
         <Link to="/Messages">Messages</Link>
