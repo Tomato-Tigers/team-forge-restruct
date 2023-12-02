@@ -96,35 +96,21 @@ interface Profilerops {
         };
     
         const handleSubmission = async () => {
-            console.log("handleSubmission called");
-            const token = localStorage.getItem('jwt');
-            if (!token) {
-                console.error('No JWT token found');
-                alert('You are not authenticated. Please login again.');
-                return;
-            }
-
-            const headers = {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            };
-        
             const preferenceData = {
-                // Structure your data here
+                userId: 1, // user.id
                 selectedSkills: selectedAnswers,
                 availability: availability
             };
-        
+       
             try {
-                const response = await axios.post('/api/staticPreferences', preferenceData, { headers });
-                console.log('Preferences updated:', response.data);
+                await axios.post('/api/staticPreferences', preferenceData);
                 alert("Preferences saved successfully!");
             } catch (error) {
                 console.error('Error saving preferences:', error);
-                alert("Error saving preferences. Please try again.");
+                alert("Error saving preferences.");
             }
         };
-        
+    
         const location = useLocation();
         let myUsr = { myEmail: 'alexandra.iotzova@emory.edu', firstName: 'Alexandra' , lastName: 'Iotzova'}
    
@@ -306,8 +292,7 @@ interface Profilerops {
     
     
                            
-    <button type="button" onClick={handleSubmission}>Submit</button>
-
+                            <button type="submit" onClick = {handleSubmission}>Submit</button>
                         </form>
                     </div>
                 </div>

@@ -8,12 +8,6 @@ const user = {
     relation: [], // the id of the students who the user wants to work with
 };
 
-// the user's preference in a group
-const pref = {
-    interest: 5,
-    skill: 5
-};
-
 // gets a sample set of users
 // return users: Map: the users with all information
 function sampleUsers() {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import { IconContext } from "react-icons";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ import { BsSliders } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 
 import "./PopoutComponent.css";
+import SuccessMessage from "./SuccessMessage";
 
 interface CheckboxOption {
   id: string;
@@ -14,15 +15,29 @@ interface CheckboxOption {
 }
 
 const skills: CheckboxOption[] = [
-  { id: "1", value: "JavaScript" },
-  { id: "2", value: "Python" },
-  // Add more skills here
+  { id: "1", value: "C" },
+  { id: "2", value: "C#" },
+  { id: "3", value: "C++" },
+  { id: "4", value: "Go" },
+  { id: "5", value: "Java" },
+  { id: "6", value: "JavaScript" },
+  { id: "7", value: "Perl" },
+  { id: "8", value: "Python" },
+  { id: "9", value: "R" },
+  { id: "10", value: "SQL" },
 ];
 
 const interests: CheckboxOption[] = [
-  { id: "1", value: "Web Development" },
-  { id: "2", value: "Machine Learning" },
-  // Add more interests here
+  { id: "1", value: "AI" },
+  { id: "2", value: "Computer Networks" },
+  { id: "3", value: "Data Science" },
+  { id: "4", value: "Game Design" },
+  { id: "5", value: "Graphics" },
+  { id: "6", value: "HCI" },
+  { id: "7", value: "Information Security" },
+  { id: "8", value: "ML" },
+  { id: "9", value: "Systems" },
+  { id: "10", value: "Theory" },
 ];
 
 interface User {
@@ -48,6 +63,9 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
   const [preferredSkillsWeight, setPreferredSkillsWeight] = useState(0);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [interestsWeight, setInterestsWeight] = useState(0);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+
 
   useEffect(() => {
     console.log(
@@ -114,6 +132,12 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
           interests: selectedInterests,
           interestsWeight: interestsWeight,
         })
+        .then((res) => {
+          setShowSuccessMessage(true);
+          setTimeout(() => {
+            setShowSuccessMessage(false);
+          }, 2000);
+        })
         .catch((error) => {
           console.error(`Error updating preferences: ${error.message}`);
         });
@@ -130,6 +154,9 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
             </Link>
           )}
         </div>
+        {showSuccessMessage && (
+              <SuccessMessage message="Preferences updated!" />
+            )}
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items">
             <li className="popout-toggle">
@@ -207,9 +234,10 @@ const PopoutComponent: React.FC<PopoutComponent> = ({
                 onChange={(e) => setInterestsWeight(Number(e.target.value))}
               />
             </li>
-            <button className="update-preferenes-button" onClick={handleUpdate}>
+            <button className="update-preferences-button" onClick={handleUpdate}>
               Update
             </button>
+  
           </ul>
         </nav>
       </IconContext.Provider>

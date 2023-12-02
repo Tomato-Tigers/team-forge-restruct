@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 
 import AddClassNavBar from "./AddClassNavBar";
 import MainLayout from "./MainLayout";
@@ -35,16 +35,20 @@ const AddClass: React.FC<AddClassProps> = ({ user, onLogout }) => {
   // Check out the dependency array and mess with it
   useEffect(() => {
     if (location.pathname === "/Projects/AddClass") {
-      navigate("JoinClass");
+      navigate("/Projects/AddClass/JoinClass");
     }
   }, [navigate, location.pathname]);
 
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <div className="add-class-page">
-        <AddClassNavBar user={user} onLogout={onLogout} />
+        <div className="add-class-page">
+          <AddClassNavBar user={user} onLogout={onLogout} />
+        </div>
       </div>
+      <Outlet />
     </MainLayout>
+    
   );
 };
 

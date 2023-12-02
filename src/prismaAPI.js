@@ -7,20 +7,21 @@ async function createNewUser(data) {
             email: data.email,
             password: data.password,
             name: data.name,
+
             //title: data.title,
             //skills: data.skills || [],
-           // title: data.title || "Default Title"  
-             // Assuming content field is used to store email
+            // title: data.title || "Default Title"  
+            // Assuming content field is used to store email
             // Include other default or required fields as necessary
         }
     });
 }
 
 async function getPasswordByEmail(prisma, email) {
-    
+
     const entry = await prisma.entry.findUnique({
         where: {
-            email:email,
+            email: email,
         },
         select: {
             password: true
@@ -32,11 +33,9 @@ async function getPasswordByEmail(prisma, email) {
     } else {
         console.log(`No password found for email: ${email}`);
     }
-    
+
     return entry?.password;
 }
-
-
 
 async function getSkillsByID(prisma, id) {
     const entry = await prisma.entry.findFirst({
@@ -50,6 +49,25 @@ async function getSkillsByID(prisma, id) {
     return entry?.skills;
 }
 
+async function getEntryByID(id) {
+    const data = await prisma.entry.findFirst({
+        where: {
+            id: id,
+        }
+    });
+    return data;
+}
+
+// async function modifyEntryByID(prisma, id, data) {
+//     const updatedEntry = await prisma.entry.update({
+//         where: {
+//             title: username,
+//         },
+//         data: data
+//     });
+//     return updatedEntry;
+// }
+
 async function deleteEntryByID(prisma, id) {
     await prisma.entry.delete({
         where: {
@@ -58,27 +76,17 @@ async function deleteEntryByID(prisma, id) {
     });
 }
 
-async function modifyEntryByID(prisma, id, data) {
-    const updatedEntry = await prisma.entry.update({
-        where: {
-            title: username,
-        },
-        data: data
-    });
-    return updatedEntry;
-}
-
-async function getTableIdByID(prisma, id) {
-    const entry = await prisma.entry.findFirst({
-        where: {
-            title: username,
-        },
-        select: {
-            id: true
-        }
-    });
-    return entry?.id;
-}
+// async function getTableIdByID(prisma, id) {
+//     const entry = await prisma.entry.findFirst({
+//         where: {
+//             title: username,
+//         },
+//         select: {
+//             id: true
+//         }
+//     });
+//     return entry?.id;
+// }
 
 async function getStudentsByClassID(prisma, classID) {
     return await prisma.Class.findUnique({
@@ -91,6 +99,15 @@ async function getStudentsByClassID(prisma, classID) {
     });
 }
 
+async function getClassPreference(id, classID) {
+    return await prisma.classPreferences.findUnique({
+        where: {
+            id: id,
+            classID: classID
+        }
+    })
+}
+
 async function upsertUserStaticPreferences(data) {
     console.log('Upserting Data:', data);
     try {
@@ -100,7 +117,7 @@ async function upsertUserStaticPreferences(data) {
             },
             update: {
                 selectedSkills: data.selectedSkills,
-                availability: data.availability, 
+                availability: data.availability,
             },
             create: {
                 userId: data.userId,
@@ -114,133 +131,72 @@ async function upsertUserStaticPreferences(data) {
     }
 }
 
-async function createMessage(senderEmail, recipientEmail, content) {
-    console.log('createMessage started', { senderEmail, recipientEmail });
-
-    try {
-        const message = await prisma.message.create({
-            data: {
-                sender: {
-                    connect: { email: senderEmail }
-                },
-                recipient: {
-                    connect: { email: recipientEmail }
-                },
-                content
-            }
-        });
-        
-        console.log('createMessage completed', message);
-        return message;
-    } catch (error) {
-        console.error('Error in createMessage', error);
-        throw error;
-    }
-}
-
-  
-  
-  
-  
-  async function getInbox(userEmail) {
-    console.log('getInbox started', { userEmail });
-
-    try {
-        const messages = await prisma.message.findMany({
-            where: {
-                recipient: {
-                    email: userEmail
-                }
-            },
-            orderBy: {
-                createdAt: 'desc'
-            }
-        });
-
-        console.log('getInbox completed', messages);
-        return messages;
-    } catch (error) {
-        console.error('Error in getInbox', error);
-        throw error;
-    }
-}
-
-
-async function getSentMessages(userEmail) {
-    console.log('getSentMessages started', { userEmail });
-
-    try {
-        const messages = await prisma.message.findMany({
-            where: {
-                sender: {
-                    email: userEmail
-                }
-            },
-            orderBy: {
-                createdAt: 'desc'
-            }
-        });
-
-        console.log('getSentMessages completed', messages);
-        return messages;
-    } catch (error) {
-        console.error('Error in getSentMessages', error);
-        throw error;
-    }
-}
-
-
-async function getMessagesForUser(email) {
-    return await prisma.message.findMany({
-      where: {
-        OR: [
-          { senderEmail: email },
-          { recipientEmail: email }
-        ],
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-}
-
-async function createMessageForUser({ senderEmail, recipientEmail, messageContent }) {
+async function createMessage(senderId, recipientId, content) {
     return await prisma.message.create({
-      data: {
-        senderEmail,
-        recipientEmail,
-        content: messageContent,
-      },
+        data: {
+            senderId,
+            recipientId,
+            content
+        }
     });
 }
 
 async function getUserIdByEmail(email) {
-
     const user = await prisma.entry.findUnique({
-
-      where: { email }
-
+        where: { email }
     });
-
     return user?.id;
+}
 
-  }
+async function getInbox(userId) {
+    if (userId === undefined) {
+        throw new Error('User ID is undefined');
+    }
+
+    return await prisma.message.findMany({
+        where: {
+            recipientId: userId, // Corrected field name
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+}
+
+async function getSentMessages(userId) {
+    if (userId === undefined) {
+        throw new Error('User ID is undefined');
+    }
+
+    return await prisma.message.findMany({
+        where: {
+            senderId: userId, // Corrected field name
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+}
+
+
+
+
 
 module.exports = {
     prisma,
     createNewUser,
     getPasswordByEmail,
     getSkillsByID,
+    getEntryByID,
+    // modifyEntryByID,
     deleteEntryByID,
-    modifyEntryByID,
-    getTableIdByID,
+    // getTableIdByID,
     getStudentsByClassID,
+    getClassPreference,
     upsertUserStaticPreferences,
     createMessage,
-    getMessagesForUser,
-    createMessageForUser,
-    getInbox,
-    getSentMessages,
     getUserIdByEmail,
+    getInbox,
+    getSentMessages
 
 };
