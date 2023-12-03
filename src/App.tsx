@@ -28,6 +28,7 @@ import { getEmailFromJWT, getUsernameFromJWT } from './jwtUtils';
 
 
 
+
 interface User {
   name: string;
   email: string;
@@ -121,20 +122,6 @@ const App: React.FC = () => {
   }, []);
 
 
-
-
-  useEffect(() => {
-    const decodedUsername = getUsernameFromJWT();
-    const decodedEmail = getEmailFromJWT();
-    if (decodedUsername) {
-      setUser({
-        name: decodedUsername,
-        email: decodedEmail
-        // Set other properties as needed
-      });
-    }
-  }, []);
-
   const handleLogin = (user: User) => {
     setUser(user);
   };
@@ -146,7 +133,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-<Router>
+      <Router>
         <Routes>
           <Route path="/" element={<Login onLogin={handleLogin} />} />
           <Route path="/Register" element={<Register />} />
@@ -187,22 +174,6 @@ const App: React.FC = () => {
                 </PrivateRoute>
               }
             />
-            <Route 
-                path="/Projects/:classID/projects" 
-                element={
-                  <PrivateRoute>
-                <ClassPageProjects user = {user} onLogout={handleLogout}/>
-                </PrivateRoute>
-                }
-              />
-              <Route 
-                path="/Projects/:classID/people" 
-                element={
-                  <PrivateRoute>
-                <ClassPagePeople user = {user} onLogout={handleLogout} />
-                </PrivateRoute>
-                }
-              />
             <Route
               path="/Projects/:classID/projects"
               element={

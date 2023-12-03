@@ -9,19 +9,25 @@ datasource db {
 }
 
 model Entry {
-  id           String   @id @default(uuid())
-  createdAt    DateTime @default(now())
-  skills       Skills[]
-  interests    String[]
-  availability String[]
-  relation     String[] //id of students the user wants to work with.
-  password     String
-  email        String   @unique
-  name         String
-  title        String?
-  groupID      String? // Foreign key to Group model
-  group        Group?   @relation(fields: [groupID], references: [groupID])
-  classes      Class[]  @relation("EntryClasses") //id of classes the user is in.
+  id                String             @id @default(uuid())
+  createdAt         DateTime           @default(now())
+  skills            Skills[]
+  interests         String[]
+  availability      String[]
+  relation          String[] //id of students the user wants to work with.
+  password          String
+  email             String             @unique
+  name              String
+  title             String?
+  groupID           String? // Foreign key to Group model
+  group             Group?             @relation(fields: [groupID], references: [groupID])
+  classes           Class[]            @relation("EntryClasses") //id of classes the user is in.
+  staticPreferences StaticPreferences?
+  classPreferences  ClassPreferences[]
+  Projects           Project[]
+
+  sentMessages     Message[] @relation("SenderMessages")
+  receivedMessages Message[] @relation("RecipientMessages")
 }
 
 enum Skills {
@@ -45,11 +51,12 @@ model Message {
 }
 
 model Class {
-  classID  String    @id @default(uuid())
-  members  Entry[]   @relation("EntryClasses") //connects to records in Entry
-  projects Project[] //id of projects the class contains
-  title    String
-  subtitle String
+  classID          String             @id @default(uuid())
+  members          Entry[]            @relation("EntryClasses")
+  projects         Project[] //id of projects the class contains
+  title            String
+  subtitle         String
+  classPreferences ClassPreferences[]
 }
 
 model Project {
@@ -57,16 +64,18 @@ model Project {
   title       String
   description String
   groupID     String? // Foreign key to Group model
-  group       Group?  @relation(fields: [groupID], references: [groupID])
+  group       Group?  @relation(fields: [groupID], references: [groupID], onDelete: Cascade)
   classID     String // Foreign key to Class model
   class       Class   @relation(fields: [classID], references: [classID])
+  ownerEmail  String // Foreign key to Entry model
+  owner       Entry   @relation(fields: [ownerEmail], references: [email])
 }
 
 model Group {
   groupID      String    @id @unique @default(uuid())
+  members      Entry[]
   meetingTimes String[]
   name         String
-  members      Entry[]
   Project      Project[]
 }
 
@@ -75,34 +84,6 @@ model Preferences {
   groupID  String @unique
   interest Int
   skill    Int
-}
-
-model StaticPreferences {
-  id             String   @id @default(uuid())
-  userId         String   @unique
-  selectedSkills String[]
-  availability   Json
-  user           Entry    @relation(fields: [userId], references: [id])
-}
-
-model ClassPreferences {
-  id                    String   @id @default(uuid())
-  userID                String
-  classID               String
-  preferredSkills       String[]
-  preferredSkillsWeight Int
-  interests             String[]
-  interestsWeight       Int
-  Class                 Class    @relation(fields: [classID], references: [classID])
-  Entry                 Entry    @relation(fields: [userID], references: [id])
-
-  @@unique([userID, classID])
-}
-
-enum Skills {
-  Java
-  Python
-  C
 }
 
 model StaticPreferences {
