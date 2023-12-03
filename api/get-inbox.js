@@ -8,12 +8,16 @@ module.exports = async (req, res) => {
   }
 
   const { recipientEmail } = req.query;
-
+  const page = parseInt(req.query.page) || 0;
+  const limit = parseInt(req.query.limit) || 10;
   try {
     const messages = await prisma.message.findMany({
       where: {
         recipientEmail,
       },
+      skip: page * limit,
+      take: limit,
+
       include: {
         sender: true, // Include sender information
       },
