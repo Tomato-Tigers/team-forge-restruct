@@ -58,6 +58,30 @@ async function getEntryByID(id) {
     return data;
 }
 
+async function getRelationByID(email) {
+    const relation = await prisma.entry.findUnique({
+        where: {
+            email: email,
+        },
+        select: {
+            relation: true
+        }
+    });
+    return relation;
+}
+
+async function updateRelationByID(email, relation) {
+    const res = await prisma.entry.update({
+        where: {
+            email: email,
+        },
+        data: {
+            relation: relation,
+        },
+    });
+    return res;
+}
+
 // async function modifyEntryByID(prisma, id, data) {
 //     const updatedEntry = await prisma.entry.update({
 //         where: {
@@ -99,11 +123,10 @@ async function getStudentsByClassID(prisma, classID) {
     });
 }
 
-async function getClassPreference(id, classID) {
+async function getClassPreference(id) {
     return await prisma.classPreferences.findUnique({
         where: {
-            id: id,
-            classID: classID
+            userID_classID: id
         }
     })
 }
@@ -188,6 +211,8 @@ module.exports = {
     getPasswordByEmail,
     getSkillsByID,
     getEntryByID,
+    getRelationByID,
+    updateRelationByID,
     // modifyEntryByID,
     deleteEntryByID,
     // getTableIdByID,

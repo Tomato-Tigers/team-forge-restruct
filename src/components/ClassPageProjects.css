@@ -1,6 +1,7 @@
 
 
 .class-page-projects {
+  background-color: black;
     margin-top: 200px;
     display: flex;
     flex-wrap: wrap;
@@ -11,6 +12,8 @@
 }
 
 .project-card{
+    color: white;
+    background-color: black;
     width: 300px;
     border: 1px solid var(--dark-gray);
     box-shadow: 0px 0px 12px rgba(0,0,0,0.3);

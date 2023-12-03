@@ -4,15 +4,17 @@ const { score } = require("./../src/api/utils/_profile.js");
 
 
 module.exports = async (req, res) => {
-    console.log("hello word");
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed, please use POST' });
     }
     const data = req.body;
     const email = data.email;
     const classID = data.classID;
+    var id;
     try {
-        var id = await getUserIdByEmail(email);
+        // TODO: email is "" when user refreshes the page
+        id = await getUserIdByEmail(email);
+        console.log("id: " + id + " email: " + email);
     } catch (error) {
         console.error("Error:", error);
         return res.status(500).send({ message: 'Cannot get id: ' + error });
@@ -24,14 +26,15 @@ module.exports = async (req, res) => {
         return res.status(500).send({ message: "Cannot get users: " + classID });
     }
     try {
-        var pref = await getClassPreference(id, classID);
+        const prefData = { userID: id, classID: classID };
+        console.log("pref data: " + JSON.stringify(prefData));
+        var pref = await getClassPreference(prefData);
     } catch (error) {
         console.error("Error:", error);
         return res.status(500).send({ message: 'Cannot get pref: ' + error });
     }
     var list = [];
     for (var idx = 0; idx < users.length; idx++) {
-        console.log(idx);
         var usr = users[idx];
         try {
             var target = await getEntryByID(usr.id);
