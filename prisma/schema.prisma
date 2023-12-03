@@ -25,6 +25,9 @@ model Entry {
   staticPreferences StaticPreferences?
   classPreferences  ClassPreferences[]
   Projects           Project[]
+
+  sentMessages     Message[] @relation("SenderMessages")
+  receivedMessages Message[] @relation("RecipientMessages")
 }
 
 enum Skills {
@@ -34,11 +37,17 @@ enum Skills {
 }
 
 model Message {
-  Messageid   String   @id @default(uuid())
-  userID      String
-  datetime    DateTime @default(now())
-  recipientID String
-  message     String
+  id            String   @id @default(uuid())
+  senderEmail   String
+  recipientEmail String
+  content       String
+  createdAt     DateTime @default(now())
+
+  sender        Entry    @relation("SenderMessages", fields: [senderEmail], references: [email])
+  recipient     Entry    @relation("RecipientMessages", fields: [recipientEmail], references: [email])
+
+  @@index([senderEmail])
+  @@index([recipientEmail])
 }
 
 model Class {

@@ -61,11 +61,3 @@ const NavigationBar: React.FC<IMyProps> = (props) => {
 };
 
 export default NavigationBar;
-
-
-
-
-
-
-
-

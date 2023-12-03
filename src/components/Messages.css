@@ -218,7 +218,12 @@ h1 {
 .InboxPane th:first-child,
 .InboxPane td:first-child {
     width: 20%; /* Set the width of the first column to half */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
+
 
 .InboxPane th:not(:first-child),
 .InboxPane td:not(:first-child) {
@@ -268,6 +273,9 @@ h1 {
 .SentdPane th:first-child,
 .SentdPane td:first-child {
     width: 20%; /* Set the width of the first column to half */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .SentdPane th:not(:first-child),

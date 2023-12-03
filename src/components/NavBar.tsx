@@ -31,6 +31,12 @@ const NavBar: React.FC<NavBarProps> = ({user, onLogout}) => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+  const navigateToHomepage = () => {
+    navigate("/Home");
+  };
+  const navigateToProfile = () => {
+    navigate("/ProfilePage");
+  }
 
   const handleLogoClick = () => {
     navigate("/Home");
@@ -58,4 +64,4 @@ const NavBar: React.FC<NavBarProps> = ({user, onLogout}) => {
   );
 };
 
-export default NavBar;
+export default NavBar; 
