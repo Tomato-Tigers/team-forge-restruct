@@ -45,6 +45,8 @@ h1 {
     border: none;
     text-align: left;
     cursor: pointer;
+    background-color: white;
+    color: black;
 }
 
 
@@ -289,4 +291,14 @@ h1 {
 
 .SentdPane th {
     text-align: center;
+
+
 }
+
+.ReplyButton {
+    background-color: white;
+    color: black;
+    width: auto; /* Adjust as needed */
+    padding: 5px 10px;
+    
+  }

@@ -156,7 +156,7 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
                       <td>{message.sender.email}</td> {/* Display the name of the sender */}
                       <td>{message.content}</td>
                       <td>
-                        <button className="MenuItem" 
+                      <button className="MenuItem ReplyButton"
                         onClick={() => handleReply(message.sender.email, message.content)}
                         >
                           Reply
