@@ -33,12 +33,16 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
   const [showSentMsgs, setShowSentMsgs] = useState(false);
   const [showSentMessages, setSentMessages] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const messagesPerPage = 10;
+
   useEffect(() => {
     fetchInboxMessages();
-  }, [user.email]);
+    fetchSentMessages();
+  }, [currentPage, user.email]);
 
   const fetchInboxMessages = () => {
-    axios.get(`/api/get-inbox?recipientEmail=${user.email}`)
+    axios.get(`/api/get-inbox?recipientEmail=${user.email}&page=${currentPage}&limit=${messagesPerPage}`)
       .then(response => {
         setInbox(response.data);
       })
@@ -46,7 +50,7 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
   };
 
   const fetchSentMessages = () => {
-    axios.get(`/api/get-sent-messages?senderEmail=${user.email}`)
+    axios.get(`/api/get-sent-messages?senderEmail=${user.email}&page=${currentPage}&limit=${messagesPerPage}`)
       .then(response => {
         setSent(response.data);
       })
@@ -104,7 +108,14 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
     setOutgoingMsgs(true);
     setSentMessages(false);
   };
+ 
+  const indexOfLastMessage = (currentPage + 1) * messagesPerPage;
+  const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
+  const currentInboxMessages = inbox.slice(indexOfFirstMessage, indexOfLastMessage);
+  const currentSentMessages = sent.slice(indexOfFirstMessage, indexOfLastMessage);
 
+  const nextPage = () => setCurrentPage(prevPage => prevPage + 1);
+  const prevPage = () => setCurrentPage(prevPage => prevPage > 0 ? prevPage - 1 : 0);
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <div className="MessagesRoot">
@@ -154,7 +165,11 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
                     </tr>
                   ))}
                 </table>
+                <div className="pagination">
+                {currentPage > 0 && <button onClick={prevPage}>Previous</button>}
+                {currentInboxMessages.length === messagesPerPage && <button onClick={nextPage}>Next</button>}
               </div>
+            </div>
             )}
             {showSentMessages && (
               <div className="SentdPane">
@@ -170,7 +185,11 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
                     </tr>
                   ))}
                 </table>
+                <div className="pagination">
+                {currentPage > 0 && <button onClick={prevPage}>Previous</button>}
+                {currentSentMessages.length === messagesPerPage && <button onClick={nextPage}>Next</button>}
               </div>
+            </div>
             )}
           </div>
         </div>
