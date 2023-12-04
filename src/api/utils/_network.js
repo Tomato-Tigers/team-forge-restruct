@@ -1,5 +1,5 @@
 const { search } = require("./_search.js");
-var adj = 0;
+var groupResult = [];
 
 // sample user object
 const user = {
@@ -11,31 +11,6 @@ const user = {
     relation: [] // the id of the users who the user wants to work with
 }
 
-// builds the network
-function build(users) {
-    var adj = new Map(); // adjacent matrix
-
-    // for each user
-    for (var user of users.values()) {
-        var temp = user.relation;
-
-        // add users who want to work with the current user
-        var original = adj.get(user.id) || [];
-        for (var id of original)
-            if (!temp.includes(id))
-                temp.push(id);
-        adj.set(user.id, temp);
-
-        // go through all users the current user wants to work with
-        for (var id of user.relation) {
-            var list = adj.get(id) || [];
-            // adds the user to the list if not already
-            if (!list.includes(user.id)) list.push(user.id);
-            adj.set(id, list);
-        }
-    }
-    return adj;
-}
 
 // forms a group of {size} for user {id}
 // param users: Map: contains all information with the id as the key
@@ -44,10 +19,9 @@ function build(users) {
 // param pref: Pref: user's preference
 // filter filter: Filter: the search filter
 // return list: array: the id of the students in the group
-function group(id, classID, size) {
-    if (adj == 0)
-        preprocess(users);
+function group(users, id, size) {
     var list = groupByRelation(id, size);
+    var res = [];
     if (list.length == size) return list;
     var res = search(users, id, pref, filter);
     for (var i = 0; i < res.length && list.length < size; i++) {
@@ -70,18 +44,13 @@ function groupByRelation(id, size) {
         for (var to of adj.get(cur)) {
             // adds unvisited nodes
             if (!res.includes(to) && res.length < size) {
+
                 res.push(to);
                 queue.push(to);
             }
         }
     }
     return res;
-}
-
-// preprocess: 
-//  builds the adj map
-function preprocess(users) {
-    adj = build(users);
 }
 
 
