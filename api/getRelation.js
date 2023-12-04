@@ -3,10 +3,10 @@ const { prisma, getRelationByID } = require("./../src/prismaAPI.js");
 
 
 module.exports = async (req, res) => {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed, please use POST' });
+    if (req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method not allowed, please use GET' });
     }
-    const data = req.body;
+    const data = req.query;
     const user = data.user;
     try {
         const ret = await getRelationByID(user);

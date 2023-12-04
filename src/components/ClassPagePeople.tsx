@@ -50,13 +50,8 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   if (profiles.length === 0) {
-    const profileData = { email: user.email, classID: classID };
     axios
-      .post("/api/search", profileData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .get("/api/search?email=" + user.email + "&classID=" + classID)
       .then((res) => {
         // console.log("search result: " + JSON.stringify(res.data));
         setProfiles(res.data);
@@ -65,18 +60,13 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
         console.log(error);
       });
 
-    const relationData = { user: user.email };
     axios
-      .post("/api/getRelation", relationData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .get("/api/getRelation?user=" + user.email)
       .then((res) => {
         // console.log("user relation: " + JSON.stringify(res.data));
         setRelation(res.data.relation);
-        console.log("data: " + JSON.stringify(res.data));
-        console.log("relation: " + JSON.stringify(relation));
+        // console.log("data: " + JSON.stringify(res.data));
+        // console.log("relation: " + JSON.stringify(relation));
       })
       .catch((error) => {
         console.log(error);
