@@ -15,7 +15,7 @@ interface Message {
     recipient: User;     // The recipient of the message, as a User object
     content: string;     // The content of the message
     createdAt: Date;     // The date and time the message was created
-    // Add any other relevant fields that your messages might have
+    
   }
 
 interface MessagesProps {
