@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
     const data = req.query;
     const email = data.email;
     const classID = data.classID;
+    const size = data.size;
 
     // get id
     var id;
@@ -54,7 +55,7 @@ module.exports = async (req, res) => {
             return res.status(500).send({ message: 'Cannot get user: ' + error });
         }
         // console.log("target: " + JSON.stringify(target));
-        var pt = score(usr, target, pref, false);
+        var pt = score(usr, target, pref, true);
         // TODO: uncomment this
         // if (pt != 0)
         list.push({
@@ -66,6 +67,8 @@ module.exports = async (req, res) => {
     for (var elem of list) {
         var usr = elem.target;
         ret.push(usr);
+        if (ret.length == size)
+            return res.json(ret);
     }
     return res.json(ret);
 }

@@ -1,4 +1,8 @@
 import React, { useReducer, useState } from "react";
+import { useParams } from "react-router-dom";
+import ClassPageNavBar from "./ClassPageNavBar";
+import axios from "axios";
+import { listenerCount } from "process";
 
 import "./Projects.css";
 
@@ -7,11 +11,6 @@ import "./ClassPage.css";
 import "./ClassPageNavBar.css";
 import "./ClassPagePeople.css";
 
-import { useParams } from "react-router-dom";
-import { search } from "./../api/utils/_search.js";
-import ClassPageNavBar from "./ClassPageNavBar";
-import { getUserIdByEmail } from "../prismaAPI";
-import axios from "axios";
 
 // const Search = require("./../api/utils/_search.js");
 
@@ -44,10 +43,12 @@ interface ClassPagePeopleProps {
 
 const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
   const { classID } = useParams<{ classID: string }>();
-  const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [relation, setRelation] = useState<string[]>([]);
-  var x = 0;
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [profiles, setProfiles] = useState<Profile[]>([]); // user profiles
+  const [relation, setRelation] = useState<string[]>([]); // relation of the current user
+  const [num, setNum] = useState<number | null>(null);
+  const [input, setInput] = useState<string>("");
+  const [list, setList] = useState<string[]>([]);
+  const [, forceUpdate] = useReducer((x) => x + 1, 0); // force Update function
 
   if (profiles.length === 0) {
     axios
@@ -93,9 +94,41 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
     // console.log("set relation to " + relation);
   }
 
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    setNum(parseInt(input));
+    setInput("");
+  };
+
+  React.useEffect(() => {
+    if (num !== null) {
+      const newList: string[] = [];
+      for (let i = 1; i <= num; i++) {
+        newList.push(`String number ${i}`);
+      }
+      setList(newList);
+    }
+  }, [num]);
+
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <ClassPageNavBar user={user} onLogout={onLogout} />
+      <div className="group-form-container">
+        <div className="group-form-box">
+          <form onSubmit={handleSubmit}>
+            <div className="group-form-title">Grouping</div>
+            <input className="group-form-title"
+              type="number"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <button className="group-form-button" onSubmit={handleSubmit}>Group</button>
+          </form>
+          {list.map((item, index) => (
+            <p key={index}>{item}</p>
+          ))}
+        </div>
+      </div>
       <div className="profiles-container">
         {profiles.map(profile => (
           <div className="profile-card" key={profile.id}>
