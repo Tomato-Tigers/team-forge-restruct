@@ -89,49 +89,56 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
       })
       .catch((error) => {
         console.log(error);
-      });
-    console.log("set relation to " + relation);
-  };
+      })
+    // console.log("set relation to " + relation);
+  }
 
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <ClassPageNavBar user={user} onLogout={onLogout} />
       <div className="profiles-container">
-        <div className="profile-table">
-          <div className="people-title">People</div>
-          <div>
-            {profiles.map((profile) => (
-              <div className="profile-card" key={profile.id}>
-                <div className="profile-head">
-                  <div className="profile-name">{profile.name}</div>
-                  <div className="profile-email">{profile.email}</div>
-                </div>
-                <div>
-                  <div className="section-title">Skills</div>
-                  {profile.skills.map((skill) => (
-                    <div className="section-content">{skill}</div>
-                  ))}
-                  <div className="placeholder"></div>
-                </div>
-                <div>
-                  <div className="section-title">Interests</div>
-                  {profile.interests.map((interest) => (
-                    <div className="section-content">{interest}</div>
-                  ))}
-                  <div className="placeholder"></div>
-                </div>
-                <div className="profile-tail">
-                  <button className="heart" onClick={() => heart(profile.id)}>
-                    <div>
-                      {relation.includes(profile.id) ? "❤️" : "🤍"}
-                      <div className="placeholder"></div>
+        {profiles.map(profile => (
+          <div className="profile-card" key={profile.id}>
+            <table className="profile-table">
+              <tbody>
+                <tr className="profile-row" key={profile.id}>
+                  <td className="profile-head">
+                    <div className="placeholder"></div>
+                    <div className="profile-name">
+                      {profile.name}
                     </div>
-                  </button>
-                </div>
-              </div>
-            ))}
+                    <div className="profile-email">
+                      {profile.email}
+                    </div>
+                    <div className="placeholder"></div>
+                  </td>
+                  <td>
+                    <div className="section-title">Skills</div>
+                    {profile.skills.map(skill => (
+                      <div className="section-content">{skill}</div>
+                    ))}
+                    <div className="placeholder"></div>
+                  </td>
+                  <td>
+                    <div className="section-title">Interests</div>
+                    {profile.interests.map(interest => (
+                      <div className="section-content">{interest}</div>
+                    ))}
+                    <div className="placeholder"></div>
+                  </td>
+                  <td className="profile-tail">
+                    <button className="heart" onClick={() => heart(profile.id)}>
+                      <div >
+                        {relation.includes(profile.id) ? "❤️" : "🤍"}
+                        <div className="placeholder"></div>
+                      </div>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table >
           </div>
-        </div>
+        ))}
       </div>
     </MainLayout>
   );
