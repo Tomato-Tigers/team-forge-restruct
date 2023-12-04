@@ -9,15 +9,14 @@ const { sharedElements } = require("./_utils.js");
 // the score depends on availability and interests
 // a higher score indicates a more likely chance of working together
 // a score of 0 means that user B should not work with user A
-function score(userA, userB, pref) {
+function score(userA, userB, pref, relationFlag) {
     if (userA.id == userB.id)
         return 0;
 
-    var res = 0;    // the final score
+    if (relationFlag && userA.relation.includes(userB.id))
+        return 10000;
 
-    var slots = sharedTime(userA.availability, userB.availability);
-    var slotCnt = timeCnt(slots);
-    if (slotCnt == 0) return 0;
+    var res = 0;    // the final score
 
     var sharedInterests = sharedElements(userA.interests, userB.interests);
     res += sharedInterests.length * pref.interest;
@@ -41,6 +40,11 @@ function score(userA, userB, pref) {
     for (var int of pref.int)
         if (userB.interests.includes(int) && !userA.interests.includes(int))
             res += pref.interestWeight;
+
+
+    var slots = sharedTime(userA.availability, userB.availability);
+    var slotCnt = timeCnt(slots);
+    if (slotCnt == 0) return res / 10;
 
     return res;
 }
