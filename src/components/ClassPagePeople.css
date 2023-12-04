@@ -1,7 +1,5 @@
-.class-page-people {
-    position: absolute;
+.profiles-container {
     margin-top: 100px;
-    left: 250px;
     width: 80%;
     height: 100%;
     justify-content: center;
