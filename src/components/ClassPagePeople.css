@@ -6,6 +6,10 @@
     width: calc(100% - 200px);
 }
 
+.profile-card {
+    margin-bottom: 20px;
+}
+
 .profile-table {
     display: flex;
     flex-direction: column;
@@ -16,21 +20,12 @@
     border-spacing: 0px 20px;
 }
 
-.people-title {
-    font-size: xxx-large;
-    font-weight: bold;
-}
-
-.profile-card {
-    background-color: black;
-    margin: 20px;
-    width: 1000px;
-}
-
 .profile-row {
+    background-color: black;
 }
 
 .profile-head {
+    width: 40%;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
 }
@@ -41,6 +36,7 @@
 }
 
 .profile-name {
+    width: 100%;
     font-size: xx-large;
     text-align: center;
 }
