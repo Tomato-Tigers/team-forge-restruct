@@ -14,6 +14,7 @@ model Entry {
   skills            Skills[]
   interests         String[]
   availability      String[]
+  
   relation          String[] //id of students the user wants to work with.
   password          String
   email             String             @unique
@@ -22,7 +23,7 @@ model Entry {
   groupID           String? // Foreign key to Group model
   group             Group?             @relation(fields: [groupID], references: [groupID])
   classes           Class[]            @relation("EntryClasses") //id of classes the user is in.
-  staticPreferences StaticPreferences?
+  stablePreferences StablePreferences?
   classPreferences  ClassPreferences[]
   Projects           Project[]
 
@@ -86,15 +87,6 @@ model Preferences {
   skill    Int
 }
 
-model StaticPreferences {
-  id             String   @id @default(uuid())
-  userId         String // Link to the User table, assuming it's 'Entry'
-  selectedSkills String[] // Array of skills (e.g., Java, Python)
-  availability   Json // Storing availability data as JSON
-  user           Entry    @relation(fields: [userId], references: [id])
-
-  @@unique([userId]) // Ensure one entry per user
-}
 
 model ClassPreferences {
   id                    String   @id @default(uuid())
@@ -109,3 +101,16 @@ model ClassPreferences {
 
   @@unique([userID, classID]) // Ensure one entry per user-class combination
 }
+
+model StablePreferences {
+  id                 String   @id @default(uuid())
+  userID             String
+  stableSkills       String[] // Array of stable skills
+  stableInterests    String[] // Array of stable interests
+  availability       Json     // Storing availability data as JSON
+  user               Entry    @relation(fields: [userID], references: [id])
+
+  @@unique([userID]) // Ensure one entry per user
+}
+
+

@@ -201,7 +201,19 @@ async function getSentMessages(userId) {
     });
 }
 
+async function getStablePreferencesByUserID(userID) {
+    return await prisma.stablePreferences.findUnique({
+        where: { userID: userID }
+    });
+}
 
+async function upsertStablePreferences(data) {
+    return await prisma.stablePreferences.upsert({
+        where: { userID: data.userID },
+        update: data,
+        create: data,
+    });
+}
 
 
 
@@ -222,6 +234,8 @@ module.exports = {
     createMessage,
     getUserIdByEmail,
     getInbox,
-    getSentMessages
+    getSentMessages,
+    getStablePreferencesByUserID,
+    upsertStablePreferences
 
 };
