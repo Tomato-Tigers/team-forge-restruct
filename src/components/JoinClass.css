@@ -1,79 +1,76 @@
-.class-card-container{
-    margin-top: 200px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: hidden;
-    margin-left: 300px;
-
+/* Define global color variables */
+:root {
+    --dark-gray: #3C3838;
+    --steel-blue: #7AC1D1;
+    --dark-blue: #1E4862;
 }
 
-@keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px); /* Start from below its final position */
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-.class-card{
-    width: 200px;
-    border: 1px solid var(--dark-gray);
-    box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
-    background-color: black;
-    color: white;
-    height: 200px;
+/* Styling for the main container of the home page */
+.HomePageRoot {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    text-align: center;
-    padding-top: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    animation: fadeInUp 0.5s ease-in-out;
+    justify-content: center;
+    background-color: var(--dark-gray); 
+    color: var(--steel-blue); 
+    height: 120vh; 
 }
 
-.title-subtitle {
-    border-bottom: 1px solid var(--dark-gray);
-    width: 50%;
-}
-.subtitle {
-    font-size: 0.92em;
-    margin-bottom: 10px;
-}
-
-.join-button{
-    width: 100px;
-    height: 30px;
-    border-radius: 10px;
-    border: 1px solid var(--dark-gray);
-    background-color: var(--steel-blue);
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    transition: background-color 0.5s ease;
-    transition: color 0.5s ease;
+/* Styling for a container that holds two panes */
+.TwoPanes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%; 
+    max-width: 1200px; 
+    padding: 20px; 
 }
 
-.join-button:hover{
-    background-color: rgb(243, 237, 237);
-    cursor: pointer;
-    color: black;
+/* Styling for a menu container */
+.Menu {
+    width: 30%; 
+    color: var(--dark-blue); 
+    float: left;
 }
 
-.error-message {
-    color: red;
-    font-size: 1em;
-    text-align: center;
-    position: relative;
-    margin-top: 100px;
-    margin-bottom: -150px;
-    margin-left: 100px;
-  }
+/* Styling for a container that holds images */
+.Images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; 
+    padding: 100px; 
+}
+
+/* Styling for buttons that navigate to different pages */
+.toProfilePage,
+.toMessagesePage,
+.toMyProjects,
+.toPreferences,
+.toDiscover {
+    width: 200px;
+    height: 200px; 
+    object-fit: cover; /* Maintain aspect ratio while covering the container */
+    border-radius: 50%; /* Make the button circular */
+    border: none; /* Remove border */
+    background-color: transparent; /* Set background color to transparent */
+}
+
+/* Styling for images inside the navigation buttons */
+.toProfilePage img,
+.toMessagesePage img,
+.toMyProjects img,
+.toPreferences img,
+.toDiscover img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+}
+
+/* Styling for the heading in the main container */
+.HomePageRoot h3 {
+    text-align: center; 
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+    font-size: 3em; /* Set font size to 3em */
+    margin-top: 20px; 
+}
