@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
     }
 
     // the params
+    // console.log("search req: " + JSON.stringify(req.query));
     const data = req.query;
     const email = data.email;
     const classID = data.classID;
