@@ -20,11 +20,11 @@ const user = {
 // filter filter: Filter: the search filter
 // return list: array: the id of the students in the group
 function group(users, id, size) {
-    if (adj === 0)
+    if (adj == 0)
         preprocess(users);
     var list = groupByRelation(id, size);
     if (list.length == size) return getInfo(list);
-    var res = search(users, id, pref);
+    var res = search(users, id, pref, filter);
     for (var i = 0; i < res.length && list.length < size; i++) {
         if (list.includes(res[i].id)) continue;
         list.push(res[i].id);
@@ -42,9 +42,7 @@ function groupByRelation(id, size) {
 
     while (queue.length != 0) {
         var cur = queue.shift(); // pop the first element
-        console.log(cur);
-        console.log(JSON.stringify(adj.get(cur)));
-        for (var dest of adj.get(cur).relation) {
+        for (var dest of adj.get(cur)) {
             // adds unvisited nodes
             if (!visited.includes(dest.id)) {
                 visited.push(dest.id);
@@ -65,15 +63,11 @@ function preprocess(users) {
 
 // builds the user map
 function build(users) {
-    console.log("users: " + JSON.stringify(users));
-    console.log("preprocess");
     var adj = new Map(); // adjacent matrix
 
     // map each user with the id
-    for (var idx = 0; idx < users.length; idx++) {
-        var user = users[idx];
+    for (var user of users.values()) {
         adj.set(user.id, user);
-        console.log("connect " + user.id);
     }
     for (var user of users.values()) {
         // go through all users the current user wants to work with
