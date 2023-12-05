@@ -17,15 +17,16 @@ module.exports = async (req, res) => {
 
     // variables
     var id, users;
+    if (email == "") return res.status(500).send({ message: 'Email is empty' });
 
     // get the user's id
     try {
-        // console.log("email: " + email);
+        console.log("email: " + email);
         id = await getUserIdByEmail(email);
-        // console.log("id: " + id);
+        console.log("id: " + id);
     } catch (error) {
         console.error("Error:", error);
-        return res.status(500).send({ message: 'Cannot get id: ' + error });
+        return res.status(500).send({ message: 'Cannot get id: ' + email });
     }
 
     // get users
