@@ -42,6 +42,7 @@ module.exports = async (req, res) => {
         const prefData = { userID: id, classID: classID };
         console.log("pref data: " + JSON.stringify(prefData));
         var pref = await getClassPreference(prefData);
+        console.log(pref);
     } catch (error) {
         console.error("Error:", error);
         return res.status(500).send({ message: 'Cannot get pref: ' + error });

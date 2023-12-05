@@ -37,6 +37,16 @@ module.exports = async (req, res) => {
         return res.status(500).send({ message: "Cannot get users: " + classID });
     }
 
-    var ret = group(users, id, size);
+    //get pref
+    try {
+        const prefData = { userID: id, classID: classID };
+        console.log("pref data: " + JSON.stringify(prefData));
+        var pref = await getClassPreference(prefData);
+    } catch (error) {
+        console.error("Error:", error);
+        return res.status(500).send({ message: 'Cannot get pref: ' + error });
+    }
+
+    var ret = group(users, id, size, pref);
     return res.json(ret);
 }
