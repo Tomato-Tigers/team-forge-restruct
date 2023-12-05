@@ -11,7 +11,6 @@ import "./ClassPage.css";
 import "./ClassPageNavBar.css";
 import "./ClassPagePeople.css";
 
-
 // const Search = require("./../api/utils/_search.js");
 
 interface User {
@@ -46,7 +45,7 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
   const [profiles, setProfiles] = useState<Profile[]>([]); // user profiles
   const [relation, setRelation] = useState<string[]>([]); // relation of the current user
   const [num, setNum] = useState<number | null>(null);
-  const [input, setInput] = useState<string>("");
+  const [input, setInput] = useState<string>(""); // Number of students for the group form function
   const [list, setList] = useState<string[]>([]);
   const [, forceUpdate] = useReducer((x) => x + 1, 0); // force Update function
 
@@ -90,16 +89,19 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
     // console.log("set relation to " + relation);
-  }
+  };
 
+  // Parses the numerical input and sends it as a parameter to the algorithm call.
+  // As a default, will print "String 1" through "String x" where x = input.
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setNum(parseInt(input));
     setInput("");
   };
 
+  // Automatically generates "String 1" through "String x" when grouping function is called
   React.useEffect(() => {
     if (num !== null) {
       const newList: string[] = [];
@@ -117,12 +119,15 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
         <div className="group-form-box">
           <form onSubmit={handleSubmit}>
             <div className="group-form-title">Grouping</div>
-            <input className="group-form-title"
+            <input
+              className="group-form-title"
               type="number"
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
-            <button className="group-form-button" onSubmit={handleSubmit}>Group</button>
+            <button className="group-form-button" onSubmit={handleSubmit}>
+              Group
+            </button>
           </form>
           {list.map((item, index) => (
             <p key={index}>{item}</p>
@@ -130,38 +135,34 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
         </div>
       </div>
       <div className="profiles-container">
-        {profiles.map(profile => (
+        {profiles.map((profile) => (
           <div className="profile-card" key={profile.id}>
             <table className="profile-table">
               <tbody>
                 <tr className="profile-row" key={profile.id}>
                   <td className="profile-head">
                     <div className="placeholder"></div>
-                    <div className="profile-name">
-                      {profile.name}
-                    </div>
-                    <div className="profile-email">
-                      {profile.email}
-                    </div>
+                    <div className="profile-name">{profile.name}</div>
+                    <div className="profile-email">{profile.email}</div>
                     <div className="placeholder"></div>
                   </td>
                   <td>
                     <div className="section-title">Skills</div>
-                    {profile.skills.map(skill => (
+                    {profile.skills.map((skill) => (
                       <div className="section-content">{skill}</div>
                     ))}
                     <div className="placeholder"></div>
                   </td>
                   <td>
                     <div className="section-title">Interests</div>
-                    {profile.interests.map(interest => (
+                    {profile.interests.map((interest) => (
                       <div className="section-content">{interest}</div>
                     ))}
                     <div className="placeholder"></div>
                   </td>
                   <td className="profile-tail">
                     <button className="heart" onClick={() => heart(profile.id)}>
-                      <div >
+                      <div>
                         {relation.includes(profile.id) ? "❤️" : "🤍"}
                         <div className="placeholder"></div>
                       </div>
@@ -169,7 +170,7 @@ const Test: React.FC<ClassPagePeopleProps> = ({ user, onLogout }) => {
                   </td>
                 </tr>
               </tbody>
-            </table >
+            </table>
           </div>
         ))}
       </div>
