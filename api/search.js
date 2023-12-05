@@ -15,8 +15,10 @@ module.exports = async (req, res) => {
     const email = data.email;
     const classID = data.classID;
 
-    // get id
-    var id;
+    // variables
+    var id, users;
+
+    // get the user's id
     try {
         // console.log("email: " + email);
         id = await getUserIdByEmail(email);
@@ -28,7 +30,7 @@ module.exports = async (req, res) => {
 
     // get users
     try {
-        var users = (await getStudentsByClassID(prisma, classID)).members;
+        users = (await getStudentsByClassID(prisma, classID)).members;
     } catch (error) {
         console.error("Error:", error);
         return res.status(500).send({ message: "Cannot get users: " + classID });

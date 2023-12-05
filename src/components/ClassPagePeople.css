@@ -89,3 +89,29 @@
     justify-content: center;
     align-items: center;
 }
+
+.group-form-container {
+    left: 250px;
+    margin-left: 200px;
+    margin-top: 100px;
+}
+
+.group-form-title {
+    margin-left: 10px;
+}
+
+.group-form-button {
+    margin-left: 10px;
+}
+
+.group-form-box {
+    width: 250px;
+    color: white;
+    background-color: black;
+    border: 1px solid var(--dark-gray);
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+}

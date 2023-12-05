@@ -24,9 +24,11 @@ const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({ user, onLogout }) => 
   // State variables for subtitle and success message
   const [subtitle, setSubtitle] = useState<string>("Class Name"); // replace with subtitle from classID
   const [successMessage, setSuccessMessage] = useState<string>("");
+
   
   // Access the navigation object for programmatic navigation
   const navigate = useNavigate();
+
 
   // Fetch the subtitle for the class using classID when the component mounts
   useEffect(() => {
@@ -44,7 +46,9 @@ const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({ user, onLogout }) => 
     }
   }, []);
 
+
   // Handle leaving the class when the Leave Class button is clicked
+
   const handleLeaveClass = () => {
     if (window.confirm("Are you sure you want to leave this class?") && user?.email) {
       axios.post("/api/leaveClass", {
@@ -62,22 +66,26 @@ const ClassPageNavBar: React.FC<ClassPageNavBarProps> = ({ user, onLogout }) => 
         console.error(`Error leaving class: ${error.response.message}`);
       });
     }
+
+
   };
 
   return (
     <div>
       <div className="navigation">
-        <h1> {subtitle} </h1>
-        <Link className="class-page-nav-item" to={`/./Projects/${classID}/projects`} state={{ subtitle: subtitle }}>
-          Projects
-        </Link>
-        <Link className="class-page-nav-item" to={`/./Projects/${classID}/people`} state={{ subtitle: subtitle }}>
-          People
-        </Link>
-        {successMessage && <SuccessMessage message={successMessage} />}
-        <button className="leave-class-button" onClick={handleLeaveClass}>
-          Leave Class
-        </button>
+        <div className="container">
+          <h1> {subtitle} </h1>
+          <Link className="class-page-nav-item" to={`/./Projects/${classID}/projects`} state={{ subtitle: subtitle }}>
+            Projects
+          </Link>
+          <Link className="class-page-nav-item" to={`/./Projects/${classID}/people`} state={{ subtitle: subtitle }}>
+            People
+          </Link>
+          {successMessage && <SuccessMessage message={successMessage} />}
+          <button className="leave-class-button" onClick={handleLeaveClass}>
+            Leave Class
+          </button>
+        </div>
       </div>
     </div>
   );

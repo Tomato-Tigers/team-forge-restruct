@@ -1,6 +1,6 @@
 // get all users in a class as a sorted list
 const { prisma, getUserIdByEmail, getStudentsByClassID, getClassPreference, getEntryByID } = require("./../src/prismaAPI.js");
-const { score } = require("./../src/api/utils/_profile.js");
+const { group } = require("./../src/api/utils/_network.js");
 
 
 module.exports = async (req, res) => {
@@ -16,8 +16,11 @@ module.exports = async (req, res) => {
     const classID = data.classID;
     const size = data.size;
 
-    // get id
+    // variables
     var id;
+    var users;
+
+    // get id
     try {
         // console.log("email: " + email);
         id = await getUserIdByEmail(email);
@@ -35,40 +38,6 @@ module.exports = async (req, res) => {
         return res.status(500).send({ message: "Cannot get users: " + classID });
     }
 
-    // get user's preferences
-    try {
-        const prefData = { userID: id, classID: classID };
-        console.log("pref data: " + JSON.stringify(prefData));
-        var pref = await getClassPreference(prefData);
-    } catch (error) {
-        console.error("Error:", error);
-        return res.status(500).send({ message: 'Cannot get pref: ' + error });
-    }
-
-    // get the score of each user and sort
-    var list = [];
-    for (var idx = 0; idx < users.length; idx++) {
-        var usr = users[idx];
-        try {
-            var target = await getEntryByID(usr.id);
-        } catch (error) {
-            return res.status(500).send({ message: 'Cannot get user: ' + error });
-        }
-        // console.log("target: " + JSON.stringify(target));
-        var pt = score(usr, target, pref, true);
-        // TODO: uncomment this
-        // if (pt != 0)
-        list.push({
-            target: target,
-            score: pt
-        });
-    }
-    var ret = [];
-    for (var elem of list) {
-        var usr = elem.target;
-        ret.push(usr);
-        if (ret.length == size)
-            return res.json(ret);
-    }
+    var ret = group(users, id, size);
     return res.json(ret);
 }
