@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
     
     
     if (!storedHashedPassword) {
-        return res.status(400).send('Username not found');
+        return res.status(400).send({message: "Username not found"});
     }
         // get user's name
     const user = await prisma.entry.findUnique({
@@ -46,11 +46,11 @@ module.exports = async (req, res) => {
           );
                     res.status(200).send({ email: email, name: user.name, token, message: 'Login successful' });; 
       } else {
-        res.status(400).send('Incorrect password. Please Try again.');
+        res.status(400).send({message: "Incorrect password. Please Try again."});
     }
   } catch (error) {
     console.error("Login error:", error);
-    res.status(500).send({message: 'Error logging in', error: error });
+    res.status(500).send({message: "Error logging in", error: error });
   } finally {
     await prisma.$disconnect();
   }
