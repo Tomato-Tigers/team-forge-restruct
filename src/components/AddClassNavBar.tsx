@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, Link, Routes, Route } from "react-router-dom";
-import "./AddClassNavBar.css";
+import "./AddClassNavBarcss.css";
 
 // Define interfaces for user information
 interface User {
