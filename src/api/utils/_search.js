@@ -15,17 +15,15 @@ const filter = {
 // param users: Map: contains all information with the id as the key
 // param id: int: user id
 // return list: array: a sorted list of users
-function search(users, cur, pref) {
+function search(users, id, pref) {
     var list = [];
-    for (var idx = 0; idx < users.length; idx++) {
-        var user = users[idx];
-        console.log("check " + JSON.stringify(user));
-        var pt = score(cur, user, pref);
-        // if (pt != 0)
-        list.push({
-            id: user.id,
-            score: pt
-        });
+    for (var user of users.values()) {
+        var pt = score(users.get(id), user, pref);
+        if (pt != 0)
+            list.push({
+                id: user.id,
+                score: pt
+            });
     }
 
     // sort the list based on the score in descending order
