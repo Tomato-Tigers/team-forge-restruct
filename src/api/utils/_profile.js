@@ -34,17 +34,17 @@ function score(userA, userB, pref, relationFlag) {
     // for (var int of filter.notInt)
     //     if (userB.interests.includes(int))
     //         return 0;
-    for (var ski of pref.ski)
+    for (var ski of pref.preferredSkills)
         if (userB.skills.includes(ski))
-            res += pref.skillWeight;
-    for (var int of pref.int)
+            res += pref.preferredSkillsWeight;
+    for (var int of pref.interests)
         if (userB.interests.includes(int) && !userA.interests.includes(int))
             res += pref.interestWeight;
 
 
-    var slots = sharedTime(userA.availability, userB.availability);
-    var slotCnt = timeCnt(slots);
-    if (slotCnt == 0) return res / 10;
+    // var slots = sharedTime(userA.availability, userB.availability);
+    // var slotCnt = timeCnt(slots);
+    // if (slotCnt == 0) return res / 10;
 
     return res;
 }

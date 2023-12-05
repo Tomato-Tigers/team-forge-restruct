@@ -19,12 +19,14 @@ const user = {
 // param pref: Pref: user's preference
 // filter filter: Filter: the search filter
 // return list: array: the id of the students in the group
-function group(users, id, size) {
+function group(users, id, size, pref) {
     if (adj === 0)
         preprocess(users);
     var list = groupByRelation(id, size);
     if (list.length == size) return getInfo(list);
-    var res = search(users, id, pref);
+    console.log("continue");
+    var res = search(users, adj.get(id), pref);
+    console.log(JSON.stringify(res));
     for (var i = 0; i < res.length && list.length < size; i++) {
         if (list.includes(res[i].id)) continue;
         list.push(res[i].id);
