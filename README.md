@@ -1,6 +1,6 @@
 # Our App
 
-[team-forge-restruct.vercel.app]
+[team-forge-restruct.vercel.app](team-forge-restruct.vercel.app)
 
 ## Available Scripts
 
