@@ -1,0 +1,104 @@
+/* NavigationBar.css */
+.navbar {
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+}
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -30px; /* Adjust the margin-top as needed */
+}
+
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+}
+
+.navbar .logo img {
+    width: 24px; 
+    height: 24px;
+    margin-right: 8px; 
+}
+
+.navbar .links {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+}
+
+.navbar a {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px 16px;
+}
+
+.close-button {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.navbar a:hover,
+.close-button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.dropdown {
+    position: absolute; 
+    top: 200px;
+    right: 20px;
+}
+
+/* Add this rule to make the text white */
+.dropdown p {
+    color: white;
+}
+.centered-content {
+    text-align: center;
+    padding: 10px; /* Adjust the padding as needed */
+}
+.profiles {
+    width: 48px; /* Adjust the size as needed */
+    height: 48px;
+    border-radius: 20%; /* Apply a circular mask */
+    overflow: hidden;
+}
+.centered{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.sign-out-button:hover {
+    background-color: transparent; 
+}
+.centered {
+    text-align: center;  
+    display: flex;
+    flex-direction: column;  
+    align-items: center;  
+}
+
+.profiles {
+    max-width: 100px; 
+    height: auto;
+}
+.navbar span {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px 16px;
+}
+.navbar span:hover {
+    background-color: #ddd;
+    color: black;
+}
