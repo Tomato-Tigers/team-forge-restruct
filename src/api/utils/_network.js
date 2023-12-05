@@ -44,9 +44,9 @@ function groupByRelation(id, size) {
         var cur = queue.shift(); // pop the first element
         for (var dest of adj.get(cur)) {
             // adds unvisited nodes
-            if (!visited.includes(dest)) {
-                visited.push(dest);
-                queue.push(dest);
+            if (!visited.includes(dest.id)) {
+                visited.push(dest.id);
+                queue.push(dest.id);
                 if (visited.length == size)
                     return visited;
             }
