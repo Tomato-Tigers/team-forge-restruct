@@ -1,100 +1,112 @@
+/* Styles for the create class box */
 .create-class-box {
-    margin: 0 auto;
-    margin-top: 120px;
-    width: 540px;
-    height: auto;
-    background-color: black;
-    color: white;
-    border: 1px solid var(--dark-gray);
-    box-shadow: 0px 0px 12px rgba(0,0,0,0.3);
-    position: absolute;
-    margin-top: -130px;
+    margin: 0 auto; 
+    margin-top: 120px; 
+    width: 540px; 
+    height: auto; 
+    background-color: black; 
+    color: white; 
+    border: 1px solid var(--dark-gray); 
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.3); 
+    position: absolute; 
+    margin-top: -130px; 
     margin-left: -171px;
-    top: 50%;
-    left: 50%;
-    animation: fadeInUp 0.5s ease-in-out;
+    top: 50%; 
+    left: 50%; 
+    animation: fadeInUp 0.5s ease-in-out; 
 }
 
+/* Styles for the header of the create class box */
 .create-class-header {
-    height: 46px;
-    border-bottom: 1px solid var(--dark-gray);
-    line-height: 46px;
-    padding: 0 28px;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
+    height: 46px; 
+    border-bottom: 1px solid var(--dark-gray); 
+    line-height: 46px; 
+    padding: 0 28px; 
+    font-size: 16px; 
+    font-weight: 600; 
+    letter-spacing: 0.2em; 
 }
 
+/* Styles for the form section of the create class box */
 .create-class-form {
-    padding: 18px 28px 0 28px;
-    animation: fadeInUp 0.5s ease-in-out;
+    padding: 18px 28px 0 28px; 
+    animation: fadeInUp 0.5s ease-in-out; 
 }
 
+/* Styles for subtitles within the form */
 .subtitle {
     font-size: 0.92em;
-    margin-bottom: 10px;
+    margin-bottom: 10px; 
 }
 
+/* Styles for form groups (input, select, textarea) */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    font-size: 1.05em;
-    font-weight: 300;
-    padding-bottom: 18px;
-    margin-bottom: -2px;
+    display: flex; 
+    flex-direction: column; 
+    font-size: 1.05em; 
+    font-weight: 300; 
+    padding-bottom: 18px; 
+    margin-bottom: -2px; 
 }
 
+/* Keyframes for the fade-in animation */
 @keyframes fadeInUp {
     from {
-      opacity: 0;
-      transform: translateY(20px); /* Start from below its final position */
+        opacity: 0; 
+        transform: translateY(20px); /* Move up from below its final position */
     }
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0); /* End at its final position */
     }
-  }
+}
 
-  input[type = title], input[type = subTitle], input[type = capacity], textarea, select {
+/* Styles for input, select, and textarea elements */
+input[type = title], input[type = subTitle], input[type = capacity], textarea, select {
     width: 90%;
-    outline: none;
-    padding: 5px 5px;
-    border: none;
-    border-radius: 10px;
-    background-color: #333;
-    font-size: 1em;
-    color: rgb(246, 242, 242);
-    transition: background-color 0.3s ease;
-    margin-bottom: 10px;
+    outline: none; 
+    padding: 5px 5px; 
+    border: none; 
+    border-radius: 10px; 
+    background-color: #333; 
+    font-size: 1em; 
+    color: rgb(246, 242, 242); 
+    transition: background-color 0.3s ease; 
+    margin-bottom: 10px; 
 }
 
+/* Styles for focused state of input, select, and textarea elements */
 input[type = title]:focus, input[type = subTitle]:focus, input[type = capacity]:focus, textarea:focus, select:focus {
-    background-color: rgb(118, 115, 115);
+    background-color: rgb(118, 115, 115); /* Change background color on focus */
 }
 
+/* Styles for the footer section */
 footer {
-    padding: 0 0 20px 0;
-    font-size: 0.82em;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    padding: 0 0 20px 0; 
+    font-size: 0.82em; 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: flex-end; 
 }
 
+/* Styles for the create class button */
 .create-class-button {
     background-color: var(--steel-blue);
     border-radius:8px;
-    transition: background-color 0.5s ease;
-    font-size: 1.1em;
+    transition: background-color 0.5s ease; 
+    font-size: 1.1em; 
 }
 
+/* Styles for the create class button on hover */
 .create-class-button:hover {
     background-color: rgba(243, 237, 237, 0.933);
-    cursor: pointer;
+    cursor: pointer; 
 }
 
-.create-class-error-message{
-    color: red;
-    font-size: 0.9em;
+/* Styles for error messages in the create class box */
+.create-class-error-message {
+    color: red; 
+    font-size: 0.9em; 
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 10px; 
 }
