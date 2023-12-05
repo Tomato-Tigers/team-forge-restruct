@@ -66,7 +66,6 @@ const ProfilePage: React.FC<ProfileProps> = ({ user, onLogout }) => {
       stableSkills: selectedSkills,
       stableInterests: selectedInterests,
       availability: availability
-     
     })
     .then(() => {
       alert("Preferences saved successfully!");

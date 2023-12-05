@@ -11,9 +11,9 @@ datasource db {
 model Entry {
   id                String             @id @default(uuid())
   createdAt         DateTime           @default(now())
-  skills            Skills[]
-  interests         String[]
-  availability      String[]
+  skills             String[]
+  interests          String[]
+  availability       Json?
   
   relation          String[] //id of students the user wants to work with.
   password          String
