@@ -4,26 +4,30 @@ import axios from "axios";
 import MainLayout from "./MainLayout";
 import './Messages.css';
 
+// Define the User and Message interfaces for type checking
 interface User {
   name: string;
   email: string;
 }
 
 interface Message {
-    id: string;          // Unique identifier for the message
-    sender: User;        // The sender of the message, as a User object
-    recipient: User;     // The recipient of the message, as a User object
-    content: string;     // The content of the message
-    createdAt: Date;     // The date and time the message was created
-    
-  }
+    id: string;
+    sender: User;
+    recipient: User;
+    content: string;
+    createdAt: Date;
+}
 
+// Define the props interface for the Messages component
 interface MessagesProps {
   user: User;
   onLogout: () => void;
 }
 
+// Messages component function
 const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
+
+  // State hooks to manage component state
   const [messages, setMessages] = useState<Message[]>([]);
   const [inbox, setInbox] = useState<Message[]>([]);
   const [sent, setSent] = useState<Message[]>([]);
@@ -33,14 +37,17 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
   const [showSentMsgs, setShowSentMsgs] = useState(false);
   const [showSentMessages, setSentMessages] = useState(false);
 
+  // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
   const messagesPerPage = 10;
 
+  // Fetch inbox and sent messages on component mount and when currentPage or user.email changes
   useEffect(() => {
     fetchInboxMessages();
     fetchSentMessages();
   }, [currentPage, user.email]);
 
+  // Function to fetch inbox messages from the server
   const fetchInboxMessages = () => {
     axios.get(`/api/get-inbox?recipientEmail=${user.email}&page=${currentPage}&limit=${messagesPerPage}`)
       .then(response => {
@@ -49,6 +56,7 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
       .catch(error => console.error('Error fetching inbox messages:', error));
   };
 
+  // Function to fetch sent messages from the server
   const fetchSentMessages = () => {
     axios.get(`/api/get-sent-messages?senderEmail=${user.email}&page=${currentPage}&limit=${messagesPerPage}`)
       .then(response => {
@@ -57,19 +65,16 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
       .catch(error => console.error('Error fetching sent messages:', error));
   };
 
+  // Function to handle replying to a message
   const handleReply = (senderEmail: string, originalMessage: string) => {
-    setNewRecipient(senderEmail); // Set the recipient for the reply
-    setNewMessage(`Replying to your message: "${originalMessage}"\n\n`); // Pre-fill the message
-  
-    // Update the state to show the message composition view
-    setOutgoingMsgs(true); // Assuming this state controls the visibility
-    setShowSentMsgs(false);    // Hide the sent messages view
-    setSentMessages(false);    // Hide any other related views, if necessary
+    setNewRecipient(senderEmail);
+    setNewMessage(`Replying to your message: "${originalMessage}"\n\n`);
+    setOutgoingMsgs(true);
+    setShowSentMsgs(false);
+    setSentMessages(false);
   };
-  
-  
-  
 
+  // Function to handle sending a new message
   const handleSendMessage = () => {
     if (!newRecipient || !newMessage) return;
 
@@ -82,13 +87,12 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
       setMessages([...messages, response.data]);
       setNewRecipient('');
       setNewMessage('');
-
-       // Refresh the inbox messages after sending the reply
-       fetchInboxMessages();
+      fetchInboxMessages();
     })
     .catch(error => console.error('Error sending message:', error));
   };
 
+  // Functions to handle displaying inbox and sent messages
   const handleInboxMessages = () => {
     fetchInboxMessages();
     setShowSentMsgs(true);
@@ -97,18 +101,20 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
   };
 
   const handleSentMessages = () => {
-    fetchSentMessages(); // Fetch the sent messages
+    fetchSentMessages();
     setShowSentMsgs(false);
     setOutgoingMsgs(false);
     setSentMessages(true);
   };
 
+  // Function to handle going back to the original view
   const handleBackOriginal = () => {
     setShowSentMsgs(false);
     setOutgoingMsgs(true);
     setSentMessages(false);
   };
- 
+
+  // Pagination logic
   const indexOfLastMessage = (currentPage + 1) * messagesPerPage;
   const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
   const currentInboxMessages = inbox.slice(indexOfFirstMessage, indexOfLastMessage);
@@ -116,6 +122,7 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
 
   const nextPage = () => setCurrentPage(prevPage => prevPage + 1);
   const prevPage = () => setCurrentPage(prevPage => prevPage > 0 ? prevPage - 1 : 0);
+
   return (
     <MainLayout user={user} onLogout={onLogout}>
       <div className="MessagesRoot">
@@ -151,14 +158,13 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
                     <th>Sender</th>
                     <th>Content</th>
                   </tr>
-                  {inbox.map((message, index) => (
+                  {currentInboxMessages.map((message, index) => (
                     <tr key={index}>
-                      <td>{message.sender.email}</td> {/* Display the name of the sender */}
+                      <td>{message.sender.email}</td>
                       <td>{message.content}</td>
                       <td>
-                      <button className="MenuItem ReplyButton"
-                        onClick={() => handleReply(message.sender.email, message.content)}
-                        >
+                        <button className="MenuItem ReplyButton"
+                          onClick={() => handleReply(message.sender.email, message.content)}>
                           Reply
                         </button>
                       </td>
@@ -166,10 +172,10 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
                   ))}
                 </table>
                 <div className="pagination">
-                {currentPage > 0 && <button onClick={prevPage}>Previous</button>}
-                {currentInboxMessages.length === messagesPerPage && <button onClick={nextPage}>Next</button>}
+                  {currentPage > 0 && <button onClick={prevPage}>Previous</button>}
+                  {currentInboxMessages.length === messagesPerPage && <button onClick={nextPage}>Next</button>}
+                </div>
               </div>
-            </div>
             )}
             {showSentMessages && (
               <div className="SentdPane">
@@ -178,18 +184,18 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
                     <th>Recipient</th>
                     <th>Content</th>
                   </tr>
-                  {sent.map((message, index) => (
+                  {currentSentMessages.map((message, index) => (
                     <tr key={index}>
-                      <td>{message.recipient.email}</td> {/* Display the name of the recipient */}
+                      <td>{message.recipient.email}</td>
                       <td>{message.content}</td>
                     </tr>
                   ))}
                 </table>
                 <div className="pagination">
-                {currentPage > 0 && <button onClick={prevPage}>Previous</button>}
-                {currentSentMessages.length === messagesPerPage && <button onClick={nextPage}>Next</button>}
+                  {currentPage > 0 && <button onClick={prevPage}>Previous</button>}
+                  {currentSentMessages.length === messagesPerPage && <button onClick={nextPage}>Next</button>}
+                </div>
               </div>
-            </div>
             )}
           </div>
         </div>
@@ -199,3 +205,4 @@ const Messages: React.FC<MessagesProps> = ({ user, onLogout }) => {
 }
 
 export default Messages;
+
